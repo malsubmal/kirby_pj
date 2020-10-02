@@ -6,13 +6,18 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import java.util.ArrayList;
+import com.badlogic.gdx.Input.Keys;
 
 public class myGame extends ApplicationAdapter {
 
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Kirby kirby;
-	
+	private boolean keypressed = false;
+	static public float stateTime = 0f;
+
+
 	@Override
 	public void create () {
 	camera = new OrthographicCamera();
@@ -20,6 +25,7 @@ public class myGame extends ApplicationAdapter {
 	batch = new SpriteBatch();
 	kirby = new Kirby();
 	kirby.create();
+
 	}
 
 	@Override
@@ -29,7 +35,8 @@ public class myGame extends ApplicationAdapter {
       // blue and alpha component in the range [0,1]
       // of the color to be used to clear the screen.
       Gdx.gl.glClearColor(0, 0, 0.2f, 1);
-      Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	  stateTime += Gdx.graphics.getDeltaTime();
 
       // tell the camera to update its matrices.
       camera.update();
@@ -38,13 +45,21 @@ public class myGame extends ApplicationAdapter {
       // coordinate system specified by the camera.
       batch.setProjectionMatrix(camera.combined);
 
+	  if(Gdx.input.isKeyPressed(Keys.RIGHT))	 {kirby.movement(Keys.RIGHT); keypressed = true;}
+	  if(Gdx.input.isKeyPressed(Keys.LEFT))	  {kirby.movement(Keys.LEFT); keypressed = true;}
+	  //if(Gdx.input.isKeyPressed(Keys.A))	  kirby.movement(Keys.A);
+	  //if(Gdx.input.isKeyPressed(Keys.D))	  kirby.movement(Keys.D);
+	
       // begin a new batch and draw the bucket and
       // all drops
       batch.begin();
-      batch.draw(kirby.defsprite, kirby.bod.x, kirby.bod.y);
+      if (!keypressed) {
+    	  batch.draw(kirby.defsprite, kirby.bod.x, kirby.bod.y);
+      } else {
+    	  batch.draw(kirby.currentFrame, kirby.bod.x, kirby.bod.y);
+      }
       batch.end();
-      
-      kirby.movement();
+      keypressed = false;
 	}
 	
 	@Override
