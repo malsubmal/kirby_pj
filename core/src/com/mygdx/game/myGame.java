@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.math.Vector2;
@@ -34,17 +35,23 @@ public class myGame extends ApplicationAdapter {
 	static public float stateTime = 0f;
 	private TiledMapRenderer tilemaprenderer;
 	private int gravity = 500;
+	private Enemy ufo;
+	private StrikeZone strikezone;
 
 
 	@Override
 	public void create () {
 	debugRenderer  = new Box2DDebugRenderer();
-	world = new World(new Vector2(0, -gravity), true); 
+	world = new World(new Vector2(0, -gravity), true);
+	strikezone = new StrikeZone();
+	world.setContactListener(strikezone); 
 	camera = new OrthographicCamera();
 	camera.setToOrtho(false, 800, 480);
 	batch = new SpriteBatch();
 	kirby = new Kirby();
 	kirby.create();
+	ufo =new UFO();
+	strikezone.setFixture(kirby.fixture);
 	importTiled("prototype.tmx");
 	}
 	
@@ -68,20 +75,20 @@ public class myGame extends ApplicationAdapter {
 	  managerUI();
        
       batch.begin();
-      if (!keypressed) {
-		  batch.draw(kirby.defsprite, kirby.body.getPosition().x-16, kirby.body.getPosition().y-8);
-		  kirby.movement(0);
-		
-      } else {
-    	  batch.draw(kirby.currentFrame, kirby.body.getPosition().x-16, kirby.body.getPosition().y-8);
-    	  //camera.translate(kirby.body.getPosition());
-      }
+      if (!keypressed) {		  kirby.movement(0);      } 
+
+		batch.draw(kirby.currentFrame, kirby.body.getPosition().x-16, kirby.body.getPosition().y-8);
+		batch.draw(ufo.currentFrame, ufo.body.getPosition().x-16, ufo.body.getPosition().y-8);
+		// batch.draw enemies
+    	//camera.translate(kirby.body.getPosition());
+    
 	  batch.end();
 	  
-	  keypressed = false;
+	  
 
 	  //update physics world
 	  world.step(1/60f, 6, 2);
+	  	((UFO) ufo).movement();
 
 	  //render box2D object
 	  debugRenderer.render(world, camera.combined);
@@ -93,10 +100,14 @@ public class myGame extends ApplicationAdapter {
 	}
 
 	public void managerUI() {
+		keypressed = false;
 		if(Gdx.input.isKeyPressed(Keys.RIGHT))	 {kirby.movement(Keys.RIGHT); keypressed = true;}
 		if(Gdx.input.isKeyPressed(Keys.LEFT))	  {kirby.movement(Keys.LEFT); keypressed = true;}
 		if(Gdx.input.isKeyPressed(Keys.UP))	      {kirby.movement(Keys.UP); keypressed = true;}
 		if(Gdx.input.isKeyPressed(Keys.DOWN))	 {kirby.movement(Keys.DOWN); keypressed = true;}
+		if (Gdx.input.isKeyPressed(Keys.A))		{kirby.movement(Keys.A); keypressed = true;}
+		//input two keys at the same time
+		//and add the directional fly functions 
 	}
 
 	public void importTiled(String tilemapsource){

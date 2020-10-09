@@ -29,12 +29,14 @@ import com.badlogic.gdx.physics.box2d.Shape;
 
 
 public abstract class Characters {
-    private int HP, DP;
+    protected int HP, DP;
     protected Texture defsprite;
     protected float frameD = 0.1f;
     protected BodyDef bodyDef = new BodyDef();
     protected Texture walksheet;
     protected ArrayList<Animation<TextureRegion>> Anims;
+    protected StrikeZone strikezone;
+    protected boolean setActive = false;
     protected Animation<TextureRegion> animHolder;
     protected TextureRegion[] walkFrames;
     protected TextureRegion[][] tmp;
@@ -42,42 +44,55 @@ public abstract class Characters {
     protected int counter = 0;
     protected String sourceAnim;
     public Body body;
+    public FixtureDef fixtureDef;
+    public Fixture fixture;
     protected int vcon = 1000;
     protected int density = 500000;
     protected int bodyradius;
     protected int spritenumber = 9;
     public enum  spritesManager  { IdleRight, IdleLeft, WalkingRight, WalkingLeft, AttackRight, AttackLeft, Defeat, SuckRight, SuckLeft};
+    protected Vector2 spawnVector;
 
 
     protected ArrayList<String> spriteSource = new ArrayList<String>();
 
 
     protected void create(){
+        defineSpawnVector();
+
         bodyDef.type = BodyType.DynamicBody;
-        bodyDef.position.set(1, 200f);
+        bodyDef.position.set(spawnVector.x, spawnVector.y);
         body = myGame.world.createBody(bodyDef);
         body.setUserData(this);
 
-        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef = new FixtureDef();
         fixtureDef.shape = new CircleShape();
         fixtureDef.shape.setRadius(8);
         fixtureDef.density = density;
 
-        Fixture fixture = body.createFixture(fixtureDef);
+        fixture = body.createFixture(fixtureDef);
 
         defineSource();
         createAnim();
-        defsprite = new Texture(Gdx.files.internal("Sprite-0001.gif"));
-    
     }
 
-    protected void defineSource(String[] sprite){
-        for (int i = 0; i< spritenumber; i++) {
+    protected void create(Vector2 spawn){
+        defineSpawnVector(spawn);
+        this.create();
+    }
+
+    protected abstract void  defineSource();
+    protected abstract void  defineSpawnVector();
+
+    protected void defineSource(String[] sprite) {
+        for (int i = 0; i< sprite.length; i++) {
             spriteSource.add(sprite[i]);
         }
     }
 
-    abstract void defineSource();
+    protected void defineSpawnVector(Vector2 spawn) {
+        spawnVector = spawn;
+    }
 
 
     protected void createAnim(){
@@ -97,7 +112,5 @@ public abstract class Characters {
         }
     }
 
-    public void movement(){
 
-    }
 }
