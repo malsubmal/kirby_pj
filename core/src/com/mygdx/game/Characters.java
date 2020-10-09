@@ -28,7 +28,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Shape;
 
 
-public class Characters {
+public abstract class Characters {
     private int HP, DP;
     protected Texture defsprite;
     protected float frameD = 0.1f;
@@ -39,14 +39,20 @@ public class Characters {
     protected TextureRegion[] walkFrames;
     protected TextureRegion[][] tmp;
     protected TextureRegion currentFrame;
-    protected int movementVector = 30;
     protected int counter = 0;
     protected String sourceAnim;
     public Body body;
     protected int vcon = 1000;
     protected int density = 500000;
+    protected int bodyradius;
+    protected int spritenumber = 9;
+    public enum  spritesManager  { IdleRight, IdleLeft, WalkingRight, WalkingLeft, AttackRight, AttackLeft, Defeat, SuckRight, SuckLeft};
 
-    public void create(){
+
+    protected ArrayList<String> spriteSource = new ArrayList<String>();
+
+
+    protected void create(){
         bodyDef.type = BodyType.DynamicBody;
         bodyDef.position.set(1, 200f);
         body = myGame.world.createBody(bodyDef);
@@ -59,40 +65,39 @@ public class Characters {
 
         Fixture fixture = body.createFixture(fixtureDef);
 
-
-    //sprite
-    defsprite = new Texture(Gdx.files.internal("Sprite-0001.gif"));
-    createAnim();
+        defineSource();
+        createAnim();
+        defsprite = new Texture(Gdx.files.internal("Sprite-0001.gif"));
     
     }
 
-    public void createAnim(){
+    protected void defineSource(String[] sprite){
+        for (int i = 0; i< spritenumber; i++) {
+            spriteSource.add(sprite[i]);
+        }
+    }
+
+    abstract void defineSource();
+
+
+    protected void createAnim(){
         Anims = new ArrayList<Animation<TextureRegion>>();
-        Anims.add(animHolder);
-        Anims.add(animHolder);
-        for (Animation<TextureRegion> currAnim : Anims) {
-            switch (counter) {
-                case 0:
-                    walksheet = new Texture(Gdx.files.internal("Sprite-0010.png"));
-                    break;
-                case 1:
-                    walksheet = new Texture(Gdx.files.internal("Sprite-0011.png"));
-                    break;
-            }
-            
+        Animation<TextureRegion> currAnim;
+        for (String source : spriteSource) {
+            walksheet = new Texture(Gdx.files.internal(source));
             tmp = TextureRegion.split(walksheet,32,32);
-            walkFrames = new TextureRegion[10];
+            walkFrames = new TextureRegion[walksheet.getWidth()/32];
             int index = 0;
-                    for (int j = 0; j < 10; j++) {
+                    for (int j = 0; j < walksheet.getWidth()/32; j++) {
                         walkFrames[index++] = tmp[0][j];
                     }
             currAnim =  new Animation<TextureRegion>(frameD,walkFrames);
-            Anims.set(counter,currAnim); 
+            Anims.add(currAnim); 
             counter++;
         }
     }
 
-    void movement(){
+    public void movement(){
 
     }
 }
