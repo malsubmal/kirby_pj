@@ -28,7 +28,22 @@ public class StrikeZone implements ContactListener, ContactFilter {
         Object opp = null;
         Enemy refereddOpp = null;
 
-        if (fixtureA.getBody().getUserData() instanceof Kirby) {
+        if (fixtureA.getBody().getUserData() instanceof HitBox) {
+            if (fixtureB.getBody().getUserData() instanceof Characters) {
+                opp = fixtureB.getBody().getUserData();
+                ((Characters) opp).HP -= 10;
+                System.out.println("HP decreases");
+            }
+        }
+         else if (fixtureB.getBody().getUserData() instanceof Kirby) {
+            if (fixtureA.getBody().getUserData() instanceof Characters) {
+                opp = fixtureA.getBody().getUserData();
+                ((Characters) opp).HP -= 10;
+                System.out.println("HP decreases");
+            }
+         }
+         else {
+       if (fixtureA.getBody().getUserData() instanceof Kirby) {
             //System.out.println(" recognize Kirby");
              if (fixtureB.isSensor()) {
                 opp = fixtureB.getBody().getUserData();
@@ -46,8 +61,8 @@ public class StrikeZone implements ContactListener, ContactFilter {
                System.out.println("setActive");
         
             }
-
-    }
+        }
+    } 
 }
 
     @Override

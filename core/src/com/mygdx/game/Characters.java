@@ -29,7 +29,7 @@ import com.badlogic.gdx.physics.box2d.Shape;
 
 
 public abstract class Characters {
-    protected int HP, DP;
+    protected int HP = 100, DP = 100;
     protected Texture defsprite;
     protected float frameD = 0.1f;
     protected BodyDef bodyDef = new BodyDef();
@@ -58,7 +58,7 @@ public abstract class Characters {
 
 
     protected void create(){
-        defineSpawnVector();
+        this.defineSpawnVector();
 
         bodyDef.type = BodyType.DynamicBody;
         bodyDef.position.set(spawnVector.x, spawnVector.y);
@@ -72,17 +72,20 @@ public abstract class Characters {
 
         fixture = body.createFixture(fixtureDef);
 
-        defineSource();
+        this.defineSource();
         createAnim();
     }
 
-    protected void create(Vector2 spawn){
+    public void defineSource() {
+    }
+
+    public void defineSpawnVector() {
+    }
+
+    protected void create(Vector2 spawn) {
         defineSpawnVector(spawn);
         this.create();
     }
-
-    protected abstract void  defineSource();
-    protected abstract void  defineSpawnVector();
 
     protected void defineSource(String[] sprite) {
         for (int i = 0; i< sprite.length; i++) {
@@ -93,7 +96,6 @@ public abstract class Characters {
     protected void defineSpawnVector(Vector2 spawn) {
         spawnVector = spawn;
     }
-
 
     protected void createAnim(){
         Anims = new ArrayList<Animation<TextureRegion>>();

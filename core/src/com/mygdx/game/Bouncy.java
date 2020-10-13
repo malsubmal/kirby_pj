@@ -1,14 +1,12 @@
 package com.mygdx.game;
 
-public class Bouncy extends Characters implements EnemiesZones{
+public class Bouncy extends Characters implements finalCharacter{
 
     @Override
     public void defineSource() {
         // TODO Auto-generated method stub
 
     }
-
-
 
     public void movement() {
         // TODO Auto-generated method stub
@@ -23,7 +21,13 @@ public class Bouncy extends Characters implements EnemiesZones{
 
 
     @Override
-    protected void defineSpawnVector() {
+    public void defineSpawnVector() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void defineStrikeZone() {
         // TODO Auto-generated method stub
 
     }

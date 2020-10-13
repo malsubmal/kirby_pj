@@ -3,66 +3,38 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.math.Vector2;
 
-public class HitBox implements ContactListener {
-
-    public BodyDef bodyDef;
-    public Body body;
+public class HitBox{
     public boolean setActive = false;
+    public Body body;
+    public BodyDef bodyDef = new BodyDef();
 
-    public HitBox(Vector2 pos, float rad) {
-        bodyDef.type = BodyType.DynamicBody;
-        //body at spawn
-        bodyDef.position.set(pos.x, pos.y);
-        body = myGame.world.createBody(bodyDef);
-        body.setUserData(this);
-
+    public HitBox(Body body, Vector2 spawnVector, float rad) {
+        bodyDef.type = BodyType.KinematicBody;
+        bodyDef.position.set(body.getPosition().x + spawnVector.x, body.getPosition().y + spawnVector.y);
+        this.body = myGame.world.createBody(bodyDef);
+        this.body.setUserData(this);
         FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.isSensor = true;
         fixtureDef.shape = new CircleShape();
         fixtureDef.shape.setRadius(rad);
 
-        Fixture fixture = body.createFixture(fixtureDef);
+        Fixture fixture = this.body.createFixture(fixtureDef);
+        
     }
 
-    public HitBox(Vector2 pos, float height, float width) {
-        bodyDef.type = BodyType.DynamicBody;
-        //body at spawn
-        bodyDef.position.set(pos.x, pos.y);
-        body = myGame.world.createBody(bodyDef);
-        body.setUserData(this);
-
+    public HitBox(Body body, Vector2 spawnVector, float height, float width) {
+        bodyDef.type = BodyType.KinematicBody;
+        bodyDef.position.set(body.getPosition().x + spawnVector.x, body.getPosition().y + spawnVector.y);
+        this.body = myGame.world.createBody(bodyDef);
+        this.body.setUserData(this);
         FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.isSensor = true;
         PolygonShape poly = new PolygonShape();
         poly.setAsBox(height/2, width/2);
         fixtureDef.shape = poly;
 
-        Fixture fixture = body.createFixture(fixtureDef);
+        Fixture fixture = this.body.createFixture(fixtureDef);
     }
      
-
-    @Override
-    public void beginContact(Contact contact) {
-        Fixture fixture = contact.getFixtureA();
-        Body bodyContact = fixture.getBody();
-        Object contacter = bodyContact.getUserData();
-        if (contacter instanceof Kirby) {
-            System.out.println("Take Damage");
-        }
-
-    }
-
-
-
-    @Override
-    public void endContact(Contact contact) {}
-
-
-    @Override
-    public void preSolve(Contact contact, Manifold oldManifold) {}
-
-    @Override
-    public void postSolve(Contact contact, ContactImpulse impulse) {}
-
-    //physics body
-    //Event listener
 
 }

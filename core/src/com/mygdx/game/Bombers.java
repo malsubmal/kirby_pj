@@ -1,6 +1,6 @@
 package com.mygdx.game;
 
-public class Bombers extends Characters implements EnemiesZones {
+public class Bombers extends Characters implements finalCharacter {
 
     @Override
     public void defineSource() {
@@ -21,7 +21,13 @@ public class Bombers extends Characters implements EnemiesZones {
 
 
     @Override
-    protected void defineSpawnVector() {
+    public void defineSpawnVector() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void defineStrikeZone() {
         // TODO Auto-generated method stub
 
     }

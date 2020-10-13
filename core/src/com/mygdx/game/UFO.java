@@ -3,7 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.Gdx;
 
-public class UFO extends Enemy implements EnemiesZones {
+public class UFO extends Enemy implements finalCharacter {
 
     public StrikeSensor thisStrikeSensor = new StrikeSensor();
     public HitBox thisHitBox;
@@ -41,7 +41,7 @@ public class UFO extends Enemy implements EnemiesZones {
 
 
     @Override
-    protected void defineSpawnVector() {
+    public void defineSpawnVector() {
         defineSpawnVector(new Vector2(2, 200f));
     }
 
@@ -49,17 +49,17 @@ public class UFO extends Enemy implements EnemiesZones {
        
             this.body.setLinearVelocity(new Vector2(0, 0));
             this.currentFrame  = this.Anims.get(0).getKeyFrame(myGame.stateTime, true);
-            if (setActive) {
-                System.out.println("activate zone");
+            System.out.println(this.HP);
+            if (HP < 0) {
+                this.body.setActive(false);
             }
 
     }
 
-        @Override
-        public void defineStrikeZone() {
-            thisStrikeSensor.create(this.body, 10f);
-
-        }
+    @Override
+    public void defineStrikeZone() {
+        thisStrikeSensor.create(this.body, 20f);
+    }
     }
 
 

@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapObject;
@@ -28,7 +29,7 @@ public class myGame extends ApplicationAdapter {
 
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
-	private Kirby kirby;
+	static public Kirby kirby;
 	public boolean keypressed = false;
 	static public World world;
 	private Box2DDebugRenderer debugRenderer;
@@ -46,11 +47,13 @@ public class myGame extends ApplicationAdapter {
 	strikezone = new StrikeZone();
 	world.setContactListener(strikezone); 
 	camera = new OrthographicCamera();
-	camera.setToOrtho(false, 800, 480);
+	camera.setToOrtho(false, 200, 100);
+	camera.zoom -= 0.08f;
 	batch = new SpriteBatch();
-	kirby = new Kirby();
+	kirby = new KirbyDefault();
 	kirby.create();
 	ufo =new UFO();
+	camera.position.set(kirby.body.getPosition().x/2,kirby.body.getPosition().y,0 );
 	strikezone.setFixture(kirby.fixture);
 	importTiled("prototype.tmx");
 	}
@@ -78,9 +81,10 @@ public class myGame extends ApplicationAdapter {
       if (!keypressed) {		  kirby.movement(0);      } 
 
 		batch.draw(kirby.currentFrame, kirby.body.getPosition().x-16, kirby.body.getPosition().y-8);
+		camera.position.set(kirby.body.getPosition().x,kirby.body.getPosition().y,0 );
 		batch.draw(ufo.currentFrame, ufo.body.getPosition().x-16, ufo.body.getPosition().y-8);
 		// batch.draw enemies
-    	//camera.translate(kirby.body.getPosition());
+		
     
 	  batch.end();
 	  
@@ -88,7 +92,7 @@ public class myGame extends ApplicationAdapter {
 
 	  //update physics world
 	  world.step(1/60f, 6, 2);
-	  	((UFO) ufo).movement();
+	  ((UFO) ufo).movement();
 
 	  //render box2D object
 	  debugRenderer.render(world, camera.combined);
@@ -101,11 +105,15 @@ public class myGame extends ApplicationAdapter {
 
 	public void managerUI() {
 		keypressed = false;
+		//movement
 		if(Gdx.input.isKeyPressed(Keys.RIGHT))	 {kirby.movement(Keys.RIGHT); keypressed = true;}
 		if(Gdx.input.isKeyPressed(Keys.LEFT))	  {kirby.movement(Keys.LEFT); keypressed = true;}
 		if(Gdx.input.isKeyPressed(Keys.UP))	      {kirby.movement(Keys.UP); keypressed = true;}
 		if(Gdx.input.isKeyPressed(Keys.DOWN))	 {kirby.movement(Keys.DOWN); keypressed = true;}
+		//suck
 		if (Gdx.input.isKeyPressed(Keys.A))		{kirby.movement(Keys.A); keypressed = true;}
+		//attack
+		if (Gdx.input.isKeyPressed(Keys.D))		{kirby.movement(Keys.D); keypressed = true;}
 		//input two keys at the same time
 		//and add the directional fly functions 
 	}
@@ -115,18 +123,18 @@ public class myGame extends ApplicationAdapter {
 		tilemaprenderer = new OrthogonalTiledMapRenderer(tilemap);
 		MapObjects objects = tilemap.getLayers().get("object").getObjects();
     	for (MapObject object: objects) {
-		Rectangle rectangle = ((RectangleMapObject)object).getRectangle();
-		BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.KinematicBody;
-		Body body = world.createBody(bodyDef);
-		PolygonShape poly = new PolygonShape();
-		poly.setAsBox(rectangle.width/2, rectangle.height/2);
-		Fixture fix = body.createFixture(poly, 1f);
-		Vector2 center = new Vector2();
-		rectangle.getCenter(center);
-		body.setTransform(center, 0);
+			Rectangle rectangle = ((RectangleMapObject)object).getRectangle();
+			BodyDef bodyDef = new BodyDef();
+			bodyDef.type = BodyDef.BodyType.KinematicBody;
+			Body body = world.createBody(bodyDef);
+			PolygonShape poly = new PolygonShape();
+			poly.setAsBox(rectangle.width/2, rectangle.height/2);
+			Fixture fix = body.createFixture(poly, 1f);
+			Vector2 center = new Vector2();
+			rectangle.getCenter(center);
+			body.setTransform(center, 0);
 		
-	}
+		}
 	}
 
 }
