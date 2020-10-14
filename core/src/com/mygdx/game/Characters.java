@@ -52,6 +52,7 @@ public abstract class Characters {
     protected int spritenumber = 9;
     public enum  spritesManager  { IdleRight, IdleLeft, WalkingRight, WalkingLeft, AttackRight, AttackLeft, Defeat, SuckRight, SuckLeft};
     protected Vector2 spawnVector;
+    public boolean defeat;
 
 
     protected ArrayList<String> spriteSource = new ArrayList<String>();

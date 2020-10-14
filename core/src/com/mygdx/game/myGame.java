@@ -38,6 +38,7 @@ public class myGame extends ApplicationAdapter {
 	private int gravity = 500;
 	private Enemy ufo;
 	private StrikeZone strikezone;
+	public static TiledMap tilemap;
 
 
 	@Override
@@ -52,10 +53,12 @@ public class myGame extends ApplicationAdapter {
 	batch = new SpriteBatch();
 	kirby = new KirbyDefault();
 	kirby.create();
-	ufo =new UFO();
+	//ufo =new UFO();
+	
 	camera.position.set(kirby.body.getPosition().x/2,kirby.body.getPosition().y,0 );
 	strikezone.setFixture(kirby.fixture);
 	importTiled("prototype.tmx");
+	Enemy.EnemySpawn();
 	}
 	
 
@@ -82,7 +85,9 @@ public class myGame extends ApplicationAdapter {
 
 		batch.draw(kirby.currentFrame, kirby.body.getPosition().x-16, kirby.body.getPosition().y-8);
 		camera.position.set(kirby.body.getPosition().x,kirby.body.getPosition().y,0 );
-		batch.draw(ufo.currentFrame, ufo.body.getPosition().x-16, ufo.body.getPosition().y-8);
+		for (Enemy temp : Enemy.existingEnemy) {
+		batch.draw(temp.currentFrame, temp.body.getPosition().x-16, temp.body.getPosition().y-8);
+		}
 		// batch.draw enemies
 		
     
@@ -92,7 +97,7 @@ public class myGame extends ApplicationAdapter {
 
 	  //update physics world
 	  world.step(1/60f, 6, 2);
-	  ((UFO) ufo).movement();
+	  Enemy.EnemyUpdate();
 
 	  //render box2D object
 	  debugRenderer.render(world, camera.combined);
@@ -119,7 +124,7 @@ public class myGame extends ApplicationAdapter {
 	}
 
 	public void importTiled(String tilemapsource){
-		TiledMap tilemap = new TmxMapLoader().load(tilemapsource);
+		tilemap = new TmxMapLoader().load(tilemapsource);
 		tilemaprenderer = new OrthogonalTiledMapRenderer(tilemap);
 		MapObjects objects = tilemap.getLayers().get("object").getObjects();
     	for (MapObject object: objects) {

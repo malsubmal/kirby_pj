@@ -3,6 +3,9 @@ import java.util.ArrayList;
 
 public class Level {
 	public ArrayList<Characters> Enemies = new ArrayList<Characters>();
+
+	//ONE LEVEL
+
 	//define Level variable
 	
 	//maybe change to a pastel pink
@@ -10,9 +13,6 @@ public class Level {
 	//define Level Constructor method
 	
 	//define Level Manager method
-	
-	//define EnemiesManager method
-		//define EnemiesSpawn method
 	
 	//define FoodManager method
 	
