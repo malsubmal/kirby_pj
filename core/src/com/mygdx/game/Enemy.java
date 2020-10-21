@@ -7,8 +7,11 @@ import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
+import java.util.function.Predicate; 
 
 public abstract class Enemy extends Characters {
+
+    protected int frameCounter = 0;
 
     public static ArrayList<Enemy> existingEnemy = new ArrayList<Enemy>();
     //public ArrayList<Vector2> UFOplacement = new ArrayList<Vector2>();
@@ -37,8 +40,25 @@ public abstract class Enemy extends Characters {
     }
 
     static void EnemyUpdate(){
+        ArrayList<Enemy> tobeDisposed = new ArrayList<Enemy>();
         for (Enemy temp: existingEnemy) {
-           ((UFO) temp).movement();
+            if (temp.HP < 0) {
+                temp.frameCounter++;
+                temp.body.setActive(false);
+                Characters.sharedAnims.get(0).setFrameDuration(0.1f);
+                temp.currentFrame  = Characters.sharedAnims.get(0).getKeyFrame(myGame.stateTime, true);
+                if (temp.frameCounter > 25) {
+                tobeDisposed.add(temp); }
+            } else {
+            /* Predicate<Enemy> dead = enemy -> (enemy.HP <= 0);
+            existingEnemy.removeIf(dead); */
+           ((UFO) temp).movement(); }
         }
+         if (tobeDisposed != null) {
+        for (Enemy temp: tobeDisposed) {
+            existingEnemy.remove(temp);
+        } 
+    } 
     }
+
 }

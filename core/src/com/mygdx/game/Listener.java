@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class StrikeZone implements ContactListener, ContactFilter {
+public class Listener implements ContactListener, ContactFilter {
 
     public Fixture kirbyFixture;
 
@@ -28,18 +28,27 @@ public class StrikeZone implements ContactListener, ContactFilter {
         Object opp = null;
         Enemy refereddOpp = null;
 
+        if (fixtureA.getBody().getUserData() instanceof SuckBox) {
+            if (fixtureB.getBody().getUserData() instanceof Enemy) {
+                opp = fixtureB.getBody().getUserData();
+                myGame.kirby.type = ((Characters) opp).type;
+                System.out.println(myGame.kirby.type);
+            }
+        }
+
         if (fixtureA.getBody().getUserData() instanceof HitBox) {
             if (fixtureB.getBody().getUserData() instanceof Characters) {
                 opp = fixtureB.getBody().getUserData();
                 ((Characters) opp).HP -= 10;
                 System.out.println("HP decreases");
+               
             }
-        }
-         else if (fixtureB.getBody().getUserData() instanceof Kirby) {
+        }  else if (fixtureB.getBody().getUserData() instanceof HitBox) {
             if (fixtureA.getBody().getUserData() instanceof Characters) {
                 opp = fixtureA.getBody().getUserData();
                 ((Characters) opp).HP -= 10;
                 System.out.println("HP decreases");
+                
             }
          }
          else {
@@ -49,8 +58,7 @@ public class StrikeZone implements ContactListener, ContactFilter {
                 opp = fixtureB.getBody().getUserData();
                 refereddOpp = (UFO) opp;
                 ((UFO) refereddOpp).setActive = true;
-                
-               System.out.println("setActive");
+                System.out.println("setActive");
               }
         } else if (fixtureB.getBody().getUserData() instanceof Kirby){
             //System.out.println(" recognize Kirby");

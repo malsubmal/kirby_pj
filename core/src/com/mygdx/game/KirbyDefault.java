@@ -29,15 +29,27 @@ public class KirbyDefault extends Kirby implements finalCharacter{
 
     private boolean rightDirection = true;
     private boolean fly = false;
-    private float duration;
+    //private float duration;
     private float attackv = 20f;
     public static HitBox kirbyHitBox;
+    private boolean suck = false;
+    public static SuckBox kirbySuckBox;
 
+    public void destroy(){
+        this.currentFrame = this.Anims.get(6).getKeyFrame(myGame.stateTime, true);
+    }
+
+    //redesign attack
     public void movement(int keyPressed){
+        if (keyPressed != Keys.D) {
+            if (kirbyHitBox != null) {kirbyHitBox.body.setActive(false);}
+        }
+        if (keyPressed != Keys.A) {
+            if (kirbySuckBox != null) {kirbySuckBox.body.setActive(false);}
+        }
         switch (keyPressed) {
             case Keys.UP:
                 fly = true;
-                 if (kirbyHitBox != null) {kirbyHitBox.body.setActive(false);}
                 this.body.setLinearVelocity(new Vector2(0, vcon*Gdx.graphics.getDeltaTime()));
                 if (rightDirection) {
                     this.currentFrame = this.Anims.get(9).getKeyFrame(myGame.stateTime, true);
@@ -47,7 +59,7 @@ public class KirbyDefault extends Kirby implements finalCharacter{
                 break;
             case Keys.RIGHT:
                 rightDirection = true;
-                if (kirbyHitBox != null) {kirbyHitBox.body.setActive(false);}
+
                 if (!fly) {
                     this.body.setLinearVelocity(new Vector2(vcon*Gdx.graphics.getDeltaTime(),0));
                     this.currentFrame  = this.Anims.get(2).getKeyFrame(myGame.stateTime, true);
@@ -58,7 +70,7 @@ public class KirbyDefault extends Kirby implements finalCharacter{
                 break;
             case Keys.LEFT:
                 rightDirection = false;
-                if (kirbyHitBox != null) {kirbyHitBox.body.setActive(false);}
+
                 if (!fly) {
                     this.body.setLinearVelocity(new Vector2(-vcon*Gdx.graphics.getDeltaTime(),0));
                     this.currentFrame  = this.Anims.get(3).getKeyFrame(myGame.stateTime, true);
@@ -69,7 +81,7 @@ public class KirbyDefault extends Kirby implements finalCharacter{
                 break;
             case Keys.DOWN:
                 fly = false;
-                if (kirbyHitBox != null) {kirbyHitBox.body.setActive(false);}
+     
                 this.body.setLinearVelocity(new Vector2(0, -vcon*Gdx.graphics.getDeltaTime()));
                 if (rightDirection) {
                     this.currentFrame = this.Anims.get(11).getKeyFrame(myGame.stateTime, true);
@@ -78,15 +90,26 @@ public class KirbyDefault extends Kirby implements finalCharacter{
                     }
                 break;
             case Keys.A:
+            //suck
                 this.body.setLinearVelocity(new Vector2(0,0));
-                if (kirbyHitBox != null) {kirbyHitBox.body.setActive(false);}
                 if (rightDirection) {
                 this.currentFrame = this.Anims.get(7).getKeyFrame(myGame.stateTime, true);
+                if (kirbySuckBox.body.isActive() == false) {
+                    kirbySuckBox = new SuckBox(myGame.kirby.body, new Vector2(8, 32),  16  , 8);                
+                    } else {
+                    kirbySuckBox.body.setTransform(new Vector2(this.body.getPosition().x + 8,this.body.getPosition().y ), 0);
+                    }
                 } else {
                 this.currentFrame = this.Anims.get(8).getKeyFrame(myGame.stateTime, true);
+                if (kirbySuckBox.body.isActive() == false) {
+                    kirbySuckBox = new SuckBox(myGame.kirby.body,new Vector2(-8, 32), 16  , 8);
+                    } else {
+                        kirbySuckBox.body.setTransform(new Vector2(this.body.getPosition().x -8,this.body.getPosition().y ), 0);
+                    } 
                 }
                 break;
             case Keys.D:
+            //attack
                 //set duration limit
                 //set movement limit
                 //set DP limit
@@ -95,7 +118,7 @@ public class KirbyDefault extends Kirby implements finalCharacter{
                 this.body.setLinearVelocity(new Vector2(vcon*Gdx.graphics.getDeltaTime()*attackv,0));
                 this.currentFrame = this.Anims.get(4).getKeyFrame(myGame.stateTime, true);
                 if (kirbyHitBox.body.isActive() == false) {
-                kirbyHitBox = new HitBox(this.body, new Vector2(8, -8),  8  , 8);                
+                kirbyHitBox = new HitBox(myGame.kirby.body, new Vector2(8, 0),  8  , 8);                
                 } else {
                 kirbyHitBox.body.setTransform(new Vector2(this.body.getPosition().x + 8,this.body.getPosition().y - 8 ), 0);
                 }
@@ -104,19 +127,23 @@ public class KirbyDefault extends Kirby implements finalCharacter{
                 this.body.setLinearVelocity(new Vector2(-vcon*Gdx.graphics.getDeltaTime()*attackv,0));
                 this.currentFrame = this.Anims.get(5).getKeyFrame(myGame.stateTime, true);
                 if (kirbyHitBox.body.isActive() == false) {
-                kirbyHitBox = new HitBox(this.body,new Vector2(-8, -8), 8  , 8);
+                kirbyHitBox = new HitBox(myGame.kirby.body,new Vector2(-8, 0), 8  , 8);
                 } else {
                 kirbyHitBox.body.setTransform(new Vector2(this.body.getPosition().x -8,this.body.getPosition().y -8 ), 0);
                 } 
                 }
                 break;
             case 0:
+            //need to put this in constructor
                 if (kirbyHitBox == null) {
-                kirbyHitBox = new HitBox(this.body, new Vector2(8, -8),  8  , 8);
-                kirbyHitBox.body.setActive(false);
+                    kirbyHitBox = new HitBox(this.body, new Vector2(8, -8),  8  , 8);
+                    kirbyHitBox.body.setActive(false);
                 }
+                if (kirbySuckBox == null) {
+                    kirbySuckBox = new SuckBox(this.body, new Vector2(8, 8),  8  , 8);
+                    kirbySuckBox.body.setActive(false);
+                    }
                 this.body.setLinearVelocity(new Vector2(0,0));
-                if (kirbyHitBox != null) {kirbyHitBox.body.setActive(false);}
                 if (rightDirection && !fly) {
                     this.currentFrame = this.Anims.get(0).getKeyFrame(myGame.stateTime, true);
                 } else if (!rightDirection && !fly) {
@@ -145,6 +172,8 @@ public class KirbyDefault extends Kirby implements finalCharacter{
     public KirbyDefault() {
         super(true);        
         this.spawnVector = new Vector2(1, 200f);
+        this.type = elemental.neutral;
+        
     }
 
     /* Kirby(Vector2 spawnVector2){

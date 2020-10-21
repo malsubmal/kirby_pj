@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 
 
 public abstract class Kirby extends Characters {
-    private ArrayList<Kirby> kArrayList;
+    //public static ArrayList<Kirby> kArrayList;
     protected boolean aug = false;
 
     /* public void create(){
@@ -23,19 +23,11 @@ public abstract class Kirby extends Characters {
         if (!aug) {
         myGame.kirby = new KirbyDefault();
         }
-        
     }
 
     public Kirby(Boolean check){
         super();
     }
 
-    public void movement(int key){
-        if (myGame.kirby instanceof KirbyDefault) {
-            myGame.kirby.movement(key);
-        }
-    }
-
-
-
+    public void movement(int key){}
 }

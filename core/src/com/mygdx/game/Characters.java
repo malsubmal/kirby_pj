@@ -31,11 +31,11 @@ import com.badlogic.gdx.physics.box2d.Shape;
 public abstract class Characters {
     protected int HP = 100, DP = 100;
     protected Texture defsprite;
-    protected float frameD = 0.1f;
+    protected float frameD = 0.3f;
     protected BodyDef bodyDef = new BodyDef();
     protected Texture walksheet;
     protected ArrayList<Animation<TextureRegion>> Anims;
-    protected StrikeZone strikezone;
+    protected static ArrayList<Animation<TextureRegion>> sharedAnims;
     protected boolean setActive = false;
     protected Animation<TextureRegion> animHolder;
     protected TextureRegion[] walkFrames;
@@ -53,6 +53,16 @@ public abstract class Characters {
     public enum  spritesManager  { IdleRight, IdleLeft, WalkingRight, WalkingLeft, AttackRight, AttackLeft, Defeat, SuckRight, SuckLeft};
     protected Vector2 spawnVector;
     public boolean defeat;
+    public enum elemental {
+        neutral,
+        one,
+        two,
+        three
+    };
+    protected elemental type;
+    protected String[] sharedSpriteSource = {
+        "defeat.png",
+    };
 
 
     protected ArrayList<String> spriteSource = new ArrayList<String>();
@@ -75,6 +85,7 @@ public abstract class Characters {
 
         this.defineSource();
         createAnim();
+        sharedAnims = createAnim(sharedSpriteSource);
     }
 
     public void defineSource() {
@@ -98,6 +109,12 @@ public abstract class Characters {
         spawnVector = spawn;
     }
 
+    /* public static void destroy(Characters thisChar){
+        if (thisChar instanceof Enemy) {
+            Enemy.EnemyDestroy(thisChar);
+        }
+    }; */
+
     protected void createAnim(){
         Anims = new ArrayList<Animation<TextureRegion>>();
         Animation<TextureRegion> currAnim;
@@ -113,6 +130,25 @@ public abstract class Characters {
             Anims.add(currAnim); 
             counter++;
         }
+    }
+
+    public ArrayList<Animation<TextureRegion>> createAnim(String[] spriteSource){
+        ArrayList<Animation<TextureRegion>> extraAnims = new ArrayList<Animation<TextureRegion>>();
+        Animation<TextureRegion> currAnim;
+        for (String source : spriteSource) {
+            walksheet = new Texture(Gdx.files.internal(source));
+            tmp = TextureRegion.split(walksheet,32,32);
+            walkFrames = new TextureRegion[walksheet.getWidth()/32];
+            int index = 0;
+                    for (int j = 0; j < walksheet.getWidth()/32; j++) {
+                        walkFrames[index++] = tmp[0][j];
+                    }
+            currAnim =  new Animation<TextureRegion>(frameD,walkFrames);
+            extraAnims.add(currAnim); 
+            counter++;
+        }
+        System.out.println(extraAnims.size());
+        return extraAnims;
     }
 
 

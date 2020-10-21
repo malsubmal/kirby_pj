@@ -37,7 +37,7 @@ public class myGame extends ApplicationAdapter {
 	private TiledMapRenderer tilemaprenderer;
 	private int gravity = 500;
 	private Enemy ufo;
-	private StrikeZone strikezone;
+	private Listener listener;
 	public static TiledMap tilemap;
 
 
@@ -45,8 +45,8 @@ public class myGame extends ApplicationAdapter {
 	public void create () {
 	debugRenderer  = new Box2DDebugRenderer();
 	world = new World(new Vector2(0, -gravity), true);
-	strikezone = new StrikeZone();
-	world.setContactListener(strikezone); 
+	listener = new Listener();
+	world.setContactListener(listener); 
 	camera = new OrthographicCamera();
 	camera.setToOrtho(false, 200, 100);
 	camera.zoom -= 0.08f;
@@ -56,7 +56,7 @@ public class myGame extends ApplicationAdapter {
 	//ufo =new UFO();
 	
 	camera.position.set(kirby.body.getPosition().x/2,kirby.body.getPosition().y,0 );
-	strikezone.setFixture(kirby.fixture);
+	listener.setFixture(kirby.fixture);
 	importTiled("prototype.tmx");
 	Enemy.EnemySpawn();
 	}
@@ -84,6 +84,7 @@ public class myGame extends ApplicationAdapter {
       if (!keypressed) {		  kirby.movement(0);      } 
 
 		batch.draw(kirby.currentFrame, kirby.body.getPosition().x-16, kirby.body.getPosition().y-8);
+		//improve shaking when Kirby's stuck
 		camera.position.set(kirby.body.getPosition().x,kirby.body.getPosition().y,0 );
 		for (Enemy temp : Enemy.existingEnemy) {
 		batch.draw(temp.currentFrame, temp.body.getPosition().x-16, temp.body.getPosition().y-8);
