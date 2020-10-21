@@ -59,6 +59,7 @@ public class myGame extends ApplicationAdapter {
 	listener.setFixture(kirby.fixture);
 	importTiled("prototype.tmx");
 	Enemy.EnemySpawn();
+	Animator.Animate();
 	}
 	
 
@@ -71,24 +72,22 @@ public class myGame extends ApplicationAdapter {
 	
 	  tilemaprenderer.setView(camera);
 	  tilemaprenderer.render();
-	  
+	  managerUI();
       // tell the camera to update its matrices.
 	  camera.update();
 	  
       // tell the SpriteBatch to render in the coordinate system specified by the camera.
-      batch.setProjectionMatrix(camera.combined);
-	 
-	  managerUI();
-       
+	  batch.setProjectionMatrix(camera.combined);
+	  
       batch.begin();
-      if (!keypressed) {		  kirby.movement(0);      } 
-
-		batch.draw(kirby.currentFrame, kirby.body.getPosition().x-16, kirby.body.getPosition().y-8);
+      if (!keypressed) {		  kirby.movement(0);      }
 		//improve shaking when Kirby's stuck
 		camera.position.set(kirby.body.getPosition().x,kirby.body.getPosition().y,0 );
-		for (Enemy temp : Enemy.existingEnemy) {
-		batch.draw(temp.currentFrame, temp.body.getPosition().x-16, temp.body.getPosition().y-8);
+		batch.draw(kirby.currentFrame, kirby.body.getPosition().x-16, kirby.body.getPosition().y-8);
+		for (SpriteRender temp : Animator.animateArray) {
+			batch.draw(temp.frame, temp.position.x-16, temp.position.y-8);
 		}
+
 		// batch.draw enemies
 		
     
@@ -98,7 +97,7 @@ public class myGame extends ApplicationAdapter {
 
 	  //update physics world
 	  world.step(1/60f, 6, 2);
-	  Enemy.EnemyUpdate();
+	  updateEntities();
 
 	  //render box2D object
 	  debugRenderer.render(world, camera.combined);
@@ -122,6 +121,12 @@ public class myGame extends ApplicationAdapter {
 		if (Gdx.input.isKeyPressed(Keys.D))		{kirby.movement(Keys.D); keypressed = true;}
 		//input two keys at the same time
 		//and add the directional fly functions 
+	}
+
+	public void updateEntities(){
+		Animator.animateArray.clear();
+		Enemy.EnemyUpdate();
+		Projectiles.projectilesUpdate();
 	}
 
 	public void importTiled(String tilemapsource){

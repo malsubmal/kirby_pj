@@ -159,27 +159,13 @@ public class KirbyDefault extends Kirby implements finalCharacter{
             default:
                 break;
         }
-        
     }
-
-    @Override
-    public void defineSource() {
-        this.defineSource(spritesheets);
-
-    }
-
 
     public KirbyDefault() {
-        super(true);        
+        super(true);       
         this.spawnVector = new Vector2(1, 200f);
         this.type = elemental.neutral;
-        
     }
-
-    /* Kirby(Vector2 spawnVector2){
-        super();        
-        this.spawnVector = spawnVector2;
-    } */
 
     @Override
     public void defineSpawnVector() {
@@ -194,9 +180,19 @@ public class KirbyDefault extends Kirby implements finalCharacter{
     }
 
     @Override
+    public void defineSpriteSource() {
+        this.spriteSource = spritesheets;
+    }
+
+    @Override
     public void defineStrikeZone() {
         // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    public void addToAnimator() {
+        // TODO Auto-generated method stub
     }
     
 }

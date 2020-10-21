@@ -1,58 +1,35 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.GL20;
+
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Array;
 import java.util.ArrayList;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Shape;
 
 
-public abstract class Characters {
+public abstract class Characters implements Animate{
     protected int HP = 100, DP = 100;
     protected Texture defsprite;
-    protected float frameD = 0.3f;
     protected BodyDef bodyDef = new BodyDef();
-    protected Texture walksheet;
-    protected ArrayList<Animation<TextureRegion>> Anims;
-    protected static ArrayList<Animation<TextureRegion>> sharedAnims;
     protected boolean setActive = false;
-    protected Animation<TextureRegion> animHolder;
-    protected TextureRegion[] walkFrames;
-    protected TextureRegion[][] tmp;
-    protected TextureRegion currentFrame;
-    protected int counter = 0;
-    protected String sourceAnim;
     public Body body;
     public FixtureDef fixtureDef;
     public Fixture fixture;
     protected int vcon = 1000;
     protected int density = 500000;
     protected int bodyradius;
-    protected int spritenumber = 9;
-    public enum  spritesManager  { IdleRight, IdleLeft, WalkingRight, WalkingLeft, AttackRight, AttackLeft, Defeat, SuckRight, SuckLeft};
     protected Vector2 spawnVector;
     public boolean defeat;
+    protected ArrayList<Animation<TextureRegion>> Anims;
+    protected TextureRegion currentFrame;
+    protected String[] spriteSource;
     public enum elemental {
         neutral,
         one,
@@ -60,13 +37,6 @@ public abstract class Characters {
         three
     };
     protected elemental type;
-    protected String[] sharedSpriteSource = {
-        "defeat.png",
-    };
-
-
-    protected ArrayList<String> spriteSource = new ArrayList<String>();
-
 
     protected void create(){
         this.defineSpawnVector();
@@ -80,76 +50,23 @@ public abstract class Characters {
         fixtureDef.shape = new CircleShape();
         fixtureDef.shape.setRadius(8);
         fixtureDef.density = density;
-
         fixture = body.createFixture(fixtureDef);
 
-        this.defineSource();
-        createAnim();
-        sharedAnims = createAnim(sharedSpriteSource);
+        defineSpriteSource(); 
+        Anims = Animator.createAnim(this.spriteSource);
     }
 
-    public void defineSource() {
-    }
+    public void defineSpawnVector(){}
 
-    public void defineSpawnVector() {
-    }
+    public abstract void defineSpriteSource();
 
     protected void create(Vector2 spawn) {
         defineSpawnVector(spawn);
         this.create();
     }
 
-    protected void defineSource(String[] sprite) {
-        for (int i = 0; i< sprite.length; i++) {
-            spriteSource.add(sprite[i]);
-        }
-    }
-
     protected void defineSpawnVector(Vector2 spawn) {
         spawnVector = spawn;
     }
-
-    /* public static void destroy(Characters thisChar){
-        if (thisChar instanceof Enemy) {
-            Enemy.EnemyDestroy(thisChar);
-        }
-    }; */
-
-    protected void createAnim(){
-        Anims = new ArrayList<Animation<TextureRegion>>();
-        Animation<TextureRegion> currAnim;
-        for (String source : spriteSource) {
-            walksheet = new Texture(Gdx.files.internal(source));
-            tmp = TextureRegion.split(walksheet,32,32);
-            walkFrames = new TextureRegion[walksheet.getWidth()/32];
-            int index = 0;
-                    for (int j = 0; j < walksheet.getWidth()/32; j++) {
-                        walkFrames[index++] = tmp[0][j];
-                    }
-            currAnim =  new Animation<TextureRegion>(frameD,walkFrames);
-            Anims.add(currAnim); 
-            counter++;
-        }
-    }
-
-    public ArrayList<Animation<TextureRegion>> createAnim(String[] spriteSource){
-        ArrayList<Animation<TextureRegion>> extraAnims = new ArrayList<Animation<TextureRegion>>();
-        Animation<TextureRegion> currAnim;
-        for (String source : spriteSource) {
-            walksheet = new Texture(Gdx.files.internal(source));
-            tmp = TextureRegion.split(walksheet,32,32);
-            walkFrames = new TextureRegion[walksheet.getWidth()/32];
-            int index = 0;
-                    for (int j = 0; j < walksheet.getWidth()/32; j++) {
-                        walkFrames[index++] = tmp[0][j];
-                    }
-            currAnim =  new Animation<TextureRegion>(frameD,walkFrames);
-            extraAnims.add(currAnim); 
-            counter++;
-        }
-        System.out.println(extraAnims.size());
-        return extraAnims;
-    }
-
 
 }

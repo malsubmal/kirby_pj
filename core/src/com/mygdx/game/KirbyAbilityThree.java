@@ -1,29 +1,13 @@
 package com.mygdx.game;
 
-public class KirbyAbilityThree extends Kirby implements finalCharacter{
+public abstract class KirbyAbilityThree extends Kirby{
 
     @Override
-    public void defineSource() {
+    public void defineSpriteSource() {
         // TODO Auto-generated method stub
 
     }
 
-    @Override
-    public void defineSpawnVector() {
-        // TODO Auto-generated method stub
 
-    }
-
-    @Override
-    public void defineHitBox() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void defineStrikeZone() {
-        // TODO Auto-generated method stub
-
-    }
 
 }

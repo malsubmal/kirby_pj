@@ -10,7 +10,9 @@ public class UFO extends Enemy implements finalCharacter {
     public HitBox thisHitBox;
     private String[] spritesheets = {
         "UFO_default.png",
-        "defeat.png"
+        "defeat.png",
+        "UFOprojectile.png"
+
     };
 
     public UFO(Vector2 spawnVector) {
@@ -30,11 +32,6 @@ public class UFO extends Enemy implements finalCharacter {
     }
 
 
-    @Override
-    public void defineSource() {
-        this.defineSource(spritesheets);
-    }
-
     public void destroyAnimation() {
     }
 
@@ -51,20 +48,31 @@ public class UFO extends Enemy implements finalCharacter {
         defineSpawnVector(new Vector2(2, 200f));
     }
 
+    @Override
+    public void defineSpriteSource() {
+        this.spriteSource = spritesheets;
+    }
+
     public void movement(){
         if (!setActive) {
             this.body.setLinearVelocity(new Vector2(0, 0));
             this.currentFrame  = this.Anims.get(0).getKeyFrame(myGame.stateTime, true);
-            //System.out.println(this.HP);
-            //maybe add defeat here
         } else {
+            this.body.setLinearVelocity(new Vector2(0, 0));
             this.currentFrame  = this.Anims.get(0).getKeyFrame(myGame.stateTime, true);
+            Projectiles uFOProjectiles = new Projectiles(this.body, this.body.getLocalCenter(), 2, myGame.kirby.body.getPosition(), spriteSource[2]);
         }
     }
 
     @Override
     public void defineStrikeZone() {
         thisStrikeSensor.create(this.body, 20f);
+    }
+
+    @Override
+    public void addToAnimator() {
+        // TODO Auto-generated method stub
+
     }
     }
 

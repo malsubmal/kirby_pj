@@ -36,8 +36,9 @@ public abstract class Enemy extends Characters {
             temp.body.setTransform(center, 0);
             existingEnemy.add(temp);
         }
-
     }
+
+
 
     static void EnemyUpdate(){
         ArrayList<Enemy> tobeDisposed = new ArrayList<Enemy>();
@@ -45,14 +46,14 @@ public abstract class Enemy extends Characters {
             if (temp.HP < 0) {
                 temp.frameCounter++;
                 temp.body.setActive(false);
-                Characters.sharedAnims.get(0).setFrameDuration(0.1f);
-                temp.currentFrame  = Characters.sharedAnims.get(0).getKeyFrame(myGame.stateTime, true);
+                Animator.sharedAnims.get(0).setFrameDuration(0.1f);
+                temp.currentFrame  = Animator.sharedAnims.get(0).getKeyFrame(myGame.stateTime, true);
                 if (temp.frameCounter > 25) {
                 tobeDisposed.add(temp); }
             } else {
-            /* Predicate<Enemy> dead = enemy -> (enemy.HP <= 0);
-            existingEnemy.removeIf(dead); */
-           ((UFO) temp).movement(); }
+           ((UFO) temp).movement();
+             }
+            Animator.animateArray.add( new SpriteRender(temp.currentFrame, temp.body.getPosition()));
         }
          if (tobeDisposed != null) {
         for (Enemy temp: tobeDisposed) {

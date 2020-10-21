@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 public class HitBox{
     public boolean setActive = false;
     public Body body;
+    public Characters caller;
     public BodyDef bodyDef = new BodyDef();
 
     public HitBox(Body mainBody, Vector2 spawnVector, float rad) {
@@ -17,6 +18,7 @@ public class HitBox{
         fixtureDef.isSensor = true;
         fixtureDef.shape = new CircleShape();
         fixtureDef.shape.setRadius(rad);
+        this.caller = (Characters) mainBody.getUserData();
         //this.body.setTransform(mainBody.getPosition().x + spawnVector.x, mainBody.getPosition().y + spawnVector.y, 0);
 
         Fixture fixture = this.body.createFixture(fixtureDef);
@@ -35,6 +37,7 @@ public class HitBox{
         PolygonShape poly = new PolygonShape();
         poly.setAsBox(height/2, width/2);
         fixtureDef.shape = poly;
+        this.caller = (Characters) mainBody.getUserData();
         //this.body.setTransform(mainBody.getPosition().x + spawnVector.x, mainBody.getPosition().y + spawnVector.y, 0);
 
         Fixture fixture = this.body.createFixture(fixtureDef);

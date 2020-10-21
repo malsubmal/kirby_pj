@@ -39,16 +39,18 @@ public class Listener implements ContactListener, ContactFilter {
         if (fixtureA.getBody().getUserData() instanceof HitBox) {
             if (fixtureB.getBody().getUserData() instanceof Characters) {
                 opp = fixtureB.getBody().getUserData();
+                if (!opp.equals(((HitBox)fixtureA.getBody().getUserData()).caller)) {
                 ((Characters) opp).HP -= 10;
                 System.out.println("HP decreases");
-               
+                }
             }
         }  else if (fixtureB.getBody().getUserData() instanceof HitBox) {
             if (fixtureA.getBody().getUserData() instanceof Characters) {
                 opp = fixtureA.getBody().getUserData();
+                if (!opp.equals(((HitBox)fixtureB.getBody().getUserData()).caller)) {
                 ((Characters) opp).HP -= 10;
                 System.out.println("HP decreases");
-                
+                }
             }
          }
          else {
