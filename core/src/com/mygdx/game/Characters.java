@@ -22,7 +22,7 @@ public abstract class Characters implements Animate{
     public Body body;
     public FixtureDef fixtureDef;
     public Fixture fixture;
-    protected int vcon = 1000;
+    protected int vcon = 5000;
     protected int density = 500000;
     protected int bodyradius;
     protected Vector2 spawnVector;

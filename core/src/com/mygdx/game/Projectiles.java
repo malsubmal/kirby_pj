@@ -18,7 +18,7 @@ public class Projectiles extends HitBox implements Animate {
 
     public Projectiles(Body mainBody, Vector2 spawnVector, float rad, Vector2 dir, String spriteSource) {
         super(mainBody, spawnVector, rad);
-        this.body.setLinearVelocity(dir);
+        this.body.setLinearVelocity(new Vector2((dir.x - this.body.getPosition().x)*20, (dir.y - this.body.getPosition().y)*20));
         this.spriteSource = spriteSource;
         this.Anims = Animator.createAnim(spriteSource);
         existingProjectiles.add(this);

@@ -32,7 +32,7 @@ public class Animator {
         Animation<TextureRegion> currAnim;
         TextureRegion[][] tmp;
         TextureRegion[] walkFrames;
-        float frameD = 0.3f;
+        float frameD = 0.1f;
 
         for (String source : spriteSource) {
             walksheet = new Texture(Gdx.files.internal(source));

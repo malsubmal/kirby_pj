@@ -8,6 +8,7 @@ public class UFO extends Enemy implements finalCharacter {
 
     public StrikeSensor thisStrikeSensor = new StrikeSensor();
     public HitBox thisHitBox;
+    public int attackWindow = 0;
     private String[] spritesheets = {
         "UFO_default.png",
         "defeat.png",
@@ -58,15 +59,21 @@ public class UFO extends Enemy implements finalCharacter {
             this.body.setLinearVelocity(new Vector2(0, 0));
             this.currentFrame  = this.Anims.get(0).getKeyFrame(myGame.stateTime, true);
         } else {
+            
             this.body.setLinearVelocity(new Vector2(0, 0));
             this.currentFrame  = this.Anims.get(0).getKeyFrame(myGame.stateTime, true);
-            Projectiles uFOProjectiles = new Projectiles(this.body, this.body.getLocalCenter(), 2, myGame.kirby.body.getPosition(), spriteSource[2]);
+            if (attackWindow == 0) {
+                Projectiles uFOProjectiles = new Projectiles(this.body, this.body.getLocalCenter(), 2, myGame.kirby.body.getPosition(), spriteSource[2]);
+                attackWindow = 50;
+            } else {
+                attackWindow--;
+            }
         }
     }
 
     @Override
     public void defineStrikeZone() {
-        thisStrikeSensor.create(this.body, 20f);
+        thisStrikeSensor.create(this.body, 40f);
     }
 
     @Override
