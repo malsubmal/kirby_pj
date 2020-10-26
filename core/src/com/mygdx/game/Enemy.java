@@ -7,7 +7,6 @@ import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
-import java.util.function.Predicate; 
 
 public abstract class Enemy extends Characters {
 

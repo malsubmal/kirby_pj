@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -125,6 +126,7 @@ public class myGame extends ApplicationAdapter {
 
 	public void updateEntities(){
 		Animator.animateArray.clear();
+		Kirby.kirbyUpdate();
 		Enemy.EnemyUpdate();
 		Projectiles.projectilesUpdate();
 	}

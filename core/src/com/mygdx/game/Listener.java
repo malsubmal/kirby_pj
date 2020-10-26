@@ -31,8 +31,9 @@ public class Listener implements ContactListener, ContactFilter {
         if (fixtureA.getBody().getUserData() instanceof SuckBox) {
             if (fixtureB.getBody().getUserData() instanceof Enemy) {
                 opp = fixtureB.getBody().getUserData();
-                myGame.kirby.type = ((Characters) opp).type;
-                System.out.println(myGame.kirby.type);
+               Kirby.type = ((Characters) opp).type;
+               Kirby.change = true;
+                System.out.println(Kirby.type);
             }
         }
 
