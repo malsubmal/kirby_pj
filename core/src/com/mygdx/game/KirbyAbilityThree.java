@@ -7,7 +7,4 @@ public abstract class KirbyAbilityThree extends Kirby{
         // TODO Auto-generated method stub
 
     }
-
-
-
 }

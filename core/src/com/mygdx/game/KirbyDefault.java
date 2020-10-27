@@ -64,10 +64,7 @@ public class KirbyDefault extends Kirby implements finalCharacter{
 
     }
 
-    @Override
-    public void addToAnimator() {
-        // TODO Auto-generated method stub
-    }
+  
 
     public void specialAttack(){
         this.body.setLinearVelocity(new Vector2(0,0));

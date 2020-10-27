@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class Projectiles extends HitBox implements Animate {
+public class Projectiles extends HitBox {
     protected ArrayList<Animation<TextureRegion>> Anims;
     protected TextureRegion currentFrame;
     protected String spriteSource;
@@ -41,16 +41,4 @@ public class Projectiles extends HitBox implements Animate {
         } 
     } 
     }
-
-    @Override
-    public void defineSpriteSource() {
-        
-    }
-
-    @Override
-    public void addToAnimator() {
-
-    }
-
-
 }

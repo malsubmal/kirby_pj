@@ -37,11 +37,7 @@ public class KirbyAbilityOne extends Kirby implements finalCharacter {
         super(true);       
         this.spawnVector = pos;
     }
-    @Override
-    public void addToAnimator() {
-        // TODO Auto-generated method stub
-
-    }
+  
 
     @Override
     public void defineHitBox() {
@@ -58,6 +54,11 @@ public class KirbyAbilityOne extends Kirby implements finalCharacter {
     @Override
     public void defineSpriteSource() {
         this.spriteSource = spritesheets;
+    }
+
+    @Override
+    public void defineSpawnVector() {
+        // TODO Auto-generated method stub
     }
 
 }

@@ -1,13 +1,11 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.Gdx;
 
-public class UFO extends Enemy implements finalCharacter {
 
-    public StrikeSensor thisStrikeSensor = new StrikeSensor();
-    public HitBox thisHitBox;
+public class UFO extends Enemy implements finalCharacter, projectileType {
+
+    public StrikeSensor strikeSensor = new StrikeSensor();
     public int attackWindow = 0;
     private String[] spritesheets = {
         "UFO_default.png",
@@ -21,7 +19,7 @@ public class UFO extends Enemy implements finalCharacter {
         create(spawnVector);
         defineStrikeZone();
         movement();
-        this.type = elemental.one;
+        this.type = elemental.neutral;
     }
 
     public UFO() {
@@ -29,7 +27,7 @@ public class UFO extends Enemy implements finalCharacter {
         create(spawnVector);
         defineStrikeZone();
         movement();
-        this.type = elemental.one;
+        this.type = elemental.neutral;
     }
 
 
@@ -38,8 +36,8 @@ public class UFO extends Enemy implements finalCharacter {
 
     @Override
     public void defineHitBox() {
-        thisHitBox = new HitBox(this.body, this.body.getPosition(), 5);
-        thisHitBox.body.setLinearVelocity(new Vector2(myGame.kirby.body.getPosition().x - this.body.getPosition().x, myGame.kirby.body.getPosition().y - this.body.getPosition().y));
+        /* hitBox = new HitBox(this.body, this.body.getPosition(), 5);
+        hitBox.body.setLinearVelocity(new Vector2(myGame.kirby.body.getPosition().x - this.body.getPosition().x, myGame.kirby.body.getPosition().y - this.body.getPosition().y)); */
     }
 
 
@@ -59,7 +57,6 @@ public class UFO extends Enemy implements finalCharacter {
             this.body.setLinearVelocity(new Vector2(0, 0));
             this.currentFrame  = this.Anims.get(0).getKeyFrame(myGame.stateTime, true);
         } else {
-            
             this.body.setLinearVelocity(new Vector2(0, 0));
             this.currentFrame  = this.Anims.get(0).getKeyFrame(myGame.stateTime, true);
             if (attackWindow == 0) {
@@ -73,14 +70,9 @@ public class UFO extends Enemy implements finalCharacter {
 
     @Override
     public void defineStrikeZone() {
-        thisStrikeSensor.create(this.body, 40f);
+        strikeSensor.create(this.body, 40f);
     }
 
-    @Override
-    public void addToAnimator() {
-        // TODO Auto-generated method stub
-
-    }
     }
 
 

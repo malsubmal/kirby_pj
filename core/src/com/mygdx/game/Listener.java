@@ -1,11 +1,8 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class Listener implements ContactListener, ContactFilter {
+public class Listener implements ContactListener {
 
     public Fixture kirbyFixture;
 
@@ -13,11 +10,8 @@ public class Listener implements ContactListener, ContactFilter {
         kirbyFixture = fixtureinput;
     }
    
-    @Override
-    public boolean shouldCollide(Fixture fixtureA, Fixture fixtureB) {
-        // TODO Auto-generated method stub
-        return false;
-    }
+    //LOOK INTO CONTACT FILTER
+    //also do some thing abt this mess bruh
 
     @Override
     public void beginContact(Contact contact) {

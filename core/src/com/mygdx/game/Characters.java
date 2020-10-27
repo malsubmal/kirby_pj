@@ -14,7 +14,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 
-public abstract class Characters implements Animate{
+public abstract class Characters {
     protected int HP = 50, DP = 100;
     protected Texture defsprite;
     protected BodyDef bodyDef = new BodyDef();
@@ -56,7 +56,7 @@ public abstract class Characters implements Animate{
         Anims = Animator.createAnim(this.spriteSource);
     }
 
-    public void defineSpawnVector(){}
+    public abstract void defineSpawnVector();
 
     public abstract void defineSpriteSource();
 
