@@ -78,7 +78,11 @@ public class myGame extends ApplicationAdapter {
       if (!keypressed) {		  kirby.movement(0);      }
 		//improve shaking when Kirby's stuck
 		camera.position.set(kirby.body.getPosition().x,kirby.body.getPosition().y,0 );
+		if ((kirby instanceof KirbyAbilityOne) && (Gdx.input.isKeyPressed(Keys.A)) && !Kirby.rightDirection) {
+		batch.draw(kirby.currentFrame, kirby.body.getPosition().x-48, kirby.body.getPosition().y-8);
+		} else {
 		batch.draw(kirby.currentFrame, kirby.body.getPosition().x-16, kirby.body.getPosition().y-8);
+		}
 		for (SpriteRender temp : Animator.animateArray) {
 			batch.draw(temp.frame, temp.position.x-16, temp.position.y-8);
 		}

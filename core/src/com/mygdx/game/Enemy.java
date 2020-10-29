@@ -11,6 +11,8 @@ import com.badlogic.gdx.math.Vector2;
 public abstract class Enemy extends Characters {
 
     protected int frameCounter = 0;
+    public StrikeSensor strikeSensor = new StrikeSensor();
+    public int attackWindow = 0;
 
     public static ArrayList<Enemy> existingEnemy = new ArrayList<Enemy>();
     //public ArrayList<Vector2> UFOplacement = new ArrayList<Vector2>();
@@ -27,6 +29,7 @@ public abstract class Enemy extends Characters {
     }
 
     static void EnemySpawn(){
+
         MapObjects UFOs = myGame.tilemap.getLayers().get("UFOobject").getObjects();
         for (MapObject object: UFOs) {
             Ellipse ellipse = ((EllipseMapObject)object).getEllipse();
@@ -35,9 +38,18 @@ public abstract class Enemy extends Characters {
             temp.body.setTransform(center, 0);
             existingEnemy.add(temp);
         }
+
+        MapObjects Fires = myGame.tilemap.getLayers().get("Fireobject").getObjects();
+        for (MapObject object: Fires) {
+            Ellipse ellipse = ((EllipseMapObject)object).getEllipse();
+            Vector2 center = new Vector2(ellipse.x, ellipse.y);
+            FireTypeEnemy temp = new FireTypeEnemy();
+            temp.body.setTransform(center, 0);
+            existingEnemy.add(temp);
+        }
     }
 
-
+    public void movement(){};
 
     static void EnemyUpdate(){
         ArrayList<Enemy> tobeDisposed = new ArrayList<Enemy>();
@@ -50,7 +62,7 @@ public abstract class Enemy extends Characters {
                 if (temp.frameCounter > 25) {
                 tobeDisposed.add(temp); }
             } else {
-           ((UFO) temp).movement();
+            temp.movement();
              }
             Animator.animateArray.add( new SpriteRender(temp.currentFrame, temp.body.getPosition()));
         }

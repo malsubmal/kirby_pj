@@ -33,7 +33,6 @@ public abstract class Kirby extends Characters {
             myGame.kirby.body.setActive(false);
             myGame.kirby = new KirbyAbilityOne(position);
             myGame.kirby.create();
-            System.out.println("update Kirby type");
             change = false;
             break;
             case two:
@@ -51,6 +50,8 @@ public abstract class Kirby extends Characters {
         super();
     }
 
+    public abstract void specialAttack();
+
     // D attack
     // A suck - special attack
 
@@ -59,7 +60,9 @@ public abstract class Kirby extends Characters {
             if (kirbyHitBox != null) {kirbyHitBox.body.setActive(false);}
         }
         if (keyPressed != Keys.A) {
-            //if (kirbySuckBox != null) {kirbySuckBox.body.setActive(false);}
+            if (myGame.kirby instanceof KirbyDefault) {if (KirbyDefault.kirbySuckBox != null) {KirbyDefault.kirbySuckBox.body.setActive(false);}}
+            if (myGame.kirby instanceof KirbyAbilityOne) {if (KirbyAbilityOne.kirbyFireHitBox != null) {KirbyAbilityOne.kirbyFireHitBox.body.setActive(false);}}
+
         }
         switch (keyPressed) {
             case Keys.UP:
@@ -102,12 +105,11 @@ public abstract class Kirby extends Characters {
                     }
                 break;
             case Keys.A:
+            myGame.kirby.specialAttack();
             //suck
-            switch (Kirby.type) {
+            /* switch (Kirby.type) {
                 case neutral:
                 ((KirbyDefault)myGame.kirby).specialAttack();
-                System.out.println("perform suck");
-                System.out.println(Kirby.type);
                 break;
                 case one:
                 this.currentFrame = this.Anims.get(0).getKeyFrame(myGame.stateTime, true);
@@ -118,7 +120,7 @@ public abstract class Kirby extends Characters {
                 case three:
                 this.currentFrame = this.Anims.get(0).getKeyFrame(myGame.stateTime, true);
                 break;
-            }
+            } */
                 break;
             case Keys.D:
             //attack
@@ -147,14 +149,18 @@ public abstract class Kirby extends Characters {
                 break;
             case 0:
             //need to put this in constructor
-                if (kirbyHitBox == null) {
-                    kirbyHitBox = new HitBox(this.body, new Vector2(8, -8),  8  , 8);
-                    kirbyHitBox.body.setActive(false);
-                }
-                if (KirbyDefault.kirbySuckBox == null) {
-                    KirbyDefault.kirbySuckBox = new SuckBox(this.body, new Vector2(8, 8),  8  , 8);
-                    KirbyDefault.kirbySuckBox.body.setActive(false);
-                    }
+            if (kirbyHitBox == null) {
+                kirbyHitBox = new HitBox(this.body, new Vector2(8, -8),  8  , 8);
+                kirbyHitBox.body.setActive(false);
+            }
+            if (KirbyDefault.kirbySuckBox == null) {
+                KirbyDefault.kirbySuckBox = new SuckBox(this.body, new Vector2(8, 8),  8  , 8);
+                KirbyDefault.kirbySuckBox.body.setActive(false);
+            }
+            if (KirbyAbilityOne.kirbyFireHitBox == null) {
+                KirbyAbilityOne.kirbyFireHitBox = new HitBox(this.body, new Vector2(8, 8),  8  , 8);
+                KirbyAbilityOne.kirbyFireHitBox.body.setActive(false);
+            }
                 this.body.setLinearVelocity(new Vector2(0,0));
                 if (rightDirection && !fly) {
                     this.currentFrame = this.Anims.get(0).getKeyFrame(myGame.stateTime, true);

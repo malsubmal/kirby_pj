@@ -5,8 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class UFO extends Enemy implements finalCharacter, projectileType {
 
-    public StrikeSensor strikeSensor = new StrikeSensor();
-    public int attackWindow = 0;
+    
     private String[] spritesheets = {
         "UFO_default.png",
         "defeat.png",

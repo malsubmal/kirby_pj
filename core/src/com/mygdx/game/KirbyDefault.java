@@ -50,8 +50,9 @@ public class KirbyDefault extends Kirby implements finalCharacter{
 
     @Override
     public void defineHitBox() {
-        // TODO Auto-generated method stub
+        
     }
+    
 
     @Override
     public void defineSpriteSource() {
@@ -70,7 +71,6 @@ public class KirbyDefault extends Kirby implements finalCharacter{
         this.body.setLinearVelocity(new Vector2(0,0));
         System.out.print("in suck");
                 if (Kirby.rightDirection) {
-                System.out.print("check horizontal dir");
                    this.currentFrame = this.Anims.get(7).getKeyFrame(myGame.stateTime, true);
                 if (kirbySuckBox.body.isActive() == false) {
                     kirbySuckBox = new SuckBox(myGame.kirby.body, new Vector2(8, 32),  16  , 8);                

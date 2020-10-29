@@ -49,6 +49,30 @@ public class Animator {
         return extraAnims;
     }
 
+    public static ArrayList<Animation<TextureRegion>> createAnim(ArrayList<AnimateWrapper> spriteSource){
+
+        Texture walksheet;
+        ArrayList<Animation<TextureRegion>> extraAnims = new ArrayList<Animation<TextureRegion>>();
+        Animation<TextureRegion> currAnim;
+        TextureRegion[][] tmp;
+        TextureRegion[] walkFrames;
+        float frameD = 0.1f;
+
+        for (AnimateWrapper wrapper : spriteSource) {
+            walksheet = new Texture(Gdx.files.internal(wrapper.source));
+            tmp = TextureRegion.split(walksheet,wrapper.width,wrapper.height);
+            walkFrames = new TextureRegion[walksheet.getWidth()/wrapper.width];
+            int index = 0;
+                    for (int j = 0; j < walksheet.getWidth()/wrapper.width; j++) {
+                        walkFrames[index++] = tmp[0][j];
+                    }
+            currAnim =  new Animation<TextureRegion>(frameD,walkFrames);
+            extraAnims.add(currAnim); 
+        }
+
+        return extraAnims;
+    }
+
     public static ArrayList<Animation<TextureRegion>> createAnim(String spriteSource){
 
         Texture walksheet;
@@ -67,7 +91,6 @@ public class Animator {
                     }
             currAnim =  new Animation<TextureRegion>(frameD,walkFrames);
             extraAnims.add(currAnim); 
-        
 
         return extraAnims;
     }

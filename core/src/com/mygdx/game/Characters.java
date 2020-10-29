@@ -30,6 +30,7 @@ public abstract class Characters {
     protected ArrayList<Animation<TextureRegion>> Anims;
     protected TextureRegion currentFrame;
     protected String[] spriteSource;
+    protected ArrayList<AnimateWrapper> spriteSourceVar;
     public enum elemental {
         neutral,
         one,
@@ -53,7 +54,11 @@ public abstract class Characters {
         fixture = body.createFixture(fixtureDef);
 
         defineSpriteSource(); 
+        if (spriteSourceVar == null) {
         Anims = Animator.createAnim(this.spriteSource);
+        } else {
+        Anims = Animator.createAnim(this.spriteSourceVar);
+        }
     }
 
     public abstract void defineSpawnVector();
