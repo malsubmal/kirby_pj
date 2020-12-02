@@ -41,6 +41,7 @@ public class Animator {
             int index = 0;
                     for (int j = 0; j < walksheet.getWidth()/32; j++) {
                         walkFrames[index++] = tmp[0][j];
+                        //walkFrames[index++].setRegion(walkFrames[index++], -16, 16, 32,32);
                     }
             currAnim =  new Animation<TextureRegion>(frameD,walkFrames);
             extraAnims.add(currAnim); 

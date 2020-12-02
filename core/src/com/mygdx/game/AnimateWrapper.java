@@ -1,9 +1,13 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.math.Vector2;
+
 public class AnimateWrapper {
 	public String source;
 	public int width;
 	public int height;
+	public Vector2 offset = Vector2.Zero;
+
 	
 	public AnimateWrapper(String source, int width, int height) {
 		this.source = source;

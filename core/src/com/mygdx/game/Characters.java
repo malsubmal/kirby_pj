@@ -15,7 +15,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 
 public abstract class Characters {
-    protected int HP = 50, DP = 100;
+    protected int HP = 100, DP = 100;
     protected Texture defsprite;
     protected BodyDef bodyDef = new BodyDef();
     protected boolean setActive = false;

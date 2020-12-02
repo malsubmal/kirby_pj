@@ -14,7 +14,9 @@ public class Projectiles extends HitBox {
     protected int range = 100;
     protected int frameCounter = 0;
     public static ArrayList<Projectiles> existingProjectiles = new ArrayList<Projectiles>();
+    
 
+    //projectile range
 
     public Projectiles(Body mainBody, Vector2 spawnVector, float rad, Vector2 dir, String spriteSource) {
         super(mainBody, spawnVector, rad);

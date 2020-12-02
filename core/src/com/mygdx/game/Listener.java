@@ -25,6 +25,7 @@ public class Listener implements ContactListener {
         if (fixtureA.getBody().getUserData() instanceof SuckBox) {
             if (fixtureB.getBody().getUserData() instanceof Enemy) {
                 opp = fixtureB.getBody().getUserData();
+                //destroy enemy
                 ((Enemy) opp).HP = -1;
                Kirby.type = ((Characters) opp).type;
                Kirby.change = true;
@@ -51,21 +52,31 @@ public class Listener implements ContactListener {
          }
          else {
        if (fixtureA.getBody().getUserData() instanceof Kirby) {
-            //System.out.println(" recognize Kirby");
-             if (fixtureB.isSensor()) {
+                       if (fixtureB.isSensor()) {
                 opp = fixtureB.getBody().getUserData();
+                if (opp instanceof Enemy) {
                 refereddOpp = (UFO) opp;
                 ((UFO) refereddOpp).setActive = true;
                 System.out.println("setActive");
+                } else if (opp instanceof Food) {
+                    //play eat sound
+                    ((Food) opp).eaten = true;
+                }
               }
         } else if (fixtureB.getBody().getUserData() instanceof Kirby){
-            //System.out.println(" recognize Kirby");
-            if (fixtureA.isSensor()) {
+                   if (fixtureA.isSensor()) {
                 opp = fixtureA.getBody().getUserData();
+                if (opp instanceof Enemy) {
                 refereddOpp = (UFO) opp;
                ((UFO) refereddOpp).setActive = true;
                System.out.println("setActive");
-        
+                } else if (opp instanceof Food) {
+                    ((Food) opp).eaten = true;
+                    if (myGame.kirby.HP < 50) {
+                        //play eat sound
+                        myGame.kirby.HP += 10;
+                    }
+                }
             }
         }
     } 

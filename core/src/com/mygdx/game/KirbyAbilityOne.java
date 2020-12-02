@@ -6,7 +6,6 @@ import java.util.ArrayList;
 public class KirbyAbilityOne extends Kirby implements finalCharacter {
 
     public static HitBox kirbyFireHitBox;
-    public static boolean spacing = false;
 
     private String[] spritesheets = {
         "fireKrestR.png", //0
@@ -57,8 +56,6 @@ public class KirbyAbilityOne extends Kirby implements finalCharacter {
 
     @Override
     public void defineHitBox() {
- 
-
     }
 
     @Override
@@ -85,13 +82,15 @@ public class KirbyAbilityOne extends Kirby implements finalCharacter {
                         kirbyFireHitBox.body.setTransform(new Vector2(this.body.getPosition().x + 32,this.body.getPosition().y ), 0);
                     }
                 } else {
-                spacing = true;
+                
                 this.currentFrame = this.Anims.get(8).getKeyFrame(myGame.stateTime, true);
+                Kirby.spriteOffset = new Vector2(currentFrame.getRegionWidth()/2,0);
                 if (kirbyFireHitBox.body.isActive() == false) {
                     kirbyFireHitBox = new HitBox(myGame.kirby.body,new Vector2(-8, 32), 16  , 16);
                     } else {
                         kirbyFireHitBox.body.setTransform(new Vector2(this.body.getPosition().x -32,this.body.getPosition().y ), 0);
                     } 
+                
                 }
     }
 

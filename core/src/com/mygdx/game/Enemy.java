@@ -15,7 +15,6 @@ public abstract class Enemy extends Characters {
     public int attackWindow = 0;
 
     public static ArrayList<Enemy> existingEnemy = new ArrayList<Enemy>();
-    //public ArrayList<Vector2> UFOplacement = new ArrayList<Vector2>();
     enum EnemyList {
         UFO,
     }
@@ -39,14 +38,14 @@ public abstract class Enemy extends Characters {
             existingEnemy.add(temp);
         }
 
-        MapObjects Fires = myGame.tilemap.getLayers().get("Fireobject").getObjects();
-        for (MapObject object: Fires) {
-            Ellipse ellipse = ((EllipseMapObject)object).getEllipse();
-            Vector2 center = new Vector2(ellipse.x, ellipse.y);
-            FireTypeEnemy temp = new FireTypeEnemy();
-            temp.body.setTransform(center, 0);
-            existingEnemy.add(temp);
-        }
+//        MapObjects Fires = myGame.tilemap.getLayers().get("Fireobject").getObjects();
+//        for (MapObject object: Fires) {
+//            Ellipse ellipse = ((EllipseMapObject)object).getEllipse();
+//            Vector2 center = new Vector2(ellipse.x, ellipse.y);
+//            FireTypeEnemy temp = new FireTypeEnemy();
+//            temp.body.setTransform(center, 0);
+//            existingEnemy.add(temp);
+//        }
     }
 
     public void movement(){};

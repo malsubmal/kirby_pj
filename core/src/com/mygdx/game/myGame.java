@@ -9,8 +9,12 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.math.Vector2;
@@ -18,8 +22,13 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Ellipse;
+
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 
 
@@ -33,28 +42,45 @@ public class myGame extends ApplicationAdapter {
 	private Box2DDebugRenderer debugRenderer;
 	static public float stateTime = 0f;
 	private TiledMapRenderer tilemaprenderer;
+	private TiledMapRenderer HUDrenderer;
 	private int gravity = 500;
 	private Listener listener;
 	public static TiledMap tilemap;
+	public static TiledMap HUDmap;
+	private Stage stage;
+	private HUD thisHUD;
+	private Vector2 kirbystarter;
 
 
 	@Override
 	public void create () {
+		Sound bgSong = Gdx.audio.newSound(
+			Gdx.files.internal("spec.mp3"));
+			bgSong.loop();
+	stage = new Stage(new ScreenViewport());
+	Table table = new Table();
+	thisHUD = new HUD();
+	stage.addActor(table);
+	stage.addActor(thisHUD);
 	debugRenderer  = new Box2DDebugRenderer();
 	world = new World(new Vector2(0, -gravity), true);
 	listener = new Listener();
 	world.setContactListener(listener); 
 	camera = new OrthographicCamera();
-	camera.setToOrtho(false, 200, 100);
-	camera.zoom -= 0.08f;
+	camera.setToOrtho(false, 500, 200);
+	camera.zoom -= 0.00004f;
 	batch = new SpriteBatch();
 	kirby = new KirbyDefault();
 	kirby.create();
 	camera.position.set(kirby.body.getPosition().x/2,kirby.body.getPosition().y,0 );
 	listener.setFixture(kirby.fixture);
 	importTiled("prototype.tmx");
+	//HUDmap = new TmxMapLoader().load("HUD.tmx");
+	//HUDrenderer = new OrthogonalTiledMapRenderer(HUDmap);
 	Enemy.EnemySpawn();
 	Animator.Animate();
+	
+	//kirby.body.setTransform(kirbystarter, 0);
 	}
 	
 
@@ -64,9 +90,13 @@ public class myGame extends ApplicationAdapter {
       Gdx.gl.glClearColor(0, 0, 0.2f, 1);
 	  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	  stateTime += Gdx.graphics.getDeltaTime();
-	
+
+	  float delta = Gdx.graphics.getDeltaTime();
+	  //stage.act(delta);
+	  
 	  tilemaprenderer.setView(camera);
 	  tilemaprenderer.render();
+	  
 	  managerUI();
       // tell the camera to update its matrices.
 	  camera.update();
@@ -78,27 +108,26 @@ public class myGame extends ApplicationAdapter {
       if (!keypressed) {		  kirby.movement(0);      }
 		//improve shaking when Kirby's stuck
 		camera.position.set(kirby.body.getPosition().x,kirby.body.getPosition().y,0 );
-		if ((kirby instanceof KirbyAbilityOne) && (Gdx.input.isKeyPressed(Keys.A)) && !Kirby.rightDirection) {
-		batch.draw(kirby.currentFrame, kirby.body.getPosition().x-48, kirby.body.getPosition().y-8);
-		} else {
-		batch.draw(kirby.currentFrame, kirby.body.getPosition().x-16, kirby.body.getPosition().y-8);
-		}
+		batch.draw(kirby.currentFrame, kirby.body.getPosition().x-16-kirby.spriteOffset.x,kirby.body.getPosition().y-8-kirby.spriteOffset.y);
 		for (SpriteRender temp : Animator.animateArray) {
 			batch.draw(temp.frame, temp.position.x-16, temp.position.y-8);
 		}
 
 		// batch.draw enemies
 		
+		
     
 	  batch.end();
 	  
-	  
+	  //stage.draw();
 
 	  //update physics world
 	  world.step(1/60f, 6, 2);
 	  updateEntities();
 
 	  //render box2D object
+	  //HUDrenderer.render();
+	  //HUDrenderer.setView(camera);
 	  debugRenderer.render(world, camera.combined);
 	}
 	
@@ -132,6 +161,11 @@ public class myGame extends ApplicationAdapter {
 	public void importTiled(String tilemapsource){
 		tilemap = new TmxMapLoader().load(tilemapsource);
 		tilemaprenderer = new OrthogonalTiledMapRenderer(tilemap);
+		//MapObjects kirbystart = tilemap.getLayers().get("start").getObjects();
+		//for (MapObject pos: kirbystart) {
+		//	Ellipse ellipse = ((EllipseMapObject) pos).getEllipse();
+        //    kirbystarter = new Vector2(ellipse.x, ellipse.y);
+		//}
 		MapObjects objects = tilemap.getLayers().get("object").getObjects();
     	for (MapObject object: objects) {
 			Rectangle rectangle = ((RectangleMapObject)object).getRectangle();
