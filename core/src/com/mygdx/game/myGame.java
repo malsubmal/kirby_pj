@@ -57,11 +57,11 @@ public class myGame extends ApplicationAdapter {
 		Sound bgSong = Gdx.audio.newSound(
 			Gdx.files.internal("spec.mp3"));
 			bgSong.loop();
-	stage = new Stage(new ScreenViewport());
-	Table table = new Table();
-	thisHUD = new HUD();
-	stage.addActor(table);
-	stage.addActor(thisHUD);
+	//stage = new Stage(new ScreenViewport());
+	//Table table = new Table();
+	//thisHUD = new HUD();
+	//stage.addActor(table);
+	//stage.addActor(thisHUD);
 	debugRenderer  = new Box2DDebugRenderer();
 	world = new World(new Vector2(0, -gravity), true);
 	listener = new Listener();
@@ -92,7 +92,7 @@ public class myGame extends ApplicationAdapter {
 	  stateTime += Gdx.graphics.getDeltaTime();
 
 	  float delta = Gdx.graphics.getDeltaTime();
-	  //stage.act(delta);
+	  stage.act(delta);
 	  
 	  tilemaprenderer.setView(camera);
 	  tilemaprenderer.render();
@@ -119,7 +119,7 @@ public class myGame extends ApplicationAdapter {
     
 	  batch.end();
 	  
-	  //stage.draw();
+	  stage.draw();
 
 	  //update physics world
 	  world.step(1/60f, 6, 2);
@@ -128,7 +128,7 @@ public class myGame extends ApplicationAdapter {
 	  //render box2D object
 	  //HUDrenderer.render();
 	  //HUDrenderer.setView(camera);
-	  debugRenderer.render(world, camera.combined);
+	  //debugRenderer.render(world, camera.combined);
 	}
 	
 	@Override
