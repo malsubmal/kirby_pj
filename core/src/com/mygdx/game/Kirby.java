@@ -13,6 +13,7 @@ public abstract class Kirby extends Characters {
     public static boolean rightDirection = true;
     public static boolean change = false;
     public static boolean fly = false;
+    public static boolean fallin = false;
     private float attackv = 20f;
     public static elemental type;
     public static Vector2 spriteOffset = new Vector2(0, 0);
@@ -21,6 +22,7 @@ public abstract class Kirby extends Characters {
     //sound
     private Sound flySound;
     private Sound lowKick;
+    protected static Sound currSound;
     //private Sound inhale;
 
     public Kirby(){
@@ -40,7 +42,7 @@ public abstract class Kirby extends Characters {
             position = myGame.kirby.body.getPosition();
             myGame.kirby.body.setActive(false);
             myGame.kirby = new KirbyAbilityOne(position);
-            myGame.kirby.create();
+            myGame.kirby.create(((GameStage)	myGame.currentStage).world);
             change = false;
             break;
             case two:
@@ -57,7 +59,7 @@ public abstract class Kirby extends Characters {
     public Kirby(Boolean check){
          super();
          //need to check the sounds again
-         lowKick = Gdx.audio.newSound(
+        lowKick = Gdx.audio.newSound(
             Gdx.files.internal("lowkick.wav"));
         flySound = Gdx.audio.newSound(
             Gdx.files.internal("fly.wav"));
@@ -69,7 +71,8 @@ public abstract class Kirby extends Characters {
     // A suck - special attack
     private void neutralAttack(){
         if (attackWindow<10){
-            lowKick.play();
+            currSound = lowKick;
+            currSound.play();
         attackWindow+=1; 
     if (rightDirection) {
         this.body.setLinearVelocity(new Vector2(vcon*Gdx.graphics.getDeltaTime()*attackv,0));
@@ -102,11 +105,22 @@ public abstract class Kirby extends Characters {
             if (myGame.kirby instanceof KirbyDefault) {if (KirbyDefault.kirbySuckBox != null) {KirbyDefault.kirbySuckBox.body.setActive(false);}}
             if (myGame.kirby instanceof KirbyAbilityOne) {if (KirbyAbilityOne.kirbyFireHitBox != null) {KirbyAbilityOne.kirbyFireHitBox.body.setActive(false);}}
 
+        if (myGame.kirby.body.getLinearVelocity().y < 0){fallin = true;
+            System.out.println("fallin");
+            fly = false;
+        } else if (myGame.kirby.body.getLinearVelocity().y > 0) {  fly = true;
+            fallin = false;
+        } else {
+            fallin = false;
+            fly = false;
+        }
         }
         switch (keyPressed) {
             case Keys.UP:
                 fly = true;
-                flySound.play();
+                fallin = false;
+                currSound = flySound;
+                currSound.play();
                 this.body.setLinearVelocity(new Vector2(0, vcon*Gdx.graphics.getDeltaTime()));
                 if (rightDirection) {
                     this.currentFrame = this.Anims.get(9).getKeyFrame(myGame.stateTime, true);
@@ -116,27 +130,27 @@ public abstract class Kirby extends Characters {
                 break;
             case Keys.RIGHT:
                 rightDirection = true;
-
-                if (!fly) {
+                if (!fly && !fallin) {
                     this.body.setLinearVelocity(new Vector2(vcon*Gdx.graphics.getDeltaTime(),0));
                     this.currentFrame  = this.Anims.get(2).getKeyFrame(myGame.stateTime, true);
-                    } else {
+                } else if (fly || fallin) {
                     this.body.setLinearVelocity(new Vector2(vcon*Gdx.graphics.getDeltaTime(),-vcon*Gdx.graphics.getDeltaTime()/2));
                     this.currentFrame  = this.Anims.get(11).getKeyFrame(myGame.stateTime, true);   
-                }
+                } 
                 break;
             case Keys.LEFT:
                 rightDirection = false;
-                if (!fly) {
+                if (!fly && !fallin) {
                     this.body.setLinearVelocity(new Vector2(-vcon*Gdx.graphics.getDeltaTime(),0));
                     this.currentFrame  = this.Anims.get(3).getKeyFrame(myGame.stateTime, true);
-                } else {
+                } else if (fly || fallin) {
                     this.body.setLinearVelocity(new Vector2(-vcon*Gdx.graphics.getDeltaTime(),-vcon*Gdx.graphics.getDeltaTime()/2));
                     this.currentFrame  = this.Anims.get(12).getKeyFrame(myGame.stateTime, true);   
-                    }
+                } 
                 break;
             case Keys.DOWN:
                 fly = false;
+                fallin = true;
                 this.body.setLinearVelocity(new Vector2(0, -vcon*Gdx.graphics.getDeltaTime()));
                 if (rightDirection) {
                     this.currentFrame = this.Anims.get(11).getKeyFrame(myGame.stateTime, true);
@@ -156,31 +170,30 @@ public abstract class Kirby extends Characters {
                 break;
             case 0:
             //need to put this in constructor
-            if (kirbyHitBox == null) {
-                kirbyHitBox = new HitBox(this.body, new Vector2(8, -8),  8  , 8);
-                kirbyHitBox.body.setActive(false);
-            }
-            if (KirbyDefault.kirbySuckBox == null) {
-                KirbyDefault.kirbySuckBox = new SuckBox(this.body, new Vector2(8, 8),  8  , 8);
-                KirbyDefault.kirbySuckBox.body.setActive(false);
-            }
-            if (KirbyAbilityOne.kirbyFireHitBox == null) {
-                KirbyAbilityOne.kirbyFireHitBox = new HitBox(this.body, new Vector2(8, 8),  8  , 8);
-                KirbyAbilityOne.kirbyFireHitBox.body.setActive(false);
-            }
-                this.body.setLinearVelocity(new Vector2(0,0));
-                if (rightDirection && !fly) {
-                    this.currentFrame = this.Anims.get(0).getKeyFrame(myGame.stateTime, true);
-                } else if (!rightDirection && !fly) {
-                    this.currentFrame = this.Anims.get(1).getKeyFrame(myGame.stateTime, true);
-                } else if (rightDirection && fly) {
-                    this.currentFrame = this.Anims.get(11).getKeyFrame(myGame.stateTime, true);
-                    //stop sprite when reaching the ground and change fly bool
-                } else if (!rightDirection && fly) {
-                    this.currentFrame = this.Anims.get(12).getKeyFrame(myGame.stateTime, true);
-                    //stop sprite when reaching the ground and change fly bool
+                if (kirbyHitBox == null) {
+                    kirbyHitBox = new HitBox(this.body, new Vector2(8, -8),  8  , 8);
+                    kirbyHitBox.body.setActive(false);
+                }
+                if (KirbyDefault.kirbySuckBox == null) {
+                    KirbyDefault.kirbySuckBox = new SuckBox(this.body, Vector2.Zero,  8  , 8);
+                    KirbyDefault.kirbySuckBox.body.setActive(false);
+                }
+                if (KirbyAbilityOne.kirbyFireHitBox == null) {
+                    KirbyAbilityOne.kirbyFireHitBox = new HitBox(this.body, Vector2.Zero,  8  , 8);
+                    KirbyAbilityOne.kirbyFireHitBox.body.setActive(false);
                 }
                 
+                 if (rightDirection && (fallin || fly)) {
+                    this.currentFrame = this.Anims.get(11).getKeyFrame(myGame.stateTime, true);
+                } else if (!rightDirection  && (fallin || fly)) {
+                    this.currentFrame = this.Anims.get(12).getKeyFrame(myGame.stateTime, true);
+                }  else if (!rightDirection) {
+                    this.currentFrame = this.Anims.get(1).getKeyFrame(myGame.stateTime, true);
+                } else if (rightDirection) {
+                    this.currentFrame = this.Anims.get(0).getKeyFrame(myGame.stateTime, true);
+                }
+                this.body.setLinearVelocity(new Vector2(0,0)); 
+                break;
             default:
                 break;
         }

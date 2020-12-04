@@ -1,6 +1,6 @@
 package com.mygdx.game;
 
-
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
@@ -11,11 +11,13 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 
-public abstract class Characters {
-    protected int HP = 100, DP = 100;
+public abstract class Characters{
+    protected int HP = setting.HP, DP = setting.DP;
     protected Texture defsprite;
     protected BodyDef bodyDef = new BodyDef();
     protected boolean setActive = false;
@@ -38,13 +40,14 @@ public abstract class Characters {
         three
     };
     protected elemental type;
+    protected GameStage ownerStage;
 
-    protected void create(){
+    protected void create(World world){
         this.defineSpawnVector();
 
         bodyDef.type = BodyType.DynamicBody;
         bodyDef.position.set(spawnVector.x, spawnVector.y);
-        body = myGame.world.createBody(bodyDef);
+        body = world.createBody(bodyDef);
         body.setUserData(this);
 
         fixtureDef = new FixtureDef();
@@ -64,11 +67,6 @@ public abstract class Characters {
     public abstract void defineSpawnVector();
 
     public abstract void defineSpriteSource();
-
-    protected void create(Vector2 spawn) {
-        defineSpawnVector(spawn);
-        this.create();
-    }
 
     protected void defineSpawnVector(Vector2 spawn) {
         spawnVector = spawn;

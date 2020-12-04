@@ -6,14 +6,15 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 
 public class Food extends Characters {
     public static ArrayList<Food> existingFoods = new ArrayList<Food>();
     boolean eaten = false;
 
-    static void FoodSpawn(){
-        MapObjects Foods = myGame.tilemap.getLayers().get("Foodobject").getObjects();
+    static void FoodSpawn(TiledMap tilemap){
+        MapObjects Foods = tilemap.getLayers().get("Foodobject").getObjects();
         for (MapObject object: Foods) {
             Ellipse ellipse = ((EllipseMapObject)object).getEllipse();
             Vector2 center = new Vector2(ellipse.x, ellipse.y);

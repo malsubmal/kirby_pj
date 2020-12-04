@@ -8,9 +8,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class HUD extends Actor {
-    TextureRegion region;
-    public HUD() {
-		region = new TextureRegion(new Texture(Gdx.files.internal("HUDtest.png")));
+	//unused
+	TextureRegion region;
+	hpHUD kirbyHP = new hpHUD();
+    public HUD(String source) {
+		region = new TextureRegion(new Texture(Gdx.files.internal(source)));
         setBounds(region.getRegionX(), region.getRegionY(),
 		region.getRegionWidth(), region.getRegionHeight());
     }

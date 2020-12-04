@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 
 
 public class UFO extends Enemy implements finalCharacter, projectileType {
@@ -13,17 +14,10 @@ public class UFO extends Enemy implements finalCharacter, projectileType {
 
     };
 
-    public UFO(Vector2 spawnVector) {
-        super();
-        create(spawnVector);
-        defineStrikeZone();
-        movement();
-        this.type = elemental.neutral;
-    }
 
-    public UFO() {
+    public UFO(World world) {
         super();
-        create(spawnVector);
+        create(world);
         defineStrikeZone();
         movement();
         this.type = elemental.neutral;

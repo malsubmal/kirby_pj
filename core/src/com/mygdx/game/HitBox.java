@@ -12,7 +12,7 @@ public class HitBox{
     public HitBox(Body mainBody, Vector2 spawnVector, float rad) {
         bodyDef.type = BodyType.KinematicBody;
         bodyDef.position.set(mainBody.getPosition().x + spawnVector.x, mainBody.getPosition().y + spawnVector.y);
-        this.body = myGame.world.createBody(bodyDef);
+        this.body = ((GameStage)myGame.currentStage).world.createBody(bodyDef);
         this.body.setUserData(this);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.isSensor = true;
@@ -30,7 +30,7 @@ public class HitBox{
     public HitBox(Body mainBody, Vector2 spawnVector, float width, float height) {
         bodyDef.type = BodyType.KinematicBody;
         bodyDef.position.set(mainBody.getPosition().x + spawnVector.x, mainBody.getPosition().y + spawnVector.y);
-        this.body = myGame.world.createBody(bodyDef);
+        this.body = ((GameStage)myGame.currentStage).world.createBody(bodyDef);
         this.body.setUserData(this);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.isSensor = true;

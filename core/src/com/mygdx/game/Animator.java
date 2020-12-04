@@ -10,7 +10,7 @@ public class Animator {
     protected static ArrayList<Animation<TextureRegion>> sharedAnims;
     protected String sourceAnim;
     protected int spritenumber = 9;
-    protected static ArrayList<SpriteRender> animateArray;
+    protected ArrayList<SpriteRender> animateArray = new ArrayList<SpriteRender>();
     public enum  spritesManager  { IdleRight, IdleLeft, WalkingRight, WalkingLeft, AttackRight, AttackLeft, Defeat, SuckRight, SuckLeft};
     protected static String[] sharedSpriteSource = {
         "defeat.png",
@@ -21,8 +21,7 @@ public class Animator {
     }
 
     public static void Animate(){
-        createSharedAnimate();
-        animateArray = new ArrayList<SpriteRender>();
+        createSharedAnimate(); 
     }
 
     public static ArrayList<Animation<TextureRegion>> createAnim(String[] spriteSource){

@@ -2,14 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.physics.box2d.*;
 
-public class Listener implements ContactListener {
-
-    public Fixture kirbyFixture;
-
-    public void setFixture(Fixture fixtureinput) {
-        kirbyFixture = fixtureinput;
-    }
-   
+public class Listener implements ContactListener {   
     //LOOK INTO CONTACT FILTER
     //also do some thing abt this mess bruh
 
@@ -37,7 +30,7 @@ public class Listener implements ContactListener {
             if (fixtureB.getBody().getUserData() instanceof Characters) {
                 opp = fixtureB.getBody().getUserData();
                 if (!opp.equals(((HitBox)fixtureA.getBody().getUserData()).caller)) {
-                ((Characters) opp).HP -= 10;
+                ((Characters) opp).HP -= setting.DP;
                 System.out.println("HP decreases");
                 }
             }
@@ -45,7 +38,7 @@ public class Listener implements ContactListener {
             if (fixtureA.getBody().getUserData() instanceof Characters) {
                 opp = fixtureA.getBody().getUserData();
                 if (!opp.equals(((HitBox)fixtureB.getBody().getUserData()).caller)) {
-                ((Characters) opp).HP -= 10;
+                ((Characters) opp).HP -= setting.DP;
                 System.out.println("HP decreases");
                 }
             }

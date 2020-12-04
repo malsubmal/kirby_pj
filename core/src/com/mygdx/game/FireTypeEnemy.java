@@ -11,7 +11,6 @@ public class FireTypeEnemy extends Enemy implements finalCharacter {
 
     public FireTypeEnemy(Vector2 spawnVector) {
         super();
-        create(spawnVector);
         defineStrikeZone();
         movement();
         this.type = elemental.one;
@@ -19,7 +18,6 @@ public class FireTypeEnemy extends Enemy implements finalCharacter {
 
     public FireTypeEnemy() {
         super();
-        create(spawnVector);
         defineStrikeZone();
         movement();
         this.type = elemental.one;
