@@ -1,17 +1,20 @@
-package com.mygdx.game;
+package com.mygdx.game.Entities;
 
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.mygdx.game.Sensors.HitBox;
+import com.mygdx.game.Stage.GameStage;
+import com.mygdx.game.Tools.Animator;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Projectiles extends HitBox {
-    protected ArrayList<Animation<TextureRegion>> Anims;
-    protected TextureRegion currentFrame;
+    public ArrayList<Animation<TextureRegion>> Anims;
+    public TextureRegion currentFrame;
     protected String spriteSource;
-    protected int range = 10;
+    public int range = 10;
     protected int frameCounter = 0;
     protected int projectileV = 1;
     protected GameStage ownerStage;

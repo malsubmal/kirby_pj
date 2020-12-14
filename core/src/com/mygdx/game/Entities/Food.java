@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.Entities;
 
 import java.util.ArrayList;
 
@@ -8,10 +8,11 @@ import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.HelperClass.Updatable;
 
-public class Food extends Characters {
+public class Food extends Characters implements Updatable {
     public static ArrayList<Food> existingFoods = new ArrayList<Food>();
-    boolean eaten = false;
+    public boolean eaten = false;
 
     static void FoodSpawn(TiledMap tilemap){
         MapObjects Foods = tilemap.getLayers().get("Foodobject").getObjects();
@@ -45,6 +46,12 @@ public class Food extends Characters {
 
     @Override
     public void defineSpriteSource() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void Updatable() {
         // TODO Auto-generated method stub
 
     }

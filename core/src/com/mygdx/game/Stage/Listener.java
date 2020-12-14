@@ -1,6 +1,14 @@
-package com.mygdx.game;
+package com.mygdx.game.Stage;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.mygdx.game.Entities.Enemy;
+import com.mygdx.game.Entities.Food;
+import com.mygdx.game.Entities.Kirby;
+import com.mygdx.game.Sensors.HitBox;
+import com.mygdx.game.Sensors.SuckBox;
+import com.mygdx.game.myGame;
+import com.mygdx.game.setting;
+import com.mygdx.game.Entities.Characters;
 
 public class Listener implements ContactListener {   
     //LOOK INTO CONTACT FILTER
@@ -48,8 +56,7 @@ public class Listener implements ContactListener {
                        if (fixtureB.isSensor()) {
                 opp = fixtureB.getBody().getUserData();
                 if (opp instanceof Enemy) {
-                refereddOpp = (UFO) opp;
-                ((UFO) refereddOpp).setActive = true;
+                ((Enemy) opp).setActive = true;
                 System.out.println("setActive");
                 } else if (opp instanceof Food) {
                     //play eat sound
@@ -60,8 +67,7 @@ public class Listener implements ContactListener {
                    if (fixtureA.isSensor()) {
                 opp = fixtureA.getBody().getUserData();
                 if (opp instanceof Enemy) {
-                refereddOpp = (UFO) opp;
-               ((UFO) refereddOpp).setActive = true;
+                ((Enemy) opp).setActive = true;
                System.out.println("setActive");
                 } else if (opp instanceof Food) {
                     ((Food) opp).eaten = true;

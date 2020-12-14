@@ -1,7 +1,12 @@
-package com.mygdx.game;
+package com.mygdx.game.Entities;
 
 import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
+
+import com.mygdx.game.myGame;
+import com.mygdx.game.HelperClass.AnimateWrapper;
+import com.mygdx.game.HelperClass.finalCharacter;
+import com.mygdx.game.Sensors.HitBox;
 
 public class KirbyAbilityOne extends Kirby implements finalCharacter {
 
@@ -93,5 +98,6 @@ public class KirbyAbilityOne extends Kirby implements finalCharacter {
                 
                 }
     }
+
 
 }

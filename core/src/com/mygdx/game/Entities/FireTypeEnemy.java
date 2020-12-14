@@ -1,6 +1,8 @@
-package com.mygdx.game;
+package com.mygdx.game.Entities;
 
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.myGame;
+import com.mygdx.game.HelperClass.finalCharacter;
 
 public class FireTypeEnemy extends Enemy implements finalCharacter {
 
@@ -49,5 +51,11 @@ public class FireTypeEnemy extends Enemy implements finalCharacter {
 
     @Override
     public void defineStrikeZone() {}
+
+    @Override
+    public void Updatable() {
+        // TODO Auto-generated method stub
+
+    }
 
 }

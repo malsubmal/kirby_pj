@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.Entities;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,14 +13,18 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.setting;
+import com.mygdx.game.HelperClass.AnimateWrapper;
+import com.mygdx.game.Stage.GameStage;
+import com.mygdx.game.Tools.Animator;
 
 
-public abstract class Characters{
-    protected int HP = setting.HP, DP = setting.DP;
+public abstract class Characters  {
+    public int HP = setting.HP;
+	protected int DP = setting.DP;
     protected Texture defsprite;
     protected BodyDef bodyDef = new BodyDef();
-    protected boolean setActive = false;
+    public boolean setActive = false;
     public Body body;
     public FixtureDef fixtureDef;
     public Fixture fixture;
@@ -30,7 +34,7 @@ public abstract class Characters{
     protected Vector2 spawnVector;
     public boolean defeat;
     protected ArrayList<Animation<TextureRegion>> Anims;
-    protected TextureRegion currentFrame;
+    public TextureRegion currentFrame;
     protected String[] spriteSource;
     protected ArrayList<AnimateWrapper> spriteSourceVar;
     public enum elemental {
@@ -39,10 +43,10 @@ public abstract class Characters{
         two,
         three
     };
-    protected elemental type;
-    protected GameStage ownerStage;
+    public elemental type;
+    public GameStage ownerStage;
 
-    protected void create(World world){
+    public void create(World world){
         this.defineSpawnVector();
 
         bodyDef.type = BodyType.DynamicBody;

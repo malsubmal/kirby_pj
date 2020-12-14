@@ -1,10 +1,13 @@
-package com.mygdx.game;
+package com.mygdx.game.Entities;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
-
+import com.mygdx.game.myGame;
+import com.mygdx.game.Sensors.HitBox;
+import com.mygdx.game.Sensors.SuckBox;
 import com.badlogic.gdx.Gdx;
+import com.mygdx.game.Stage.GameStage;
 
 public abstract class Kirby extends Characters {
 

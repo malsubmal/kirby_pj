@@ -1,16 +1,18 @@
-package com.mygdx.game;
+package com.mygdx.game.Tools;
 
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.HelperClass.AnimateWrapper;
+import com.mygdx.game.HelperClass.SpriteRender;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Animator {
-    protected static ArrayList<Animation<TextureRegion>> sharedAnims;
+    public static ArrayList<Animation<TextureRegion>> sharedAnims;
     protected String sourceAnim;
     protected int spritenumber = 9;
-    protected ArrayList<SpriteRender> animateArray = new ArrayList<SpriteRender>();
+    public ArrayList<SpriteRender> animateArray = new ArrayList<SpriteRender>();
     public enum  spritesManager  { IdleRight, IdleLeft, WalkingRight, WalkingLeft, AttackRight, AttackLeft, Defeat, SuckRight, SuckLeft};
     protected static String[] sharedSpriteSource = {
         "defeat.png",

@@ -1,14 +1,22 @@
-package com.mygdx.game;
+package com.mygdx.game.Sensors;
+
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.HelperClass.WrapperStage;
+import com.mygdx.game.myGame;
+import com.mygdx.game.Entities.Characters;
+import com.mygdx.game.HelperClass.Updatable;
+import com.mygdx.game.Stage.GameStage;
 
-public class HitBox{
+public class HitBox implements Updatable{
     public boolean setActive = false;
     public Body body;
     public Characters caller;
     public BodyDef bodyDef = new BodyDef();
 
+
+    //round hitbox
     public HitBox(Body mainBody, Vector2 spawnVector, float rad) {
         bodyDef.type = BodyType.KinematicBody;
         bodyDef.position.set(mainBody.getPosition().x + spawnVector.x, mainBody.getPosition().y + spawnVector.y);
@@ -27,6 +35,11 @@ public class HitBox{
 
     public HitBox(boolean check) {}
 
+    public void behaviour(){}
+
+    //hitbox update
+
+    //square hitbox
     public HitBox(Body mainBody, Vector2 spawnVector, float width, float height) {
         bodyDef.type = BodyType.KinematicBody;
         bodyDef.position.set(mainBody.getPosition().x + spawnVector.x, mainBody.getPosition().y + spawnVector.y);
@@ -41,6 +54,12 @@ public class HitBox{
         //this.body.setTransform(mainBody.getPosition().x + spawnVector.x, mainBody.getPosition().y + spawnVector.y, 0);
 
         Fixture fixture = this.body.createFixture(fixtureDef);
+    }
+
+    @Override
+    public void Updatable() {
+        // TODO Auto-generated method stub
+
     }
      
 

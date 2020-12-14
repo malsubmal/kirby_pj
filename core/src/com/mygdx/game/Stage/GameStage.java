@@ -1,8 +1,8 @@
-package com.mygdx.game;
+package com.mygdx.game.Stage;
 
 import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -16,9 +16,17 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.myGame;
+import com.mygdx.game.Entities.Enemy;
+import com.mygdx.game.Entities.Kirby;
+import com.mygdx.game.Entities.Projectiles;
+import com.mygdx.game.HelperClass.SpriteRender;
+import com.mygdx.game.HelperClass.WrapperStage;
+import com.mygdx.game.Tools.Animator;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
-public class GameStage extends Stage {
+public class GameStage extends WrapperStage {
     //HUD
     //Map
     //Sound
@@ -28,12 +36,16 @@ public class GameStage extends Stage {
     public Animator levelAnimator;
     public World world;
     private int gravity = 500;
-    TiledMap tilemap;
+    public TiledMap tilemap;
     public OrthogonalTiledMapRenderer tilemaprenderer;
     public ArrayList<Projectiles> existingProjectiles = new ArrayList<Projectiles>();
-    public static ArrayList<Enemy> existingEnemy = new ArrayList<Enemy>();
+    public static ArrayList<Enemy> existingEnemy = new ArrayList<Enemy>();    
+	private Box2DDebugRenderer debugRenderer;
+    private boolean receiveUI = true;
+	public boolean keypressed = false;
 
-    public GameStage(){        
+    public GameStage(){              
+		debugRenderer = new Box2DDebugRenderer();  
         levelAnimator = new Animator();
         world = new World(new Vector2(0, -gravity), true);
         myGame.kirby.create(world);
@@ -92,7 +104,7 @@ public class GameStage extends Stage {
         ArrayList<Enemy> tobeDisposed = new ArrayList<Enemy>();
         for (Enemy temp: existingEnemy) {
             if (temp.HP < 0) {
-                //add to death animation array
+                //separate into death array
                 temp.frameCounter++;
                 temp.body.setActive(false);
                 Animator.sharedAnims.get(0).setFrameDuration(0.1f);
@@ -129,4 +141,52 @@ public class GameStage extends Stage {
         } 
     } 
     }
+
+   
+
+    @Override
+	public void StageDraw() {
+        // TODO Auto-generated method stub
+            tilemaprenderer.setView(myGame.getCamera());
+            tilemaprenderer.render();
+            if (receiveUI){ manageUI();}
+            myGame.getBatch().begin();
+            if (!keypressed) {		  myGame.kirby.movement(0);      }
+            //improve shaking when Kirby's stuck
+            myGame.getCamera().position.set(myGame.kirby.body.getPosition().x,myGame.kirby.body.getPosition().y,0 );
+            
+            myGame.getBatch().draw(myGame.kirby.currentFrame
+                    , myGame.kirby.body.getPosition().x-16-myGame.kirby.spriteOffset.x
+                    ,myGame.kirby.body.getPosition().y-8-myGame.kirby.spriteOffset.y);
+            for (SpriteRender temp : levelAnimator.animateArray) {
+                myGame.getBatch().draw(temp.frame, temp.position.x-16, temp.position.y-8);
+            }	
+            myGame.getBatch().end();
+            //update physics world
+            world.step(1/60f, 6, 2);
+            levelAnimator.animateArray.clear();
+            Kirby.kirbyUpdate();
+            entitiesUpdate();
+    
+            //render box2D object
+            debugRenderer.render(world, myGame.getCamera().combined);
+        }
+
+	@Override
+	public void manageUI() {
+        // TODO Auto-generated method stub
+            keypressed = false;
+            //movement
+            if(Gdx.input.isKeyPressed(Keys.RIGHT))	 {myGame.kirby.movement(Keys.RIGHT); keypressed = true;}
+            if(Gdx.input.isKeyPressed(Keys.LEFT))	  {myGame.kirby.movement(Keys.LEFT); keypressed = true;}
+            if(Gdx.input.isKeyPressed(Keys.UP))	      {myGame.kirby.movement(Keys.UP); keypressed = true;}
+            if(Gdx.input.isKeyPressed(Keys.DOWN))	 {myGame.kirby.movement(Keys.DOWN); keypressed = true;}
+            //suck
+            if (Gdx.input.isKeyPressed(Keys.A))		{myGame.kirby.movement(Keys.A); keypressed = true;}
+            //attack
+            if (Gdx.input.isKeyPressed(Keys.D))		{myGame.kirby.movement(Keys.D); keypressed = true;}		
+       
+	}
+		
 }
+

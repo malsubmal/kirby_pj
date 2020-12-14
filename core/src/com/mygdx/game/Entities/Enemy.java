@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.Entities;
 
 import java.util.ArrayList;
 
@@ -8,10 +8,13 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.HelperClass.Updatable;
+import com.mygdx.game.Sensors.StrikeSensor;
+import com.mygdx.game.Stage.GameStage;
 
-public abstract class Enemy extends Characters {
+public abstract class Enemy extends Characters implements Updatable {
 
-    protected int frameCounter = 0;
+    public int frameCounter = 0;
     public StrikeSensor strikeSensor = new StrikeSensor();
     public int attackWindow = 0;
 
@@ -27,7 +30,7 @@ public abstract class Enemy extends Characters {
 
     }
 
-    static void EnemySpawn(GameStage gameStage){
+    public static void EnemySpawn(GameStage gameStage){
         MapObjects UFOs = gameStage.tilemap.getLayers().get("UFOobject").getObjects();
         for (MapObject object: UFOs) {
             Ellipse ellipse = ((EllipseMapObject)object).getEllipse();
