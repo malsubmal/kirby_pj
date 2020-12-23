@@ -21,6 +21,7 @@ import com.mygdx.game.Entities.Enemy;
 import com.mygdx.game.Entities.Kirby;
 import com.mygdx.game.Entities.Projectiles;
 import com.mygdx.game.HelperClass.SpriteRender;
+import com.mygdx.game.HelperClass.Updatable;
 import com.mygdx.game.HelperClass.WrapperStage;
 import com.mygdx.game.Tools.Animator;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -39,12 +40,15 @@ public class GameStage extends WrapperStage {
     public TiledMap tilemap;
     public OrthogonalTiledMapRenderer tilemaprenderer;
     public ArrayList<Projectiles> existingProjectiles = new ArrayList<Projectiles>();
-    public static ArrayList<Enemy> existingEnemy = new ArrayList<Enemy>();    
 	private Box2DDebugRenderer debugRenderer;
     private boolean receiveUI = true;
-	public boolean keypressed = false;
+    public boolean keypressed = false;
+    ArrayList<Updatable> updateArray = new ArrayList<Updatable>();
+    private Enemy enemyHolder = new Enemy();
 
-    public GameStage(){              
+    public GameStage(){
+        enemyHolder = new Enemy();
+        updateArray.add(enemyHolder);
 		debugRenderer = new Box2DDebugRenderer();  
         levelAnimator = new Animator();
         world = new World(new Vector2(0, -gravity), true);
@@ -52,20 +56,22 @@ public class GameStage extends WrapperStage {
         Listener listener = new Listener();
         world.setContactListener(listener); 
         importTiled(mapSource);
-        Enemy.EnemySpawn(this);
+        enemyHolder.EnemySpawn(this);
         Animator.Animate();
         //kirby.body.setTransform(kirbystarter, 0);
 	    
     }
     
     public GameStage(String source){  
+        enemyHolder = new Enemy();
+        updateArray.add(enemyHolder);
         this.mapSource = source;      
         world = new World(new Vector2(0, -gravity), true);
         myGame.kirby.create(world);
         Listener listener = new Listener();
         world.setContactListener(listener); 
         importTiled(mapSource);
-        Enemy.EnemySpawn(this);
+        enemyHolder.EnemySpawn(this);
         Animator.Animate();
         //kirby.body.setTransform(kirbystarter, 0);
 	    
@@ -102,7 +108,7 @@ public class GameStage extends WrapperStage {
 
     private void EnemyUpdate(){
         ArrayList<Enemy> tobeDisposed = new ArrayList<Enemy>();
-        for (Enemy temp: existingEnemy) {
+        for (Enemy temp: enemyHolder.existingEnemy) {
             if (temp.HP < 0) {
                 //separate into death array
                 temp.frameCounter++;
@@ -114,11 +120,11 @@ public class GameStage extends WrapperStage {
             } else {
             temp.movement();
              }
-             temp.ownerStage.levelAnimator.animateArray.add( new SpriteRender(temp.currentFrame, temp.body.getPosition()));
+            temp.ownerStage.levelAnimator.animateArray.add( new SpriteRender(temp.currentFrame, temp.body.getPosition()));
         }
          if (tobeDisposed != null) {
         for (Enemy temp: tobeDisposed) {
-            existingEnemy.remove(temp);
+            enemyHolder.existingEnemy.remove(temp);
         } 
     } 
     }

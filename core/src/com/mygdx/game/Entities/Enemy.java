@@ -12,25 +12,32 @@ import com.mygdx.game.HelperClass.Updatable;
 import com.mygdx.game.Sensors.StrikeSensor;
 import com.mygdx.game.Stage.GameStage;
 
-public abstract class Enemy extends Characters implements Updatable {
+public class Enemy extends Characters implements Updatable {
 
     public int frameCounter = 0;
     public StrikeSensor strikeSensor = new StrikeSensor();
     public int attackWindow = 0;
+    public ArrayList<Enemy> existingEnemy = new ArrayList<Enemy>();    
 
     enum EnemyList {
         UFO,
     }
 
-    Enemy(){
+    public Enemy(){
         super();
     }
 
-    static void EnemyManager(){
+    @Override
+    public void Updatable() {
+        if (HP < 0) {
+            body.setActive(false);
 
+        } else {
+            movement();
+        }
     }
 
-    public static void EnemySpawn(GameStage gameStage){
+    public void EnemySpawn(GameStage gameStage){
         MapObjects UFOs = gameStage.tilemap.getLayers().get("UFOobject").getObjects();
         for (MapObject object: UFOs) {
             Ellipse ellipse = ((EllipseMapObject)object).getEllipse();
@@ -38,7 +45,7 @@ public abstract class Enemy extends Characters implements Updatable {
             UFO temp = new UFO(gameStage.world);
             temp.ownerStage = gameStage;
             temp.body.setTransform(center, 0);
-            gameStage.existingEnemy.add(temp);
+            existingEnemy.add(temp);
         }
 
 //        MapObjects Fires = myGame.tilemap.getLayers().get("Fireobject").getObjects();
@@ -51,6 +58,18 @@ public abstract class Enemy extends Characters implements Updatable {
 //        }
     }
 
-    public void movement(){};
+    public void movement(){}
+
+    @Override
+    public void defineSpawnVector() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void defineSpriteSource() {
+        // TODO Auto-generated method stub
+
+    };
 
 }

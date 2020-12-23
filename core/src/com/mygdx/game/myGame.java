@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -13,6 +14,8 @@ import com.mygdx.game.Entities.Kirby;
 import com.mygdx.game.Entities.KirbyDefault;
 import com.mygdx.game.HelperClass.WrapperStage;
 import com.mygdx.game.Stage.GameStage;
+import com.mygdx.game.Stage.OpenScreen;
+import com.mygdx.game.Stage.TestStage;
 import com.mygdx.game.UI.HUD;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -33,26 +36,26 @@ public class myGame extends ApplicationAdapter {
 	private Stage configStage;
 	private HUD thisHUD;
 	private Vector2 kirbystarter;
+	private Screen testScreen;
 
 	@Override
 	public void create() {
 		Sound bgSong = Gdx.audio.newSound(Gdx.files.internal("spec.mp3"));
-		bgSong.loop();
-		// new stage for title screen
-		// new stage for loading screen
-		// new stage for pause screen
-		// new stage for option/config screen
-		// stage = new Stage(new ScreenViewport());
+		//bgSong.loop();
 		kirby = new KirbyDefault();
 		currentStage = new GameStage();
+
+		//testScreen = new OpenScreen();
+		//testScreen.show();
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 500, 200);
 		camera.zoom -= 0.00004f;
 
 		batch = new SpriteBatch();
-		// testStage = new currentStage<>(new GameStage());
-		camera.position.set(kirby.body.getPosition().x / 2, kirby.body.getPosition().y, 0);
+		
+		//camera.position.set(kirby.body.getPosition().x / 2, kirby.body.getPosition().y, 0);
+		camera.position.set(0,0, 0);
 	}
 
 	public static OrthographicCamera getCamera() {
@@ -62,7 +65,11 @@ public class myGame extends ApplicationAdapter {
 	public static SpriteBatch getBatch() {
 		return batch;
 	}
-	
+
+	public Kirby getKirby(){
+		return myGame.kirby;
+	}
+
 	//public currentStage<GameStage> testStage;
 	@Override
 	public void render () {
@@ -81,6 +88,8 @@ public class myGame extends ApplicationAdapter {
 	  batch.setProjectionMatrix(camera.combined);
 
 	  currentStage.StageDraw();
+	 
+	  //testScreen.render(delta);
 
 	}
 	

@@ -50,12 +50,17 @@ public class UFO extends Enemy implements finalCharacter {
     public void movement(){
         if (!setActive) {
             this.body.setLinearVelocity(new Vector2(0, 0));
+            //rest anim
             this.currentFrame  = this.Anims.get(0).getKeyFrame(myGame.stateTime, true);
         } else {
-            this.body.setLinearVelocity(new Vector2(0, 0));
+            //get on the same y-coord as Kirby and shoot projectiles horizontally            
+            this.body.setLinearVelocity(new Vector2((myGame.kirby.body.getPosition().x-this.body.getPosition().x)/2,
+                                                     myGame.kirby.body.getPosition().y-this.body.getPosition().y));
+            //Attack anim
             this.currentFrame  = this.Anims.get(0).getKeyFrame(myGame.stateTime, true);
             if (attackWindow == 0) {
                 Projectiles uFOProjectiles = new Projectiles(this.body, this.body.getLocalCenter(), 2, myGame.kirby.body.getPosition(), spriteSource[2]);
+                uFOProjectiles.body.setLinearVelocity(new Vector2(myGame.kirby.body.getPosition().x-this.body.getPosition().x,0));
                 attackWindow = 50;
             } else {
                 attackWindow--;
@@ -71,7 +76,7 @@ public class UFO extends Enemy implements finalCharacter {
     @Override
     public void Updatable() {
         // TODO Auto-generated method stub
-
+        
     }
 
 

@@ -14,7 +14,7 @@ public class Projectiles extends HitBox {
     public ArrayList<Animation<TextureRegion>> Anims;
     public TextureRegion currentFrame;
     protected String spriteSource;
-    public int range = 10;
+    public int range = 100;
     protected int frameCounter = 0;
     protected int projectileV = 1;
     protected GameStage ownerStage;
@@ -25,7 +25,7 @@ public class Projectiles extends HitBox {
     public Projectiles(Body mainBody, Vector2 spawnVector, float rad, Vector2 dir, String spriteSource) {
         super(mainBody, spawnVector, rad);
         this.ownerStage = ((Characters) mainBody.getUserData()).ownerStage;
-        this.body.setLinearVelocity(new Vector2((dir.x - this.body.getPosition().x)*20, (dir.y - this.body.getPosition().y)*20));
+        //this.body.setLinearVelocity(new Vector2((dir.x - this.body.getPosition().x)*20, (dir.y - this.body.getPosition().y)*20));
         this.spriteSource = spriteSource;
         this.Anims = Animator.createAnim(spriteSource);
         ownerStage.existingProjectiles.add(this);
