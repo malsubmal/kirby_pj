@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="1600" height="160" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="43">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="1600" height="160" tilewidth="16" tileheight="16" infinite="0" nextlayerid="15" nextobjectid="44">
  <tileset firstgid="1" source="80727.tsx"/>
  <tileset firstgid="113" source="32130.tsx"/>
  <tileset firstgid="7476" source="2982.tsx"/>
@@ -1054,6 +1054,11 @@
    <ellipse/>
   </object>
   <object id="41" x="-50" y="1614" width="2">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup id="14" name="start">
+  <object id="43" x="40" y="2353">
    <ellipse/>
   </object>
  </objectgroup>

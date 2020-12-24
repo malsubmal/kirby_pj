@@ -56,6 +56,8 @@ public abstract class Kirby extends Characters {
             break;
         }
         System.out.println(Kirby.type);
+        
+        currSound.play();
      }
     }
 
@@ -75,7 +77,6 @@ public abstract class Kirby extends Characters {
     private void neutralAttack(){
         if (attackWindow<10){
             currSound = lowKick;
-            currSound.play();
         attackWindow+=1; 
     if (rightDirection) {
         this.body.setLinearVelocity(new Vector2(vcon*Gdx.graphics.getDeltaTime()*attackv,0));
@@ -123,7 +124,6 @@ public abstract class Kirby extends Characters {
                 fly = true;
                 fallin = false;
                 currSound = flySound;
-                currSound.play();
                 this.body.setLinearVelocity(new Vector2(0, vcon*Gdx.graphics.getDeltaTime()));
                 if (rightDirection) {
                     this.currentFrame = this.Anims.get(9).getKeyFrame(myGame.stateTime, true);
@@ -173,6 +173,8 @@ public abstract class Kirby extends Characters {
                 break;
             case 0:
             //need to put this in constructor
+            //need to adjust instantiation
+            //need a loading timeout
                 if (kirbyHitBox == null) {
                     kirbyHitBox = new HitBox(this.body, new Vector2(8, -8),  8  , 8);
                     kirbyHitBox.body.setActive(false);

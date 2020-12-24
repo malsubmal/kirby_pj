@@ -43,7 +43,7 @@ public class myGame extends ApplicationAdapter {
 		Sound bgSong = Gdx.audio.newSound(Gdx.files.internal("spec.mp3"));
 		//bgSong.loop();
 		kirby = new KirbyDefault();
-		currentStage = new GameStage();
+		currentStage = new GameStage("testavail.tmx");
 
 		//testScreen = new OpenScreen();
 		//testScreen.show();
@@ -69,6 +69,7 @@ public class myGame extends ApplicationAdapter {
 	public Kirby getKirby(){
 		return myGame.kirby;
 	}
+
 
 	//public currentStage<GameStage> testStage;
 	@Override
