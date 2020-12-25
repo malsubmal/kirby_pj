@@ -38,6 +38,7 @@ public abstract class Characters  {
     protected String[] spriteSource;
     protected ArrayList<AnimateWrapper> spriteSourceVar;
     public enum elemental {
+        electric,
         neutral,
         one,
         two,

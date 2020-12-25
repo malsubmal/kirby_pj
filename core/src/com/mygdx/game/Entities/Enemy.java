@@ -19,7 +19,7 @@ public class Enemy extends Characters implements Updatable {
     public ArrayList<Enemy> existingEnemy = new ArrayList<Enemy>();    
 
     enum EnemyList {
-        UFO,
+        UFO, ElectricEnemy
     }
 
     public Enemy(){

@@ -22,6 +22,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.mygdx.game.Entities.ElectricEnemy;
 import com.mygdx.game.myGame;
 import com.mygdx.game.Entities.Enemy;
 import com.mygdx.game.Entities.Kirby;
@@ -80,12 +81,17 @@ public class GameStage extends WrapperStage {
         levelAnimator = new Animator();
         world = new World(new Vector2(0, -gravity), true);
         myGame.kirby.create(world);
+
         Listener listener = new Listener();
         world.setContactListener(listener);
         importTiled(mapSource);
         enemyHolder.EnemySpawn(this);
         Animator.Animate();
         myGame.kirby.body.setTransform(kirbystarter, 0);
+        //test elctric Enemy
+        ElectricEnemy testingEnemy = new ElectricEnemy(world);
+        testingEnemy.body.setLinearVelocity(new Vector2(myGame.kirby.body.getPosition().x + 10, myGame.kirby.body.getPosition().y));
+        testingEnemy.ownerStage = this;
 
     }
 

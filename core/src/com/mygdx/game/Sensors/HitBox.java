@@ -49,7 +49,7 @@ public class HitBox implements Updatable{
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.isSensor = true;
         PolygonShape poly = new PolygonShape();
-        poly.setAsBox(height/2, width/2);
+        poly.setAsBox( height/2, width/2);
         fixtureDef.shape = poly;
         this.caller = (Characters) mainBody.getUserData();
         //this.body.setTransform(mainBody.getPosition().x + spawnVector.x, mainBody.getPosition().y + spawnVector.y, 0);
