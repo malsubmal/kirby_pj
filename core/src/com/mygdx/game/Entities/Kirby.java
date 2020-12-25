@@ -9,6 +9,8 @@ import com.mygdx.game.Sensors.SuckBox;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.Stage.GameStage;
 
+import static javafx.scene.input.KeyCode.U;
+
 public abstract class Kirby extends Characters {
 
 
@@ -148,8 +150,8 @@ public abstract class Kirby extends Characters {
                     this.currentFrame  = this.Anims.get(3).getKeyFrame(myGame.stateTime, true);
                 } else if (fly || fallin) {
                     this.body.setLinearVelocity(new Vector2(-vcon*Gdx.graphics.getDeltaTime(),-vcon*Gdx.graphics.getDeltaTime()/2));
-                    this.currentFrame  = this.Anims.get(12).getKeyFrame(myGame.stateTime, true);   
-                } 
+                    this.currentFrame  = this.Anims.get(12).getKeyFrame(myGame.stateTime, true);
+                }
                 break;
             case Keys.DOWN:
                 fly = false;

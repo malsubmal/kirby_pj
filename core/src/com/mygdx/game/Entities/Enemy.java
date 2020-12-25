@@ -47,6 +47,18 @@ public class Enemy extends Characters implements Updatable {
             existingEnemy.add(temp);
         }
 
+//        UFO newUFO = new UFO(gameStage.world);
+//        newUFO.body.setLinearVelocity(md
+//        ameStage.getKirbystarter());
+//        newUFO.ownerStage = gameStage;
+//        existingEnemy.add(newUFO);
+
+        // Test electric enemy
+        ElectricEnemy testingEnemy = new ElectricEnemy(gameStage.world);
+        testingEnemy.body.setTransform(new Vector2(gameStage.getKirbystarter().x - 100, gameStage.getKirbystarter().y), 180);
+        testingEnemy.ownerStage = gameStage;
+        existingEnemy.add(testingEnemy);
+
 //        MapObjects Fires = myGame.tilemap.getLayers().get("Fireobject").getObjects();
 //        for (MapObject object: Fires) {
 //            Ellipse ellipse = ((EllipseMapObject)object).getEllipse();

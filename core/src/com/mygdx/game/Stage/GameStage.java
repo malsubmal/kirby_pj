@@ -22,11 +22,8 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.mygdx.game.Entities.ElectricEnemy;
+import com.mygdx.game.Entities.*;
 import com.mygdx.game.myGame;
-import com.mygdx.game.Entities.Enemy;
-import com.mygdx.game.Entities.Kirby;
-import com.mygdx.game.Entities.Projectiles;
 import com.mygdx.game.HelperClass.SpriteRender;
 import com.mygdx.game.HelperClass.Updatable;
 import com.mygdx.game.HelperClass.WrapperStage;
@@ -71,6 +68,7 @@ public class GameStage extends WrapperStage {
         Animator.Animate();
         // kirby.body.setTransform(kirbystarter, 0);
 
+
     }
 
     public GameStage(String source) {
@@ -88,10 +86,18 @@ public class GameStage extends WrapperStage {
         enemyHolder.EnemySpawn(this);
         Animator.Animate();
         myGame.kirby.body.setTransform(kirbystarter, 0);
-        //test elctric Enemy`
-        ElectricEnemy testingEnemy = new ElectricEnemy(world);
-        testingEnemy.body.setLinearVelocity(new Vector2(myGame.kirby.body.getPosition().x + 10, myGame.kirby.body.getPosition().y));
-        testingEnemy.ownerStage = this;
+
+//        //test elctric Enemy
+//        ElectricEnemy testingEnemy = new ElectricEnemy(world);
+//        testingEnemy.body.setTransform(new Vector2(myGame.kirby.body.getPosition().x + 20, myGame.kirby.body.getPosition().y), 0);
+//        testingEnemy.ownerStage = this;
+
+        // test ufo enemy
+//        UFO newUFO = new UFO(world);
+//        newUFO.body.setLinearVelocity(new Vector2(myGame.kirby.body.getPosition().x + 10, myGame.kirby.body.getPosition().y));
+//        newUFO.ownerStage = this;
+
+
 
     }
 
@@ -160,7 +166,8 @@ public class GameStage extends WrapperStage {
         for (Enemy temp: tobeDisposed) {
             enemyHolder.existingEnemy.remove(temp);
         } 
-    } 
+    }
+
     }
     
     public void projectilesUpdate(){
@@ -223,12 +230,19 @@ public class GameStage extends WrapperStage {
             if(Gdx.input.isKeyPressed(Keys.LEFT))	  {myGame.kirby.movement(Keys.LEFT); keypressed = true;}
             if(Gdx.input.isKeyPressed(Keys.UP))	      {myGame.kirby.movement(Keys.UP); keypressed = true;}
             if(Gdx.input.isKeyPressed(Keys.DOWN))	 {myGame.kirby.movement(Keys.DOWN); keypressed = true;}
+            if(Gdx.input.isKeyPressed(Keys.K))	 {myGame.kirby.movement(Keys.RIGHT); keypressed = true;}
+            if(Gdx.input.isKeyPressed(Keys.H))	  {myGame.kirby.movement(Keys.LEFT); keypressed = true;}
+            if(Gdx.input.isKeyPressed(Keys.U))	      {myGame.kirby.movement(Keys.UP); keypressed = true;}
+            if(Gdx.input.isKeyPressed(Keys.J))	 {myGame.kirby.movement(Keys.DOWN); keypressed = true;}
             //suck
             if (Gdx.input.isKeyPressed(Keys.A))		{myGame.kirby.movement(Keys.A); keypressed = true;}
             //attack
             if (Gdx.input.isKeyPressed(Keys.D))		{myGame.kirby.movement(Keys.D); keypressed = true;}		
        
 	}
-		
+
+    public Vector2 getKirbystarter() {
+        return kirbystarter;
+    }
 }
 

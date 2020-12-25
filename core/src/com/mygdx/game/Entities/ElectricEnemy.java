@@ -47,10 +47,17 @@ public class ElectricEnemy extends Enemy implements finalCharacter {
             //rest anim
             this.currentFrame  = this.Anims.get(0).getKeyFrame(myGame.stateTime, true);
         } else {
-            System.out.println("set Active Electric");
+          //  System.out.println("set Active Electric");
             //get on the same y-coord as Kirby and shoot projectiles horizontally
-            this.body.setLinearVelocity(new Vector2((myGame.kirby.body.getPosition().x-this.body.getPosition().x)/2,
-                    this.body.getPosition().y));
+            if(this.body.getPosition().x < myGame.kirby.body.getPosition().x){
+   //             System.out.println("Right side");
+            }
+            else{
+     //           System.out.println("Left side");
+            }
+            this.body.setLinearVelocity(new Vector2((myGame.kirby.body.getPosition().x-this.body.getPosition().x),
+                    0));
+
             //Attack anim
             this.currentFrame  = this.Anims.get(0).getKeyFrame(myGame.stateTime, true);
             if (attackWindow == 0) {
@@ -58,6 +65,7 @@ public class ElectricEnemy extends Enemy implements finalCharacter {
 //                uFOProjectiles.body.setLinearVelocity(new Vector2(myGame.kirby.body.getPosition().x-this.body.getPosition().x,0));
                 // Attack define
                 defineHitBox();
+                System.out.println("Attack");
                 attackWindow = 100;
             } else {
                 attackWindow--;
