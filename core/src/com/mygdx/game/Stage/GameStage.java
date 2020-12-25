@@ -88,7 +88,7 @@ public class GameStage extends WrapperStage {
         enemyHolder.EnemySpawn(this);
         Animator.Animate();
         myGame.kirby.body.setTransform(kirbystarter, 0);
-        //test elctric Enemy
+        //test elctric Enemy`
         ElectricEnemy testingEnemy = new ElectricEnemy(world);
         testingEnemy.body.setLinearVelocity(new Vector2(myGame.kirby.body.getPosition().x + 10, myGame.kirby.body.getPosition().y));
         testingEnemy.ownerStage = this;
