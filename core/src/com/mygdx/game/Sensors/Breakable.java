@@ -1,5 +1,9 @@
 package com.mygdx.game.Sensors;
 
-public class Breakable {
+import com.mygdx.game.Entities.Enemy;
+
+public class Breakable extends Enemy {
+
+    
     
 }

@@ -57,10 +57,13 @@ public class GameStage extends WrapperStage {
     private Image bgImage;
 
     public GameStage() {
+        //create ArrayList 
         enemyHolder = new Enemy();
         updateArray.add(enemyHolder);
+        //
         debugRenderer = new Box2DDebugRenderer();
         levelAnimator = new Animator();
+        
         world = new World(new Vector2(0, -gravity), true);
         myGame.kirby.create(world);
         Listener listener = new Listener();
