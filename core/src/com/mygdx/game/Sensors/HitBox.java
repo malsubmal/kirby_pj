@@ -15,7 +15,7 @@ public class HitBox implements Updatable{
     public Characters caller;
     public BodyDef bodyDef = new BodyDef();
     
-
+    private float radius;
 
     //round hitbox
     public HitBox(Body mainBody, Vector2 spawnVector, float rad) {
@@ -27,11 +27,16 @@ public class HitBox implements Updatable{
         fixtureDef.isSensor = true;
         fixtureDef.shape = new CircleShape();
         fixtureDef.shape.setRadius(rad);
+        radius = rad;
         this.caller = (Characters) mainBody.getUserData();
         //this.body.setTransform(mainBody.getPosition().x + spawnVector.x, mainBody.getPosition().y + spawnVector.y, 0);
 
         Fixture fixture = this.body.createFixture(fixtureDef);
         
+    }
+
+    public float getRadius() {
+        return radius;
     }
 
     public HitBox(boolean check) {}

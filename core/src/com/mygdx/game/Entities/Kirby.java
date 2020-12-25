@@ -112,7 +112,7 @@ public abstract class Kirby extends Characters {
             if (myGame.kirby instanceof KirbyAbilityOne) {if (KirbyAbilityOne.kirbyFireHitBox != null) {KirbyAbilityOne.kirbyFireHitBox.body.setActive(false);}}
 
         if (myGame.kirby.body.getLinearVelocity().y < 0){fallin = true;
-            System.out.println("fallin");
+         //   System.out.println("fallin");
             fly = false;
         } else if (myGame.kirby.body.getLinearVelocity().y > 0) {  fly = true;
             fallin = false;

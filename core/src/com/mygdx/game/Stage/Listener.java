@@ -52,38 +52,38 @@ public class Listener implements ContactListener {
         }
         } else if (fixtureB.getBody().getUserData() instanceof Kirby){
             if (fixtureA.isSensor()) {
-        opp = fixtureA.getBody().getUserData();
-        if (opp instanceof Enemy) {
-        ((Enemy) opp).setActive = true;
-        System.out.println("setActive");
-        } else if (opp instanceof Food) {
-            ((Food) opp).eaten = true;
-            if (myGame.kirby.HP < 50) {
-                //play eat sound
-                myGame.kirby.HP += 10;
-            }
-        }
-        }
-        } else {
-        if (fixtureA.getBody().getUserData() instanceof HitBox) {
-            if ( !fixtureB.isSensor() && fixtureB.getBody().getType() == BodyDef.BodyType.DynamicBody) {
-                opp = fixtureB.getBody().getUserData();
-                if (!opp.equals(((HitBox)fixtureA.getBody().getUserData()).caller)) {
-                ((Characters) opp).HP -= setting.DP;
-                System.out.println("HP decreases");
-                }
-            }
-        }  else if (fixtureB.getBody().getUserData() instanceof HitBox) {
-            if (!fixtureA.isSensor() && fixtureA.getBody().getType() == BodyDef.BodyType.DynamicBody)  {
                 opp = fixtureA.getBody().getUserData();
-                if (!opp.equals(((HitBox)fixtureB.getBody().getUserData()).caller)) {
-                ((Characters) opp).HP -= setting.DP;
-                System.out.println("HP decreases");
+                if (opp instanceof Enemy) {
+                    ((Enemy) opp).setActive = true;
+                    System.out.println("setActive");
+                } else if (opp instanceof Food) {
+                    ((Food) opp).eaten = true;
+                    if (myGame.kirby.HP < 50) {
+                        //play eat sound
+                        myGame.kirby.HP += 10;
+                    }
                 }
             }
-         }
-         else {} 
-}
+        } else {
+            if (fixtureA.getBody().getUserData() instanceof HitBox) {
+                if ( !fixtureB.isSensor() && fixtureB.getBody().getType() == BodyDef.BodyType.DynamicBody) {
+                    opp = fixtureB.getBody().getUserData();
+                    if (!opp.equals(((HitBox)fixtureA.getBody().getUserData()).caller)) {
+                    ((Characters) opp).HP -= setting.DP;
+                    System.out.println("HP decreases");
+                    }
+                }
+            }  else if (fixtureB.getBody().getUserData() instanceof HitBox) {
+                if (!fixtureA.isSensor() && fixtureA.getBody().getType() == BodyDef.BodyType.DynamicBody)  {
+                    opp = fixtureA.getBody().getUserData();
+                    if (!opp.equals(((HitBox)fixtureB.getBody().getUserData()).caller)) {
+                    ((Characters) opp).HP -= setting.DP;
+                    System.out.println("HP decreases");
+                    }
+                }
+             }
+            else {}
+    }
     }
 
     @Override
