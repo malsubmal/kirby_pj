@@ -13,8 +13,10 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.mygdx.game.myGame;
 import com.mygdx.game.setting;
 import com.mygdx.game.HelperClass.AnimateWrapper;
+import com.mygdx.game.Sensors.HitBox;
 import com.mygdx.game.Stage.GameStage;
 import com.mygdx.game.Tools.Animator;
 
@@ -29,14 +31,16 @@ public abstract class Characters  {
     public FixtureDef fixtureDef;
     public Fixture fixture;
     protected int vcon = 5000;
-    protected int density = 500000;
+    protected int density = 10;
     protected int bodyradius;
     protected Vector2 spawnVector;
     public boolean defeat;
-    protected ArrayList<Animation<TextureRegion>> Anims;
+    public ArrayList<Animation<TextureRegion>> Anims;
     public TextureRegion currentFrame;
     protected String[] spriteSource;
-    protected ArrayList<AnimateWrapper> spriteSourceVar;
+    public ArrayList<AnimateWrapper> spriteSourceVar;
+    protected int[] height, width;
+    public Vector2 spriteOffset = new Vector2(0, 0);
     public enum elemental {
         electric,
         neutral,
@@ -46,13 +50,15 @@ public abstract class Characters  {
     };
     public elemental type;
     public GameStage ownerStage;
+    public World world;
+    public HitBox hitBox;
 
     public void create(World world){
         this.defineSpawnVector();
-
+        this.world = world;
         bodyDef.type = BodyType.DynamicBody;
         bodyDef.position.set(spawnVector.x, spawnVector.y);
-        body = world.createBody(bodyDef);
+        body = this.world.createBody(bodyDef);
         body.setUserData(this);
 
         fixtureDef = new FixtureDef();
@@ -75,6 +81,15 @@ public abstract class Characters  {
 
     protected void defineSpawnVector(Vector2 spawn) {
         spawnVector = spawn;
+    }
+
+    public TextureRegion getFrame(int order){        
+        TextureRegion currentFrame  = Anims.get(order).getKeyFrame(myGame.stateTime, true);
+        if (spriteSourceVar != null) {
+        if ((spriteSourceVar.get(order).height != 0) && (spriteSourceVar.get(order).width != 0)) {
+            spriteOffset = new Vector2(spriteSourceVar.get(order).width,spriteSourceVar.get(order).height);
+        } }
+        return currentFrame;
     }
 
 }

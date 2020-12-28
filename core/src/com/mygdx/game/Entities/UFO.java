@@ -7,13 +7,11 @@ import com.mygdx.game.HelperClass.finalCharacter;
 
 
 public class UFO extends Enemy implements finalCharacter {
-
     
     private String[] spritesheets = {
         "UFO_default.png",
         "defeat.png",
         "UFOprojectile.png"
-
     };
 
 

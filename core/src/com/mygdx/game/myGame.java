@@ -52,6 +52,7 @@ public class myGame extends ApplicationAdapter {
 		camera.setToOrtho(false, 500, 200);
 		camera.zoom -= 0.00004f;
 
+
 		batch = new SpriteBatch();
 		
 		//camera.position.set(kirby.body.getPosition().x / 2, kirby.body.getPosition().y, 0);
@@ -96,7 +97,7 @@ public class myGame extends ApplicationAdapter {
 	
 	@Override
 	public void dispose () {
-		
+		//dispose
 	}
 
 	

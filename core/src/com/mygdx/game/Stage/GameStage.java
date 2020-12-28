@@ -27,6 +27,8 @@ import com.mygdx.game.myGame;
 import com.mygdx.game.HelperClass.SpriteRender;
 import com.mygdx.game.HelperClass.Updatable;
 import com.mygdx.game.HelperClass.WrapperStage;
+import com.mygdx.game.Sensors.Breakable;
+import com.mygdx.game.Sensors.HitBox;
 import com.mygdx.game.Tools.Animator;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -46,6 +48,7 @@ public class GameStage extends WrapperStage {
     public TiledMap tilemap;
     public OrthogonalTiledMapRenderer tilemaprenderer;
     public ArrayList<Projectiles> existingProjectiles = new ArrayList<Projectiles>();
+    public ArrayList<Breakable> existingBreakables = new ArrayList<Breakable>();
     private Box2DDebugRenderer debugRenderer;
     private boolean receiveUI = true;
     public boolean keypressed = false;
@@ -53,12 +56,16 @@ public class GameStage extends WrapperStage {
     private Enemy enemyHolder = new Enemy();
     private Vector2 kirbystarter;
     private Image bgImage;
+    public Breakable breakableTest;
 
     public GameStage() {
+        //create ArrayList 
         enemyHolder = new Enemy();
         updateArray.add(enemyHolder);
+        //
         debugRenderer = new Box2DDebugRenderer();
         levelAnimator = new Animator();
+        
         world = new World(new Vector2(0, -gravity), true);
         myGame.kirby.create(world);
         Listener listener = new Listener();
@@ -86,6 +93,9 @@ public class GameStage extends WrapperStage {
         enemyHolder.EnemySpawn(this);
         Animator.Animate();
         myGame.kirby.body.setTransform(kirbystarter, 0);
+        //test Breakable
+        breakableTest = new Breakable(this);
+        breakableTest.body.setTransform(new Vector2(myGame.kirby.body.getPosition().x + 20,myGame.kirby.body.getPosition().y), 0);
 
 //        //test elctric Enemy
 //        ElectricEnemy testingEnemy = new ElectricEnemy(world);
@@ -143,6 +153,7 @@ public class GameStage extends WrapperStage {
     
     public void entitiesUpdate(){
         projectilesUpdate();
+        breakableUpdate();
         EnemyUpdate();
     }
 
@@ -153,14 +164,23 @@ public class GameStage extends WrapperStage {
                 //separate into death array
                 temp.frameCounter++;
                 temp.body.setActive(false);
+                if (temp.hitBox != null) {
+                    temp.hitBox.body.setActive(false);
+                }
                 Animator.sharedAnims.get(0).setFrameDuration(0.1f);
                 temp.currentFrame  = Animator.sharedAnims.get(0).getKeyFrame(myGame.stateTime, true);
                 if (temp.frameCounter > 25) {
                 tobeDisposed.add(temp); }
             } else {
             temp.movement();
-             }
-            temp.ownerStage.levelAnimator.animateArray.add( new SpriteRender(temp.currentFrame, temp.body.getPosition()));
+            }
+            
+            temp.ownerStage.levelAnimator.animateArray.add( new SpriteRender(temp.currentFrame, 
+            new Vector2(temp.body.getPosition().x - (temp.spriteOffset.x/4),
+            temp.body.getPosition().y - temp.spriteOffset.y/4)
+            ));
+            temp.spriteOffset = Vector2.Zero;
+            
         }
          if (tobeDisposed != null) {
         for (Enemy temp: tobeDisposed) {
@@ -170,6 +190,7 @@ public class GameStage extends WrapperStage {
 
     }
     
+    //need to re-vamp here
     public void projectilesUpdate(){
         ArrayList<Projectiles> tobeDisposed = new ArrayList<Projectiles>();
         for (Projectiles temp: existingProjectiles) {
@@ -189,10 +210,30 @@ public class GameStage extends WrapperStage {
     } 
     }
 
+    public void breakableUpdate(){
+        ArrayList<Breakable> tobeDisposed = new ArrayList<Breakable>();
+        for (Breakable temp: existingBreakables) {
+            if (temp.HP <= 20) {
+                temp.body.setActive(false);
+                tobeDisposed.add(temp);
+            } else {
+                levelAnimator.animateArray.add( new SpriteRender(temp.Anim.getKeyFrames()[4-temp.HP/10],
+                new Vector2 (temp.body.getPosition().x-16, temp.body.getPosition().y-16-8)));
+            }
+        }
+        if (tobeDisposed != null) {
+            for (Breakable temp: tobeDisposed) {
+                existingProjectiles.remove(temp);
+            } 
+        } 
+    }
+
    
 
     @Override
 	public void StageDraw() {
+        
+        //HitBox hitBoxTest = new HitBox(myGame.kirby.body, breakableTest.body.getPosition(), 20);
         // TODO Auto-generated method stub
             tilemaprenderer.setView(myGame.getCamera());
             tilemaprenderer.render();
@@ -208,7 +249,9 @@ public class GameStage extends WrapperStage {
                     , myGame.kirby.body.getPosition().x-16-myGame.kirby.spriteOffset.x
                     ,myGame.kirby.body.getPosition().y-8-myGame.kirby.spriteOffset.y);
             for (SpriteRender temp : levelAnimator.animateArray) {
-                myGame.getBatch().draw(temp.frame, temp.position.x-16, temp.position.y-8);
+                myGame.getBatch().draw(temp.frame,
+                 temp.position.x-16,
+                 temp.position.y-8);
             }	
             myGame.getBatch().end();
             //update physics world

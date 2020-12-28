@@ -9,8 +9,6 @@ import com.mygdx.game.Sensors.SuckBox;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.Stage.GameStage;
 
-import static javafx.scene.input.KeyCode.U;
-
 public abstract class Kirby extends Characters {
 
 

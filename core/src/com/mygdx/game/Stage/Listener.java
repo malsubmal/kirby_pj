@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.mygdx.game.Entities.Enemy;
 import com.mygdx.game.Entities.Food;
 import com.mygdx.game.Entities.Kirby;
+import com.mygdx.game.Sensors.Breakable;
 import com.mygdx.game.Sensors.HitBox;
 import com.mygdx.game.Sensors.SuckBox;
 import com.mygdx.game.myGame;
@@ -37,7 +38,43 @@ public class Listener implements ContactListener {
             }
         }
 
-        //Kirby hurts Enemy when harm their bodies
+        /* if ((fixtureB.getBody().getUserData() instanceof Breakable) || (fixtureA.getBody().getUserData() instanceof Breakable) ) {
+            System.out.println("detected");
+        } */
+
+/*         if (fixtureA.getBody().getUserData() instanceof HitBox) {
+            if ( ((HitBox) fixtureA.getBody().getUserData()).caller instanceof Kirby) {                
+            if (fixtureB.getBody().getUserData() instanceof Breakable) {
+            System.out.println("kirby vs block");
+            opp = fixtureB.getBody().getUserData();
+            ((Breakable) opp).HP -=1;
+        }
+    }
+    } */
+
+    if (fixtureA.getBody().getUserData() instanceof Breakable) {
+        //System.out.println("detected");
+        //System.out.println(fixtureB.getBody().getUserData());
+        if (fixtureB.getBody().getUserData() instanceof HitBox) {        
+        System.out.println("hitbox detected");
+        if ((((HitBox) fixtureB.getBody().getUserData()).caller instanceof Kirby)) {                
+        System.out.println("kirby vs block");
+        opp = fixtureA.getBody().getUserData();
+        ((Breakable) opp).HP -=1;
+    }
+}
+} else if (fixtureB.getBody().getUserData() instanceof Breakable) {
+    //System.out.println("detected");
+    //System.out.println(fixtureB.getBody().getUserData());
+    if (fixtureA.getBody().getUserData() instanceof HitBox) {        
+    System.out.println("hitbox detected");
+    if ((((HitBox) fixtureA.getBody().getUserData()).caller instanceof Kirby)) {                
+    System.out.println("kirby vs block");
+    opp = fixtureB.getBody().getUserData();
+    ((Breakable) opp).HP -=1;
+}
+}
+} else    //Kirby hurts Enemy when harm their bodies
         
         if (fixtureA.getBody().getUserData() instanceof Kirby) {
                 if (fixtureB.isSensor()) {
@@ -65,13 +102,13 @@ public class Listener implements ContactListener {
                 }
             }
         } else {
-            if (fixtureA.getBody().getUserData() instanceof HitBox) {
-                if ( !fixtureB.isSensor() && fixtureB.getBody().getType() == BodyDef.BodyType.DynamicBody) {
-                    opp = fixtureB.getBody().getUserData();
-                    if (!opp.equals(((HitBox)fixtureA.getBody().getUserData()).caller)) {
-                    ((Characters) opp).HP -= setting.DP;
-                    System.out.println("HP decreases");
-                    }
+        if (fixtureA.getBody().getUserData() instanceof HitBox ){
+            //System.out.println(fixtureA.getBody().getUserData());
+            if ( !fixtureB.isSensor() && fixtureB.getBody().getType() == BodyDef.BodyType.DynamicBody) {
+                opp = fixtureB.getBody().getUserData();
+                if (!opp.equals(((HitBox)fixtureA.getBody().getUserData()).caller)) {
+                ((Characters) opp).HP -= setting.DP;
+                System.out.println("HP decreases");
                 }
             }  else if (fixtureB.getBody().getUserData() instanceof HitBox) {
                 if (!fixtureA.isSensor() && fixtureA.getBody().getType() == BodyDef.BodyType.DynamicBody)  {
@@ -81,9 +118,9 @@ public class Listener implements ContactListener {
                     System.out.println("HP decreases");
                     }
                 }
-             }
-            else {}
-    }
+            }
+         }
+}
     }
 
     @Override
