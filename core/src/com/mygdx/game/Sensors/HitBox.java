@@ -21,10 +21,13 @@ public class HitBox implements Updatable{
     public HitBox(Body mainBody, Vector2 spawnVector, float rad) {
         bodyDef.type = BodyType.KinematicBody;
         bodyDef.position.set(mainBody.getPosition().x + spawnVector.x, mainBody.getPosition().y + spawnVector.y);
-        this.body = ((GameStage)myGame.currentStage).world.createBody(bodyDef);
+        //bodyDef.gravityScale = 0;
+        World tempWorld = ((GameStage)myGame.currentStage).world;
+        this.body = tempWorld.createBody(bodyDef);
         this.body.setUserData(this);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.isSensor = true;
+        fixtureDef.density = 0.00001f;
         fixtureDef.shape = new CircleShape();
         fixtureDef.shape.setRadius(rad);
         this.caller = (Characters) mainBody.getUserData();
@@ -42,11 +45,14 @@ public class HitBox implements Updatable{
 
     //square hitbox
     public HitBox(Body mainBody, Vector2 spawnVector, float width, float height) {
+
         bodyDef.type = BodyType.KinematicBody;
         bodyDef.position.set(mainBody.getPosition().x + spawnVector.x, mainBody.getPosition().y + spawnVector.y);
         this.body = ((GameStage)myGame.currentStage).world.createBody(bodyDef);
+        //bodyDef.gravityScale = 0;
         this.body.setUserData(this);
         FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.density = 0.00001f;
         fixtureDef.isSensor = true;
         PolygonShape poly = new PolygonShape();
         poly.setAsBox(height/2, width/2);
