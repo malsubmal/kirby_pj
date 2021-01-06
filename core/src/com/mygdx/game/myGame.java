@@ -14,7 +14,7 @@ import com.mygdx.game.Entities.Kirby;
 import com.mygdx.game.Entities.KirbyDefault;
 import com.mygdx.game.HelperClass.WrapperStage;
 import com.mygdx.game.Stage.GameStage;
-import com.mygdx.game.Stage.OpenScreen;
+import com.mygdx.game.Stage.OpenStage;
 import com.mygdx.game.Stage.TestStage;
 import com.mygdx.game.UI.HUD;
 import com.badlogic.gdx.math.Vector2;
@@ -30,6 +30,7 @@ public class myGame extends ApplicationAdapter {
 
 	static public float stateTime = 0f;
 	public static WrapperStage currentStage;
+	public static WrapperStage bufferStage;
 	private Stage titleStage;
 	private Stage loadStage;
 	private Stage pauseStage;
@@ -40,17 +41,17 @@ public class myGame extends ApplicationAdapter {
 
 	@Override
 	public void create() {
-		Sound bgSong = Gdx.audio.newSound(Gdx.files.internal("spec.mp3"));
+		//Sound bgSong = Gdx.audio.newSound(Gdx.files.internal("spec.mp3"));
 		//bgSong.loop();
 		kirby = new KirbyDefault();
-		currentStage = new GameStage("testavail.tmx");
+		currentStage = new OpenStage();
 
 		//testScreen = new OpenScreen();
 		//testScreen.show();
 
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 500, 200);
-		camera.zoom -= 0.00004f;
+		camera.setToOrtho(false, 1000, 800);
+		//camera.zoom -= 0.00004f;
 
 
 		batch = new SpriteBatch();
@@ -76,7 +77,7 @@ public class myGame extends ApplicationAdapter {
 	@Override
 	public void render () {
 
-      Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+      Gdx.gl.glClearColor(0, 0, 0, 1);
 	  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	  stateTime += Gdx.graphics.getDeltaTime();
 
@@ -90,6 +91,12 @@ public class myGame extends ApplicationAdapter {
 	  batch.setProjectionMatrix(camera.combined);
 
 	  currentStage.StageDraw();
+
+	  if (bufferStage != null) {
+	  if ( bufferStage.loaded) {
+		  currentStage = bufferStage;
+	  }
+	}
 	 
 	  //testScreen.render(delta);
 

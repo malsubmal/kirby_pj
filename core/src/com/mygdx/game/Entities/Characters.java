@@ -42,9 +42,9 @@ public abstract class Characters  {
     protected int[] height, width;
     public Vector2 spriteOffset = new Vector2(0, 0);
     public enum elemental {
-        electric,
+        electrice,
         neutral,
-        one,
+        fire,
         two,
         three
     };

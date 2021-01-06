@@ -15,14 +15,14 @@ public class FireTypeEnemy extends Enemy implements finalCharacter {
         super();
         defineStrikeZone();
         movement();
-        this.type = elemental.one;
+        this.type = elemental.fire;
     }
 
     public FireTypeEnemy() {
         super();
         defineStrikeZone();
         movement();
-        this.type = elemental.one;
+        this.type = elemental.fire;
     }
 
 

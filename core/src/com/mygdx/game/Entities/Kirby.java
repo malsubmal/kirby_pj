@@ -41,7 +41,7 @@ public abstract class Kirby extends Characters {
             case neutral:
             change = false;
             break;
-            case one:
+            case fire:
             position = myGame.kirby.body.getPosition();
             myGame.kirby.body.setActive(false);
             myGame.kirby = new KirbyAbilityOne(position);

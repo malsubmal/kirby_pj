@@ -62,7 +62,6 @@ public class GameStage extends WrapperStage {
         //create ArrayList 
         enemyHolder = new Enemy();
         updateArray.add(enemyHolder);
-        //
         debugRenderer = new Box2DDebugRenderer();
         levelAnimator = new Animator();
         
@@ -75,6 +74,7 @@ public class GameStage extends WrapperStage {
         Animator.Animate();
         // kirby.body.setTransform(kirbystarter, 0);
 
+        loaded = true;
 
     }
 
@@ -97,17 +97,7 @@ public class GameStage extends WrapperStage {
         breakableTest = new Breakable(this);
         breakableTest.body.setTransform(new Vector2(myGame.kirby.body.getPosition().x + 20,myGame.kirby.body.getPosition().y), 0);
 
-//        //test elctric Enemy
-//        ElectricEnemy testingEnemy = new ElectricEnemy(world);
-//        testingEnemy.body.setTransform(new Vector2(myGame.kirby.body.getPosition().x + 20, myGame.kirby.body.getPosition().y), 0);
-//        testingEnemy.ownerStage = this;
-
-        // test ufo enemy
-//        UFO newUFO = new UFO(world);
-//        newUFO.body.setLinearVelocity(new Vector2(myGame.kirby.body.getPosition().x + 10, myGame.kirby.body.getPosition().y));
-//        newUFO.ownerStage = this;
-
-
+        loaded = true;
 
     }
 
@@ -233,8 +223,7 @@ public class GameStage extends WrapperStage {
     @Override
 	public void StageDraw() {
         
-        //HitBox hitBoxTest = new HitBox(myGame.kirby.body, breakableTest.body.getPosition(), 20);
-        // TODO Auto-generated method stub
+
             tilemaprenderer.setView(myGame.getCamera());
             tilemaprenderer.render();
             if (receiveUI){ manageUI();}
@@ -248,6 +237,7 @@ public class GameStage extends WrapperStage {
             myGame.getBatch().draw(myGame.kirby.currentFrame
                     , myGame.kirby.body.getPosition().x-16-myGame.kirby.spriteOffset.x
                     ,myGame.kirby.body.getPosition().y-8-myGame.kirby.spriteOffset.y);
+
             for (SpriteRender temp : levelAnimator.animateArray) {
                 myGame.getBatch().draw(temp.frame,
                  temp.position.x-16,
@@ -277,9 +267,7 @@ public class GameStage extends WrapperStage {
             if(Gdx.input.isKeyPressed(Keys.H))	  {myGame.kirby.movement(Keys.LEFT); keypressed = true;}
             if(Gdx.input.isKeyPressed(Keys.U))	      {myGame.kirby.movement(Keys.UP); keypressed = true;}
             if(Gdx.input.isKeyPressed(Keys.J))	 {myGame.kirby.movement(Keys.DOWN); keypressed = true;}
-            //suck
             if (Gdx.input.isKeyPressed(Keys.A))		{myGame.kirby.movement(Keys.A); keypressed = true;}
-            //attack
             if (Gdx.input.isKeyPressed(Keys.D))		{myGame.kirby.movement(Keys.D); keypressed = true;}		
        
 	}

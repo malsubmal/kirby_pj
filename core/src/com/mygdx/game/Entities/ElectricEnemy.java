@@ -30,7 +30,7 @@ public class ElectricEnemy extends Enemy implements finalCharacter {
         create(world);
         defineStrikeZone();
         movement();
-        this.type = elemental.electric;
+        this.type = elemental.fire;
     }
 
 
