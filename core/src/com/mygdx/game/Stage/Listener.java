@@ -27,61 +27,73 @@ public class Listener implements ContactListener {
         Object opp = null;
         Enemy refereddOpp = null;
 
-        if (fixtureA.getBody().getUserData() instanceof SuckBox) {
-            if (!fixtureB.isSensor()  && fixtureB.getBody().getUserData() instanceof Enemy) {
-                opp = fixtureB.getBody().getUserData();
-                //destroy enemy
-                ((Enemy) opp).HP = -1;
-               Kirby.type = ((Characters) opp).type;
-               Kirby.change = true;
-                System.out.println(Kirby.type);
-            }
-        }
 
-        if (fixtureA.getBody().getUserData() instanceof Breakable) {
+        if (fixtureA.getBody().getUserData() instanceof Breakable && fixtureB.getBody().getUserData() instanceof HitBox ) {
             //System.out.println("detected");
             //System.out.println(fixtureB.getBody().getUserData());
-            if (fixtureB.getBody().getUserData() instanceof HitBox) {        
+             
             System.out.println("hitbox detected");
             if ((((HitBox) fixtureB.getBody().getUserData()).caller instanceof Kirby)) {                
             System.out.println("kirby vs block");
             opp = fixtureA.getBody().getUserData();
             ((Breakable) opp).HP -=1;
-        }
+        
     }
-    } else if (fixtureB.getBody().getUserData() instanceof Breakable) {
+    } else if (fixtureB.getBody().getUserData() instanceof Breakable && fixtureA.getBody().getUserData() instanceof HitBox) {
             //System.out.println("detected");
             //System.out.println(fixtureB.getBody().getUserData());
-            if (fixtureA.getBody().getUserData() instanceof HitBox) {        
+             
             System.out.println("hitbox detected");
             if ((((HitBox) fixtureA.getBody().getUserData()).caller instanceof Kirby)) {                
             System.out.println("kirby vs block");
             opp = fixtureB.getBody().getUserData();
             ((Breakable) opp).HP -=1;
-    }
+    
     }
 }  else if (fixtureA.getBody().getUserData() instanceof HitBox ){
             //System.out.println(fixtureA.getBody().getUserData());
-            if ( !fixtureB.isSensor() && fixtureB.getBody().getType() == BodyDef.BodyType.DynamicBody) {
+            if(((HitBox)fixtureA.getBody().getUserData()).isSuckBox){
+                if (!fixtureB.isSensor()  && fixtureB.getBody().getUserData() instanceof Enemy) {
+                    opp = fixtureB.getBody().getUserData();
+                    //destroy enemy
+                    ((Enemy) opp).HP = 0;
+                    System.out.println("suckbox detected");
+                   Kirby.type = ((Characters) opp).type;
+                   Kirby.change = true;
+                    System.out.println(Kirby.type);
+                }
+            } else if ( !fixtureB.isSensor() && fixtureB.getBody().getType() == BodyDef.BodyType.DynamicBody) {
                 opp = fixtureB.getBody().getUserData();
                 if (!opp.equals(((HitBox)fixtureA.getBody().getUserData()).caller)) {
                 ((Characters) opp).HP -= ((HitBox)fixtureA.getBody().getUserData()).DP;
+                System.out.println(((HitBox)fixtureA.getBody().getUserData()).DP);
                 System.out.println("HP decreases");
                 System.out.println(myGame.kirby.HP);
                 }
             }
             }  else if (fixtureB.getBody().getUserData() instanceof HitBox) {
-                if (!fixtureA.isSensor() && fixtureA.getBody().getType() == BodyDef.BodyType.DynamicBody)  {
+                if(((HitBox)fixtureB.getBody().getUserData()).isSuckBox){
+                    if (!fixtureA.isSensor()  && fixtureA.getBody().getUserData() instanceof Enemy) {
+                        opp = fixtureA.getBody().getUserData();
+                        //destroy enemy
+                        ((Enemy) opp).HP = 0;
+                        System.out.println("suckbox detected");
+                       Kirby.type = ((Characters) opp).type;
+                       Kirby.change = true;
+                        System.out.println(Kirby.type);
+                    } else if (!fixtureA.isSensor() && fixtureA.getBody().getType() == BodyDef.BodyType.DynamicBody)  {
                     opp = fixtureA.getBody().getUserData();
                     if (!opp.equals(((HitBox)fixtureB.getBody().getUserData()).caller)) {
                     ((Characters) opp).HP -= ((HitBox)fixtureB.getBody().getUserData()).DP;
+                    System.out.println(((HitBox)fixtureB.getBody().getUserData()).DP);
                     System.out.println("HP decreases");
                     System.out.println(myGame.kirby.HP);
                     }
                 }
             }
-         else if (fixtureA.getBody().getUserData() instanceof Kirby) {
-            if (fixtureB.isSensor()) {
+        }
+         else if (fixtureA.getBody().getUserData() instanceof Kirby && fixtureB.isSensor()) {
+            
     opp = fixtureB.getBody().getUserData();
     if (opp instanceof Enemy) {
     ((Enemy) opp).setActive = true;
@@ -90,9 +102,9 @@ public class Listener implements ContactListener {
         //play eat sound
         ((Food) opp).eaten = true;
     }
-    }
-    } else if (fixtureB.getBody().getUserData() instanceof Kirby){
-        if (fixtureA.isSensor()) {
+    
+    } else if (fixtureB.getBody().getUserData() instanceof Kirby && fixtureA.isSensor()){
+      
             opp = fixtureA.getBody().getUserData();
             if (opp instanceof Enemy) {
                 ((Enemy) opp).setActive = true;
@@ -104,9 +116,10 @@ public class Listener implements ContactListener {
                     myGame.kirby.HP += 10;
                 }
             }
-        }
+        
     }
 }
+
     
 
     @Override

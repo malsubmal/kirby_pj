@@ -11,10 +11,11 @@ import com.mygdx.game.Stage.GameStage;
 
 public class HitBox implements Updatable{
     public boolean setActive = false;
+    public boolean isSuckBox = false;
     public Body body;
     public Characters caller;
     public BodyDef bodyDef = new BodyDef();
-    public int DP = 1;
+    public int DP;
     
     private float radius;
 
@@ -35,7 +36,7 @@ public class HitBox implements Updatable{
         radius = rad;
         this.caller = (Characters) mainBody.getUserData();
         //this.body.setTransform(mainBody.getPosition().x + spawnVector.x, mainBody.getPosition().y + spawnVector.y, 0);
-
+        this.DP = 1;
         Fixture fixture = this.body.createFixture(fixtureDef);
         
     }
@@ -61,6 +62,7 @@ public class HitBox implements Updatable{
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.density = 0.00001f;
         fixtureDef.isSensor = true;
+        this.DP = 1;
         PolygonShape poly = new PolygonShape();
         poly.setAsBox( height/2, width/2);
         fixtureDef.shape = poly;

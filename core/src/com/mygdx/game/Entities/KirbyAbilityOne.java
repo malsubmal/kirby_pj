@@ -8,7 +8,7 @@ import com.mygdx.game.HelperClass.AnimateWrapper;
 import com.mygdx.game.HelperClass.finalCharacter;
 import com.mygdx.game.Sensors.HitBox;
 
-public class KirbyAbilityOne extends Kirby implements finalCharacter {
+public class KirbyAbilityOne extends Kirby {
 
     public static HitBox kirbyFireHitBox;
 
@@ -43,6 +43,14 @@ public class KirbyAbilityOne extends Kirby implements finalCharacter {
     }
 
     @Override
+    public HitBox defineHitBox() {
+        kirbyFireHitBox = new HitBox(this.body, Vector2.Zero,  32  , 32);
+        kirbyFireHitBox.DP = 100;
+        return kirbyFireHitBox;
+    }
+
+
+    @Override
     public void defineSpriteSource() {
       
         this.spriteSourceVar = new ArrayList<AnimateWrapper>();
@@ -56,17 +64,6 @@ public class KirbyAbilityOne extends Kirby implements finalCharacter {
     public KirbyAbilityOne(Vector2 pos) {
         super(true);    
         this.spawnVector = pos;
-    }
-  
-
-    @Override
-    public void defineHitBox() {
-    }
-
-    @Override
-    public void defineStrikeZone() {
-        // TODO Auto-generated method stub
-
     }
 
 
@@ -99,6 +96,7 @@ public class KirbyAbilityOne extends Kirby implements finalCharacter {
                 }
                
     }
+
 
 
 }

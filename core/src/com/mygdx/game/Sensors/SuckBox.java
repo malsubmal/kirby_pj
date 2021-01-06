@@ -9,10 +9,12 @@ public class SuckBox extends HitBox {
 
     public SuckBox(boolean check) {
         super(check);
+        isSuckBox = true;
     }
 
     public SuckBox(Body mainBody, Vector2 spawnVector, float width, float height) {
-        super(mainBody, spawnVector, width, height);
+        super(mainBody, spawnVector, width, height);        
+        isSuckBox = true;
     }
 
 }

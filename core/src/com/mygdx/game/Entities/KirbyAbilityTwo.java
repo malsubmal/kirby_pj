@@ -8,7 +8,7 @@ import com.mygdx.game.HelperClass.AnimateWrapper;
 import com.mygdx.game.HelperClass.finalCharacter;
 import com.mygdx.game.Sensors.HitBox;
 
-public class KirbyAbilityTwo extends Kirby implements finalCharacter {
+public class KirbyAbilityTwo extends Kirby{
 
     public static HitBox kirbyFireHitBox;
 
@@ -60,14 +60,13 @@ public class KirbyAbilityTwo extends Kirby implements finalCharacter {
   
 
     @Override
-    public void defineHitBox() {
+    public HitBox defineHitBox() {
+        kirbyFireHitBox = new HitBox(this.body, Vector2.Zero,  32  , 32);
+        kirbyFireHitBox.DP = 100;
+        return kirbyFireHitBox;
     }
 
-    @Override
-    public void defineStrikeZone() {
-        // TODO Auto-generated method stub
 
-    }
 
 
     @Override

@@ -13,6 +13,7 @@ public abstract class Kirby extends Characters {
 
 
     public static HitBox kirbyHitBox;
+    public static HitBox kirbySHitBox;
     public static boolean rightDirection = true;
     public static boolean change = false;
     public static boolean fly = false;
@@ -35,40 +36,37 @@ public abstract class Kirby extends Characters {
 
     }
 
+    public abstract HitBox defineHitBox();
+
     public static void kirbyUpdate() {
         Kirby.spriteOffset = Vector2.Zero;
         if (myGame.kirby.HP <= 0) {
             death = true;
         }
         if (change) {
-        switch (Kirby.type) {
-            case neutral:
             position = myGame.kirby.body.getPosition();
             myGame.kirby.body.setActive(false);
+        switch (Kirby.type) {
+            case neutral:
             myGame.kirby = new KirbyDefault(position);
-            myGame.kirby.create(((GameStage)	myGame.currentStage).world);
             change = false;
             break;
             case fire:
-            position = myGame.kirby.body.getPosition();
-            myGame.kirby.body.setActive(false);
             myGame.kirby = new KirbyAbilityOne(position);
-            myGame.kirby.create(((GameStage)	myGame.currentStage).world);
             change = false;
             break;
             case ice:
-            position = myGame.kirby.body.getPosition();
-            myGame.kirby.body.setActive(false);
             myGame.kirby = new KirbyAbilityTwo(position);
-            myGame.kirby.create(((GameStage)	myGame.currentStage).world);
             change = false;
             break;
             case three:
             change = false;
             break;
         }
+        myGame.kirby.create(((GameStage)	myGame.currentStage).world);
         System.out.println(Kirby.type);
-        
+        kirbySHitBox = myGame.kirby.defineHitBox();
+        kirbyHitBox.DP = 100;
         currSound.play();
      }
     }
@@ -204,22 +202,11 @@ public abstract class Kirby extends Characters {
                     kirbyHitBox.body.setActive(false);
                 }
 
-                if (KirbyDefault.kirbySuckBox == null) {
-                    KirbyDefault.kirbySuckBox = new SuckBox(this.body, Vector2.Zero,  32  , 16);
-                    KirbyDefault.kirbySuckBox.body.setActive(false);
+                if (kirbySHitBox == null){
+                    kirbySHitBox = myGame.kirby.defineHitBox();
+                    kirbyHitBox.DP = 100;
                 }
-
-                if (KirbyAbilityOne.kirbyFireHitBox == null) {
-                    KirbyAbilityOne.kirbyFireHitBox = new HitBox(this.body, Vector2.Zero,  32  , 32);
-                    KirbyAbilityOne.kirbyFireHitBox.DP = 10;
-                    KirbyAbilityOne.kirbyFireHitBox.body.setActive(false);
-                }
-                   if (KirbyAbilityTwo.kirbyFireHitBox == null) {
-                    KirbyAbilityTwo.kirbyFireHitBox = new HitBox(this.body, Vector2.Zero,  32  , 32);
-                    KirbyAbilityTwo.kirbyFireHitBox.DP = 10;
-                    KirbyAbilityTwo.kirbyFireHitBox.body.setActive(false);
-                }
-                
+               
                 if (rightDirection && (fallin || fly)) {
                     this.currentFrame = this.Anims.get(11).getKeyFrame(myGame.stateTime, true);
                 } else if (!rightDirection  && (fallin || fly)) {
