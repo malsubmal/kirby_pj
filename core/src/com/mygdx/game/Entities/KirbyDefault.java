@@ -78,17 +78,17 @@ public class KirbyDefault extends Kirby implements finalCharacter{
                 if (Kirby.rightDirection) {
                    this.currentFrame = this.Anims.get(7).getKeyFrame(myGame.stateTime, true);
                 if (kirbySuckBox.body.isActive() == false) {
-                    kirbySuckBox = new SuckBox(myGame.kirby.body, new Vector2(8, 32),  16  , 8);                
-                    } else {
-                    kirbySuckBox.body.setTransform(new Vector2(this.body.getPosition().x + 8,this.body.getPosition().y ), 0);
-                    }
+                    kirbySuckBox.setActive(true);
+                }
+                kirbySuckBox.body.setTransform(new Vector2(this.body.getPosition().x + 8,this.body.getPosition().y ), 0);
+                
                 } else {
                 this.currentFrame = this.Anims.get(8).getKeyFrame(myGame.stateTime, true);
                 if (kirbySuckBox.body.isActive() == false) {
-                    kirbySuckBox = new SuckBox(myGame.kirby.body,new Vector2(-8, 32), 16  , 8);
-                    } else {
-                        kirbySuckBox.body.setTransform(new Vector2(this.body.getPosition().x -8,this.body.getPosition().y ), 0);
+                    kirbySuckBox.setActive(true);
                     } 
+                kirbySuckBox.body.setTransform(new Vector2(this.body.getPosition().x -8,this.body.getPosition().y ), 0);
+                    
                 }
     }
 

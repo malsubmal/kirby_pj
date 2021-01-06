@@ -97,7 +97,6 @@ public class KirbyAbilityTwo extends Kirby implements finalCharacter {
                     } 
                 
                 }
-                kirbyFireHitBox.DP = 10;
     }
 
 

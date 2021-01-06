@@ -44,7 +44,7 @@ public class myGame extends ApplicationAdapter {
 		currentStage = new OpenStage();
 
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 1000, 800);
+		camera.setToOrtho(false, 500, 400);
 		//camera.zoom -= 0.00004f;
 
 

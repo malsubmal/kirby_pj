@@ -28,7 +28,7 @@ public class Listener implements ContactListener {
         Enemy refereddOpp = null;
 
         if (fixtureA.getBody().getUserData() instanceof SuckBox) {
-            if (fixtureB.getBody().getUserData() instanceof Enemy) {
+            if (!fixtureB.isSensor()  && fixtureB.getBody().getUserData() instanceof Enemy) {
                 opp = fixtureB.getBody().getUserData();
                 //destroy enemy
                 ((Enemy) opp).HP = -1;

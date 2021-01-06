@@ -198,20 +198,25 @@ public abstract class Kirby extends Characters {
             //need to put this in constructor
             //need to adjust instantiation
             //need a loading timeout
+            //need to optimize here
                 if (kirbyHitBox == null) {
                     kirbyHitBox = new HitBox(this.body, new Vector2(8, -8),  8  , 8);
                     kirbyHitBox.body.setActive(false);
                 }
+
                 if (KirbyDefault.kirbySuckBox == null) {
-                    KirbyDefault.kirbySuckBox = new SuckBox(this.body, Vector2.Zero,  8  , 8);
+                    KirbyDefault.kirbySuckBox = new SuckBox(this.body, Vector2.Zero,  32  , 16);
                     KirbyDefault.kirbySuckBox.body.setActive(false);
                 }
+
                 if (KirbyAbilityOne.kirbyFireHitBox == null) {
-                    KirbyAbilityOne.kirbyFireHitBox = new HitBox(this.body, Vector2.Zero,  8  , 8);
+                    KirbyAbilityOne.kirbyFireHitBox = new HitBox(this.body, Vector2.Zero,  32  , 32);
+                    KirbyAbilityOne.kirbyFireHitBox.DP = 10;
                     KirbyAbilityOne.kirbyFireHitBox.body.setActive(false);
                 }
                    if (KirbyAbilityTwo.kirbyFireHitBox == null) {
-                    KirbyAbilityTwo.kirbyFireHitBox = new HitBox(this.body, Vector2.Zero,  8  , 8);
+                    KirbyAbilityTwo.kirbyFireHitBox = new HitBox(this.body, Vector2.Zero,  32  , 32);
+                    KirbyAbilityTwo.kirbyFireHitBox.DP = 10;
                     KirbyAbilityTwo.kirbyFireHitBox.body.setActive(false);
                 }
                 
