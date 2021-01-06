@@ -26,7 +26,9 @@ _to add contents_
 
 (Animator class not optimized to good luck!)
 
-Enemy: An Enemy needs sprites, idle movement, and attack movement. Add sprite sources as String[] spritesources;
+Enemy: 
+       
+       An Enemy needs sprites, idle movement, and attack movement. Add sprite sources as String[] spritesources;
 
        Define the hitbox and the elemental of the enemy;
        
@@ -38,19 +40,27 @@ Enemy: An Enemy needs sprites, idle movement, and attack movement. Add sprite so
        
        Add the new class and the object layer name to the EnemySpawn() method in class Enemy;
        
-Kirby: A Kirby needs idle, attack, etc sprites (refer to the other class of Kirby);
+Kirby: 
+       
+       A Kirby needs idle, attack, etc sprites (refer to the other class of Kirby);
 
        Add the elemental, special move's hitbox and special attack of Kirby;
        
        Add this Kirby to the KirbyUpdate() method in class Kirby;
        
-GameStage: A Map;
+GameStage: 
+             
+             A Map;
 
-Supporting Stages: A background image;
+Supporting Stages: 
+                     
+                    A background image;
 
                     A manageUI() method;
                     
-Map: A Map needs a tile layer, which has to be visible;
+Map: 
+
+     A Map needs a tile layer, which has to be visible;
 
      A map need a start layer with ONE ellipse object (this will specify the position of Kirby when first entering the map);
      
@@ -58,7 +68,9 @@ Map: A Map needs a tile layer, which has to be visible;
      
      (Will need to mod the EnemySpawn() method to support different types of enemy groups in different maps && EnemySpawn() method currently also spawns breakable blocks so will        need to move to a more general spawn method.)
      
-Environmental elements: Sprite and Animation as necessary;
+Environmental elements: 
+
+                        Sprite and Animation as necessary;
 
                         An object layer in the .tmx map;
                         
