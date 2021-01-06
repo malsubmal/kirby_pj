@@ -31,23 +31,17 @@ public class myGame extends ApplicationAdapter {
 	static public float stateTime = 0f;
 	public static WrapperStage currentStage;
 	public static WrapperStage bufferStage;
-	private Stage titleStage;
-	private Stage loadStage;
-	private Stage pauseStage;
-	private Stage configStage;
 	private HUD thisHUD;
 	private Vector2 kirbystarter;
 	private Screen testScreen;
+	public static Sound bgSong;
 
 	@Override
 	public void create() {
-		//Sound bgSong = Gdx.audio.newSound(Gdx.files.internal("spec.mp3"));
-		//bgSong.loop();
+		bgSong = Gdx.audio.newSound(Gdx.files.internal("Hyrule.mp3"));
+        bgSong.loop();
 		kirby = new KirbyDefault();
 		currentStage = new OpenStage();
-
-		//testScreen = new OpenScreen();
-		//testScreen.show();
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1000, 800);
@@ -106,6 +100,4 @@ public class myGame extends ApplicationAdapter {
 	public void dispose () {
 		//dispose
 	}
-
-	
 }

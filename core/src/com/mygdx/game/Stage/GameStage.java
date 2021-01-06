@@ -50,7 +50,7 @@ public class GameStage extends WrapperStage {
     public ArrayList<Projectiles> existingProjectiles = new ArrayList<Projectiles>();
     public ArrayList<Breakable> existingBreakables = new ArrayList<Breakable>();
     private Box2DDebugRenderer debugRenderer;
-    private boolean receiveUI = true;
+    private boolean receiveUI = false;
     public boolean keypressed = false;
     ArrayList<Updatable> updateArray = new ArrayList<Updatable>();
     private Enemy enemyHolder = new Enemy();
@@ -79,6 +79,8 @@ public class GameStage extends WrapperStage {
     }
 
     public GameStage(String source) {
+        
+        myGame.bgSong = Gdx.audio.newSound(Gdx.files.internal("bg.mp3"));
         enemyHolder = new Enemy();
         updateArray.add(enemyHolder);
         this.mapSource = source;
@@ -98,6 +100,7 @@ public class GameStage extends WrapperStage {
         breakableTest.body.setTransform(new Vector2(myGame.kirby.body.getPosition().x + 20,myGame.kirby.body.getPosition().y), 0);
 
         loaded = true;
+        receiveUI = true;
 
     }
 
@@ -223,26 +226,27 @@ public class GameStage extends WrapperStage {
     @Override
 	public void StageDraw() {
         
-
+        if (myGame.kirby.death == false){
             tilemaprenderer.setView(myGame.getCamera());
             tilemaprenderer.render();
             if (receiveUI){ manageUI();}
             myGame.getBatch().begin();
-            if (!keypressed) {		  myGame.kirby.movement(0);      }
+            if ( receiveUI && !keypressed) {		  myGame.kirby.movement(0);      }
             //bgImage.setPosition(myGame.kirby.body.getPosition().x,myGame.kirby.body.getPosition().y );
             //bgImage.draw(myGame.getBatch(), Gdx.graphics.getDeltaTime());
             //improve shaking when Kirby's stuck
             myGame.getCamera().position.set(myGame.kirby.body.getPosition().x,myGame.kirby.body.getPosition().y,0 );
             
-            myGame.getBatch().draw(myGame.kirby.currentFrame
-                    , myGame.kirby.body.getPosition().x-16-myGame.kirby.spriteOffset.x
-                    ,myGame.kirby.body.getPosition().y-8-myGame.kirby.spriteOffset.y);
+           
 
             for (SpriteRender temp : levelAnimator.animateArray) {
                 myGame.getBatch().draw(temp.frame,
                  temp.position.x-16,
                  temp.position.y-8);
             }	
+            myGame.getBatch().draw(myGame.kirby.currentFrame
+            , myGame.kirby.body.getPosition().x-16-myGame.kirby.spriteOffset.x
+            ,myGame.kirby.body.getPosition().y-8-myGame.kirby.spriteOffset.y);
             myGame.getBatch().end();
             //update physics world
             world.step(1/60f, 6, 2);
@@ -252,6 +256,18 @@ public class GameStage extends WrapperStage {
     
             //render box2D object
             debugRenderer.render(world, myGame.getCamera().combined);
+        } else {
+            
+            System.out.println("death");
+        
+           myGame.getBatch().begin();
+            myGame.getBatch().draw(myGame.kirby.Anims.get(6).getKeyFrame(myGame.stateTime, true)
+            , myGame.kirby.body.getPosition().x-16-myGame.kirby.spriteOffset.x
+            ,myGame.kirby.body.getPosition().y-8-myGame.kirby.spriteOffset.y);
+            myGame.getBatch().end(); 
+            //    myGame.bufferStage = new OpenStage();
+            
+        }
         }
 
 	@Override
@@ -268,7 +284,8 @@ public class GameStage extends WrapperStage {
             if(Gdx.input.isKeyPressed(Keys.U))	      {myGame.kirby.movement(Keys.UP); keypressed = true;}
             if(Gdx.input.isKeyPressed(Keys.J))	 {myGame.kirby.movement(Keys.DOWN); keypressed = true;}
             if (Gdx.input.isKeyPressed(Keys.A))		{myGame.kirby.movement(Keys.A); keypressed = true;}
-            if (Gdx.input.isKeyPressed(Keys.D))		{myGame.kirby.movement(Keys.D); keypressed = true;}		
+            if (Gdx.input.isKeyPressed(Keys.D))		{myGame.kirby.movement(Keys.D); keypressed = true;}	
+            if (Gdx.input.isKeyPressed(Keys.X))		{myGame.kirby.movement(Keys.X); keypressed = true;}		
        
 	}
 

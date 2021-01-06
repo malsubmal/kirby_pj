@@ -38,90 +38,76 @@ public class Listener implements ContactListener {
             }
         }
 
-        /* if ((fixtureB.getBody().getUserData() instanceof Breakable) || (fixtureA.getBody().getUserData() instanceof Breakable) ) {
-            System.out.println("detected");
-        } */
-
-/*         if (fixtureA.getBody().getUserData() instanceof HitBox) {
-            if ( ((HitBox) fixtureA.getBody().getUserData()).caller instanceof Kirby) {                
-            if (fixtureB.getBody().getUserData() instanceof Breakable) {
+        if (fixtureA.getBody().getUserData() instanceof Breakable) {
+            //System.out.println("detected");
+            //System.out.println(fixtureB.getBody().getUserData());
+            if (fixtureB.getBody().getUserData() instanceof HitBox) {        
+            System.out.println("hitbox detected");
+            if ((((HitBox) fixtureB.getBody().getUserData()).caller instanceof Kirby)) {                
             System.out.println("kirby vs block");
-            opp = fixtureB.getBody().getUserData();
+            opp = fixtureA.getBody().getUserData();
             ((Breakable) opp).HP -=1;
         }
     }
-    } */
-
-    if (fixtureA.getBody().getUserData() instanceof Breakable) {
-        //System.out.println("detected");
-        //System.out.println(fixtureB.getBody().getUserData());
-        if (fixtureB.getBody().getUserData() instanceof HitBox) {        
-        System.out.println("hitbox detected");
-        if ((((HitBox) fixtureB.getBody().getUserData()).caller instanceof Kirby)) {                
-        System.out.println("kirby vs block");
-        opp = fixtureA.getBody().getUserData();
-        ((Breakable) opp).HP -=1;
+    } else if (fixtureB.getBody().getUserData() instanceof Breakable) {
+            //System.out.println("detected");
+            //System.out.println(fixtureB.getBody().getUserData());
+            if (fixtureA.getBody().getUserData() instanceof HitBox) {        
+            System.out.println("hitbox detected");
+            if ((((HitBox) fixtureA.getBody().getUserData()).caller instanceof Kirby)) {                
+            System.out.println("kirby vs block");
+            opp = fixtureB.getBody().getUserData();
+            ((Breakable) opp).HP -=1;
     }
-}
-} else if (fixtureB.getBody().getUserData() instanceof Breakable) {
-    //System.out.println("detected");
-    //System.out.println(fixtureB.getBody().getUserData());
-    if (fixtureA.getBody().getUserData() instanceof HitBox) {        
-    System.out.println("hitbox detected");
-    if ((((HitBox) fixtureA.getBody().getUserData()).caller instanceof Kirby)) {                
-    System.out.println("kirby vs block");
-    opp = fixtureB.getBody().getUserData();
-    ((Breakable) opp).HP -=1;
-}
-}
-} else    //Kirby hurts Enemy when harm their bodies
-        
-        if (fixtureA.getBody().getUserData() instanceof Kirby) {
-                if (fixtureB.isSensor()) {
-        opp = fixtureB.getBody().getUserData();
-        if (opp instanceof Enemy) {
-        ((Enemy) opp).setActive = true;
-        System.out.println("setActive");
-        } else if (opp instanceof Food) {
-            //play eat sound
-            ((Food) opp).eaten = true;
-        }
-        }
-        } else if (fixtureB.getBody().getUserData() instanceof Kirby){
-            if (fixtureA.isSensor()) {
-                opp = fixtureA.getBody().getUserData();
-                if (opp instanceof Enemy) {
-                    ((Enemy) opp).setActive = true;
-                    System.out.println("setActive");
-                } else if (opp instanceof Food) {
-                    ((Food) opp).eaten = true;
-                    if (myGame.kirby.HP < 50) {
-                        //play eat sound
-                        myGame.kirby.HP += 10;
-                    }
-                }
-            }
-        } else {
-        if (fixtureA.getBody().getUserData() instanceof HitBox ){
+    }
+}  else if (fixtureA.getBody().getUserData() instanceof HitBox ){
             //System.out.println(fixtureA.getBody().getUserData());
             if ( !fixtureB.isSensor() && fixtureB.getBody().getType() == BodyDef.BodyType.DynamicBody) {
                 opp = fixtureB.getBody().getUserData();
                 if (!opp.equals(((HitBox)fixtureA.getBody().getUserData()).caller)) {
-                ((Characters) opp).HP -= setting.DP;
+                ((Characters) opp).HP -= ((HitBox)fixtureA.getBody().getUserData()).DP;
                 System.out.println("HP decreases");
+                System.out.println(myGame.kirby.HP);
                 }
+            }
             }  else if (fixtureB.getBody().getUserData() instanceof HitBox) {
                 if (!fixtureA.isSensor() && fixtureA.getBody().getType() == BodyDef.BodyType.DynamicBody)  {
                     opp = fixtureA.getBody().getUserData();
                     if (!opp.equals(((HitBox)fixtureB.getBody().getUserData()).caller)) {
-                    ((Characters) opp).HP -= setting.DP;
+                    ((Characters) opp).HP -= ((HitBox)fixtureB.getBody().getUserData()).DP;
                     System.out.println("HP decreases");
+                    System.out.println(myGame.kirby.HP);
                     }
                 }
             }
-         }
-}
+         else if (fixtureA.getBody().getUserData() instanceof Kirby) {
+            if (fixtureB.isSensor()) {
+    opp = fixtureB.getBody().getUserData();
+    if (opp instanceof Enemy) {
+    ((Enemy) opp).setActive = true;
+    System.out.println("setActive");
+    } else if (opp instanceof Food) {
+        //play eat sound
+        ((Food) opp).eaten = true;
     }
+    }
+    } else if (fixtureB.getBody().getUserData() instanceof Kirby){
+        if (fixtureA.isSensor()) {
+            opp = fixtureA.getBody().getUserData();
+            if (opp instanceof Enemy) {
+                ((Enemy) opp).setActive = true;
+                System.out.println("setActive");
+            } else if (opp instanceof Food) {
+                ((Food) opp).eaten = true;
+                if (myGame.kirby.HP < 50) {
+                    //play eat sound
+                    myGame.kirby.HP += 10;
+                }
+            }
+        }
+    }
+}
+    
 
     @Override
     public void endContact(Contact contact) {

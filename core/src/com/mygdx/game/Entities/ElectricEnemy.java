@@ -41,7 +41,7 @@ public class ElectricEnemy extends Enemy implements finalCharacter {
 
     @Override
     public void defineHitBox() {
-        hitBox = new HitBox(this.body, this.body.getLocalCenter(), 10f);
+        hitBox = new HitBox(this.body, this.body.getLocalCenter(), 30f);
         hitBox.setActive(false);
 
         /* float range = (float) Math.sqrt(Math.pow((myGame.kirby.body.getPosition().x - hitBox.body.getPosition().x),2)+Math.pow((myGame.kirby.body.getPosition().y - hitBox.body.getPosition().y),2));

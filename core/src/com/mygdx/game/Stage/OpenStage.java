@@ -16,19 +16,17 @@ import com.mygdx.game.Tools.Animator;
 
 public class OpenStage extends WrapperStage {
     
-    ArrayList<Animation<TextureRegion>> kirbyGreetingAnim;
-    String source = "titleseq.png";
+ 
     Texture bg;
     float width, height;
 
     public OpenStage() {
-        Sound bgSong = Gdx.audio.newSound(Gdx.files.internal("Hyrule.mp3"));
-        bgSong.loop();
         bg = new Texture(Gdx.files.internal("open.jpg"));
         width = bg.getWidth();
         height = bg.getHeight();
-        kirbyGreetingAnim = Animator.createAnim(source);
         System.out.println("finish loading OpenStage");
+        loaded = true;
+    
     }
 
    
@@ -37,8 +35,10 @@ public class OpenStage extends WrapperStage {
     public void StageDraw() {
         // TODO Auto-generated method stub
         myGame.getBatch().begin();
+        
+        myGame.getCamera().position.set(0,0,0);
         myGame.getBatch().draw(bg,-width/2,-height/2);
-        myGame.getBatch().draw(kirbyGreetingAnim.get(0).getKeyFrame(myGame.stateTime,true),-myGame.getCamera().viewportWidth/2,-myGame.getCamera().viewportHeight/2);
+
         myGame.getBatch().end();
         manageUI();
 

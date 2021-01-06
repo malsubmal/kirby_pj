@@ -14,6 +14,7 @@ public class HitBox implements Updatable{
     public Body body;
     public Characters caller;
     public BodyDef bodyDef = new BodyDef();
+    public int DP = 1;
     
     private float radius;
 

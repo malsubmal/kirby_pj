@@ -35,10 +35,6 @@ public class KirbyDefault extends Kirby implements finalCharacter{
 
     public static SuckBox kirbySuckBox;
 
-    public void destroy(){
-        this.currentFrame = this.Anims.get(6).getKeyFrame(myGame.stateTime, true);
-    }
-
     public KirbyDefault() {
         super(true);       
         this.spawnVector = new Vector2(1, 200f);
@@ -49,6 +45,12 @@ public class KirbyDefault extends Kirby implements finalCharacter{
     public void defineSpawnVector() {
         // TODO Auto-generated method stub
 
+    }
+
+    public KirbyDefault(Vector2 pos) {
+        super(true);    
+        this.spawnVector = pos;
+        Kirby.type = elemental.neutral;
     }
 
     @Override

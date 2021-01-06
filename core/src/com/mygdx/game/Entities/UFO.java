@@ -20,7 +20,7 @@ public class UFO extends Enemy implements finalCharacter {
         create(world);
         defineStrikeZone();
         movement();
-        this.type = elemental.neutral;
+        this.type = elemental.ice;
     }
 
 

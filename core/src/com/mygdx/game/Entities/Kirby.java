@@ -23,22 +23,30 @@ public abstract class Kirby extends Characters {
     private static Vector2 position;
     private int attackWindow = 0;
     //sound
+    public static boolean death = false;
     private Sound flySound;
     private Sound lowKick;
     protected static Sound currSound;
-    //private Sound inhale;
+    // private Sound inhale;
 
-    public Kirby(){
-        
+    public Kirby() {
+
         myGame.kirby = new KirbyDefault();
-        
+
     }
 
-    public static void kirbyUpdate(){
+    public static void kirbyUpdate() {
         Kirby.spriteOffset = Vector2.Zero;
+        if (myGame.kirby.HP <= 0) {
+            death = true;
+        }
         if (change) {
         switch (Kirby.type) {
             case neutral:
+            position = myGame.kirby.body.getPosition();
+            myGame.kirby.body.setActive(false);
+            myGame.kirby = new KirbyDefault(position);
+            myGame.kirby.create(((GameStage)	myGame.currentStage).world);
             change = false;
             break;
             case fire:
@@ -48,7 +56,11 @@ public abstract class Kirby extends Characters {
             myGame.kirby.create(((GameStage)	myGame.currentStage).world);
             change = false;
             break;
-            case two:
+            case ice:
+            position = myGame.kirby.body.getPosition();
+            myGame.kirby.body.setActive(false);
+            myGame.kirby = new KirbyAbilityTwo(position);
+            myGame.kirby.create(((GameStage)	myGame.currentStage).world);
             change = false;
             break;
             case three:
@@ -108,6 +120,8 @@ public abstract class Kirby extends Characters {
         if (keyPressed != Keys.A) {
             if (myGame.kirby instanceof KirbyDefault) {if (KirbyDefault.kirbySuckBox != null) {KirbyDefault.kirbySuckBox.body.setActive(false);}}
             if (myGame.kirby instanceof KirbyAbilityOne) {if (KirbyAbilityOne.kirbyFireHitBox != null) {KirbyAbilityOne.kirbyFireHitBox.body.setActive(false);}}
+            
+            if (myGame.kirby instanceof KirbyAbilityTwo) {if (KirbyAbilityTwo.kirbyFireHitBox != null) {KirbyAbilityTwo.kirbyFireHitBox.body.setActive(false);}}
 
         if (myGame.kirby.body.getLinearVelocity().y < 0){fallin = true;
          //   System.out.println("fallin");
@@ -171,6 +185,15 @@ public abstract class Kirby extends Characters {
                     neutralAttack();
                
                 break;
+            case Keys.X:
+                if (Kirby.type == elemental.neutral) {
+
+                } else {
+                Kirby.type = elemental.neutral;
+                Kirby.change = true;
+                }
+                this.currentFrame = this.Anims.get(0).getKeyFrame(myGame.stateTime, true);
+                break;
             case 0:
             //need to put this in constructor
             //need to adjust instantiation
@@ -187,8 +210,12 @@ public abstract class Kirby extends Characters {
                     KirbyAbilityOne.kirbyFireHitBox = new HitBox(this.body, Vector2.Zero,  8  , 8);
                     KirbyAbilityOne.kirbyFireHitBox.body.setActive(false);
                 }
+                   if (KirbyAbilityTwo.kirbyFireHitBox == null) {
+                    KirbyAbilityTwo.kirbyFireHitBox = new HitBox(this.body, Vector2.Zero,  8  , 8);
+                    KirbyAbilityTwo.kirbyFireHitBox.body.setActive(false);
+                }
                 
-                 if (rightDirection && (fallin || fly)) {
+                if (rightDirection && (fallin || fly)) {
                     this.currentFrame = this.Anims.get(11).getKeyFrame(myGame.stateTime, true);
                 } else if (!rightDirection  && (fallin || fly)) {
                     this.currentFrame = this.Anims.get(12).getKeyFrame(myGame.stateTime, true);

@@ -78,25 +78,28 @@ public class KirbyAbilityOne extends Kirby implements finalCharacter {
     @Override
     public void specialAttack() {
         this.body.setLinearVelocity(new Vector2(0,0));
+
         System.out.print("spit fire");
                 if (Kirby.rightDirection) {
                    this.currentFrame = this.Anims.get(7).getKeyFrame(myGame.stateTime, true);
                 if (kirbyFireHitBox.body.isActive() == false) {
-                    kirbyFireHitBox = new HitBox(myGame.kirby.body, new Vector2(8, 32),  16  , 16);                
+                    kirbyFireHitBox = new HitBox(myGame.kirby.body, new Vector2(myGame.kirby.body.getPosition().x + 32 ,myGame.kirby.body.getPosition().y ),  32  ,32);                
                     } else {
                         kirbyFireHitBox.body.setTransform(new Vector2(this.body.getPosition().x + 32,this.body.getPosition().y ), 0);
                     }
+                
                 } else {
                 
                 this.currentFrame = this.Anims.get(8).getKeyFrame(myGame.stateTime, true);
                 Kirby.spriteOffset = new Vector2(currentFrame.getRegionWidth()/2,0);
                 if (kirbyFireHitBox.body.isActive() == false) {
-                    kirbyFireHitBox = new HitBox(myGame.kirby.body,new Vector2(-8, 32), 16  , 16);
+                    kirbyFireHitBox = new HitBox(myGame.kirby.body,new Vector2(myGame.kirby.body.getPosition().x - 32 ,myGame.kirby.body.getPosition().y ), 32  , 32);
                     } else {
                         kirbyFireHitBox.body.setTransform(new Vector2(this.body.getPosition().x -32,this.body.getPosition().y ), 0);
                     } 
                 
                 }
+                kirbyFireHitBox.DP = 10;
     }
 
 

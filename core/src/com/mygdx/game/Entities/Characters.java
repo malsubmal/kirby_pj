@@ -45,7 +45,7 @@ public abstract class Characters  {
         electrice,
         neutral,
         fire,
-        two,
+        ice,
         three
     };
     public elemental type;

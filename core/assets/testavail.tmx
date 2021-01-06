@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="1600" height="160" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="228">
- <imagelayer id="6" name="bg" offsetx="-778.333" offsety="1725.33">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="1600" height="160" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="288">
+ <imagelayer id="6" name="bg" visible="0" offsetx="-778.333" offsety="1725.33">
   <image source="DS DSi - Kirby Canvas Curse Kirby Power Paintbrush - Space Backgrounds/SpaceBG0.png" width="336" height="192"/>
  </imagelayer>
  <layer id="1" name="Tile Layer 1" width="1600" height="160">
@@ -277,19 +277,55 @@
   <object id="203" x="684" y="2210.67">
    <polygon points="0,0 100.667,-0.666667 102.667,13.3333 67.3333,29.3333 23.3333,76 0.666667,90"/>
   </object>
+  <object id="262" x="411" y="2381.5" width="45" height="3.5"/>
+  <object id="263" x="206" y="2375" width="40" height="4.5"/>
+  <object id="264" x="184" y="2426.5" width="51.5" height="4"/>
+  <object id="265" x="305.5" y="2412.5" width="41" height="4"/>
+  <object id="266" x="308.5" y="2374" width="32.5" height="2"/>
+  <object id="267" x="363.5" y="2396" width="36.5" height="3.5"/>
+  <object id="268" x="397" y="2451" width="56" height="5"/>
  </objectgroup>
- <objectgroup id="4" name="start">
-  <object id="170" x="315.333" y="2004.67">
+ <objectgroup id="11" name="FoodObject">
+  <object id="277" x="887" y="2223">
+   <ellipse/>
+  </object>
+  <object id="278" x="892" y="2000">
+   <ellipse/>
+  </object>
+  <object id="279" x="894" y="2464" width="1" height="1">
+   <ellipse/>
+  </object>
+  <object id="280" x="218" y="2254">
+   <ellipse/>
+  </object>
+  <object id="281" x="251" y="2254">
+   <ellipse/>
+  </object>
+  <object id="282" x="293" y="2255" width="1">
+   <ellipse/>
+  </object>
+  <object id="283" x="357" y="2257">
+   <ellipse/>
+  </object>
+  <object id="284" x="403" y="2257">
+   <ellipse/>
+  </object>
+  <object id="285" x="450" y="2259">
+   <ellipse/>
+  </object>
+  <object id="286" x="252" y="1692">
+   <ellipse/>
+  </object>
+  <object id="287" x="316" y="1695">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="start" visible="0">
+  <object id="236" x="390" y="1601">
    <ellipse/>
   </object>
  </objectgroup>
  <objectgroup id="5" name="UFOobject">
-  <object id="171" x="196.667" y="1798.67">
-   <ellipse/>
-  </object>
-  <object id="172" x="400.667" y="1842.67">
-   <ellipse/>
-  </object>
   <object id="173" x="418.667" y="2090.67">
    <ellipse/>
   </object>
@@ -378,6 +414,124 @@
    <ellipse/>
   </object>
   <object id="227" x="414" y="2436">
+   <ellipse/>
+  </object>
+  <object id="253" x="151" y="2319">
+   <ellipse/>
+  </object>
+  <object id="254" x="219" y="2327">
+   <ellipse/>
+  </object>
+  <object id="255" x="337" y="2331" height="1">
+   <ellipse/>
+  </object>
+  <object id="256" x="278" y="2332">
+   <ellipse/>
+  </object>
+  <object id="257" x="391" y="2335">
+   <ellipse/>
+  </object>
+  <object id="258" x="442" y="2332">
+   <ellipse/>
+  </object>
+  <object id="259" x="221" y="2444">
+   <ellipse/>
+  </object>
+  <object id="260" x="283" y="2428">
+   <ellipse/>
+  </object>
+  <object id="261" x="446" y="2443">
+   <ellipse/>
+  </object>
+  <object id="269" x="772" y="1955">
+   <ellipse/>
+  </object>
+  <object id="270" x="774" y="2060">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup id="7" name="ElectricObject">
+  <object id="228" x="666" y="1732">
+   <ellipse/>
+  </object>
+  <object id="229" x="758" y="1731">
+   <ellipse/>
+  </object>
+  <object id="230" x="745" y="1667">
+   <ellipse/>
+  </object>
+  <object id="231" x="812" y="1665">
+   <ellipse/>
+  </object>
+  <object id="232" x="749" y="1616">
+   <ellipse/>
+  </object>
+  <object id="233" x="590" y="1616" width="1">
+   <ellipse/>
+  </object>
+  <object id="234" x="683" y="1617">
+   <ellipse/>
+  </object>
+  <object id="235" x="591" y="1620">
+   <ellipse/>
+  </object>
+  <object id="237" x="189" y="1996">
+   <ellipse/>
+  </object>
+  <object id="239" x="326" y="2171">
+   <ellipse/>
+  </object>
+  <object id="271" x="764" y="2167">
+   <ellipse/>
+  </object>
+  <object id="272" x="745" y="2312">
+   <ellipse/>
+  </object>
+  <object id="273" x="159" y="1828">
+   <ellipse/>
+  </object>
+  <object id="274" x="281" y="1791">
+   <ellipse/>
+  </object>
+  <object id="275" x="236" y="1903">
+   <ellipse/>
+  </object>
+  <object id="276" x="420" y="1872">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup id="9" name="BreakableObject">
+  <object id="241" x="363" y="1801">
+   <ellipse/>
+  </object>
+  <object id="243" x="659" y="1847">
+   <ellipse/>
+  </object>
+  <object id="244" x="796" y="1568">
+   <ellipse/>
+  </object>
+  <object id="245" x="659" y="2325">
+   <ellipse/>
+  </object>
+  <object id="246" x="186" y="2202">
+   <ellipse/>
+  </object>
+  <object id="247" x="549" y="2462">
+   <ellipse/>
+  </object>
+  <object id="248" x="610" y="2462">
+   <ellipse/>
+  </object>
+  <object id="249" x="674" y="2462">
+   <ellipse/>
+  </object>
+  <object id="250" x="737" y="2463">
+   <ellipse/>
+  </object>
+  <object id="251" x="799" y="2463">
+   <ellipse/>
+  </object>
+  <object id="252" x="859" y="2465">
    <ellipse/>
   </object>
  </objectgroup>
